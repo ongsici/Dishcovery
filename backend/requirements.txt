@@ -1,1 +1,4 @@
-oauthlib
+requests
+python-dotenv
+fastapi
+pydantic
