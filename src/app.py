@@ -73,9 +73,11 @@ def ingredients_search():
             "id": recipe_id,  # Include recipe ID
             "name": recipe_name,  # Include recipe name
             "image": recipe_details.get('image'),  # Include image
+            "instructions": recipe_details.get('instructions'),
             "extended_ingredients": extended_ingredients,  # Include ingredients from the details
             "missed_ingredients": missed_ingredients,  # Only names of missed ingredients
             "used_ingredients": used_ingredients,  # Only names of used ingredients
+            "ready_in_minutes": recipe_details.get('readyInMinutes'),
             "labels": {  # Labels for dietary preferences
                 "vegan": recipe_details.get('vegan'),
                 "vegetarian": recipe_details.get('vegetarian'),
@@ -94,7 +96,7 @@ def ingredients_search():
         # Add the recipe to the results dictionary with recipe_name as the key
         results[recipe_name] = organized_recipe
 
-        # print(results)
+        print(results)
 
     return results
     
