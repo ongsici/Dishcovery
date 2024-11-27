@@ -2,7 +2,7 @@ import requests
 from flask import Flask, render_template, request
 from src.utils.data_models import IngredientsInput
 from src.utils.get_spoonacular import get_nutrition_by_id, get_recipe_by_id, get_recipe_by_ingredients
-
+from src.utils.get_nutrition_intake import get_daily_nutrition_intake
 
 app = Flask(__name__)
 
@@ -107,6 +107,22 @@ def recipe_search_results():
 @app.route("/nutrition_tracker")
 def nutrition_tracker():
     return render_template("nutrition_tracker.html")
+
+@app.route("/nutrition_query", methods=["POST"])
+def nutrition_query():
+    age = request.form.get("age")
+    gender = request.form.get("gender")
+    height = request.form.get("height")
+    weight = request.form.get("weight") 
+
+    print(f'age: {age, type(age)}')
+    print(gender, type(gender))
+    print(height, type(height))
+    print(weight, type(weight))
+    rec_intake = get_daily_nutrition_intake(gender, age, height, weight)
+    # print(rec_intake)
+
+    return render_template("nutrition_tracker.html", results=rec_intake)
 
 
 @app.route("/saved_recipes")
