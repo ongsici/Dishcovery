@@ -7,10 +7,23 @@
                 font-family: Arial, sans-serif;
                 text-align: center;
                 padding: 50px;
+                margin: 20px;
+                line-height: 1.5;
             }
             h1 {
                 font-size: 4em;
-                margin-bottom: 50px;vbb
+                margin-bottom: 50px;
+            }
+            .container {
+                max-width: 600px;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                background-color: #f9f9f9;
+            }
+            .form-group {
+                margin-bottom: 15px;
             }
             .button {
                 background-color: #A0D3E8;
@@ -27,46 +40,110 @@
                 width: 60%;
                 max-width: 400px;
             }
+            #search-results {
+                margin-top: 20 px;
+            }
+            #results-list li {
+                margin: 5px 0;
+            }
         </style>
     </head>
     <body>
         <a href="/">home</a>
+        <div class="container">
+            <h1>recipe search</h1>
 
-        <h1>recipe search</h1>
+            <form action="/ingredients_search" method="POST">
+                <div class="form-group">
+                    <label for="ingredients">ingredients:</label>
+                    <input type="text" id="ingredients" name="ingredients" placeholder="Enter ingredients...">
+                </div>
 
-        <!-- update/make /search-recipe -->
-        <form action="/search-recipe" method="GET">
-            <label for="ingredients">ingredients:</label>
-            <input type="text" id="ingredients" name="ingredients" placeholder="Enter ingredients...">
+                <div class="form-group">
+                    <label for="filter">Filter:</label>
+                    <select id="filter" name="filter">
+                        <option value="default1">Default 1</option>
+                        <option value="default2">Default 2</option>
+                        <option value="default3">Default 3</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sort">Sort:</label>
+                    <select id="sort" name="sort">
+                        <option value="default">Default</option>
+                        <option value="name">Name</option>
+                        <option value="cooking_time">Cooking time</option>
+                        <option value="nutrition">Nutrition</option>
+                        <option value="date_saved">Date saved</option>
+                    </select>
+                </div>
+            
+                <div class="form-group">
+                    <button type="submit">Submit</button>
+                </div>
+            
+            </form>
 
-            <label for="filter">Filter:</label>
-            <select id="filter" name="filter">
-                <option value="default1">Default 1</option>
-                <option value="default2">Default 2</option>
-                <option value="default3">Default 3</option>
-            </select>
+            <script>
+                document.querySelector('form[action="/ingredients_search"]').addEventListener('submit', async function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Gather form data
+                const ingredients = document.getElementById('ingredients').value;
+                const filter = document.getElementById('filter').value;
+                const sort = document.getElementById('sort').value;
+
+                // Construct the request payload
+                const payload = {
+                    ingredients: ingredients.split(',').map(item => item.trim()), // Convert to list of strings
+                    filter: filter,
+                    sort: sort
+                };
+
+                try {
+                    // Send the POST request
+                    const response = await fetch('/ingredients_search', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(payload),
+                    });
+
+                    if (response.ok) {
+                        window.location.href = '/recipe_search_results'; // Redirect to the results page
+                    } else {
+                        console.error('Failed to fetch results:', await response.text());
+                    }
+                } catch (error) {
+                    console.error('Error during fetch:', error);
+                }
+                });
+
+            </script>
+
+        </div>
+
+        <div class="container">
+            <div id="search-results">
+                <h2>Recipes:</h2>
+                <ul id="results-list">
+                    <!-- Results will appear here -->
+                </ul>
+            </div>
+    
+    
+            
+    
+            <form action="/save-recipe" method="POST">
+                <button type="submit">save recipe</button>
+            </form>
+    
+            <button onclick="window.location.href='nutrition_tracker.html';">nutrition tracker</button>
+        </div>
+
         
-            <label for="sort">Sort:</label>
-            <select id="sort" name="sort">
-                <option value="default">Default</option>
-                <option value="name">Name</option>
-                <option value="cooking_time">Cooking time</option>
-                <option value="nutrition">Nutrition</option>
-                <option value="date_saved">Date saved</option>
-            </select>
-        
-            <button type="submit">Submit</button>
-        </form>
-
-        <br><br>
-        recipes:
-        <br><br>
-
-        <form action="/save-recipe" method="POST">
-            <button type="submit">save recipe</button>
-        </form>
-
-        <button onclick="window.location.href='nutrition_tracker.html';">nutrition tracker</button>
 
     </body>
 </html>

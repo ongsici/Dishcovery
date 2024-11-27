@@ -13,7 +13,7 @@ def get_recipe_by_ingredients(ingredients_list: List):
     params ={
         "ingredients": ingredients,
         "apiKey": API_KEY,
-        "number": 10
+        "number": 2
     }
     response = requests.get(url, params=params)
     data = response.json()

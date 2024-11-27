@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            padding: 20px;
+        }
+        .recipe-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .recipe-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 300px;
+            text-decoration: none;
+            color: #333;
+        }
+        .recipe-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .recipe-card .content {
+            padding: 15px;
+        }
+        .recipe-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+        }
+        .recipe-card p {
+            margin: 0;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Recipe Search Results</h1>
+    {% for recipe_name, recipe in recipes.items() %}
+    <div class="card">
+        <img src="{{ recipe.image }}" alt="Recipe image">
+        <h2>{{ recipe.name }}</h2>
+        <p><strong>Calories:</strong> {{ recipe.nutrition.calories }}</p>
+        <p><strong>Carbohydrate:</strong> {{ recipe.nutrition.carbohydrate }}</p>
+        <p><strong>Fat:</strong> {{ recipe.nutrition.fat }}</p>
+        <p><strong>Protein:</strong> {{ recipe.nutrition.protein }}</p>
+        <p><strong>Missed Ingredients:</strong> {{ recipe.missed_ingredients | join(', ') }}</p>
+        <p><strong>Used Ingredients:</strong> {{ recipe.used_ingredients | join(', ') }}</p>
+    </div>
+    {% endfor %}
+</body>
+</html>
