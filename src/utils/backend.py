@@ -1,8 +1,10 @@
 from fastapi import FastAPI
+# from Dishcovery.src.utils.data_models import IngredientsInput
+# from Dishcovery.src.utils.get_spoonacular import get_recipe_by_ingredients
+# from Dishcovery.src.utils.get_spoonacular import get_recipe_by_id
+# from Dishcovery.src.utils.get_spoonacular import get_nutrition_by_id
 from data_models import IngredientsInput
-from get_spoonacular import get_recipe_by_ingredients
-from get_spoonacular import get_recipe_by_id
-from get_spoonacular import get_nutrition_by_id
+from get_spoonacular import get_recipe_by_ingredients, get_nutrition_by_id, get_recipe_by_id
 
 app = FastAPI()
 
@@ -84,10 +86,10 @@ def ingredients_search(item: IngredientsInput):
     return {"recipes": results}
 
 
-ingredients_input = IngredientsInput(ingredients=["tomato", "cheese", "onion"])
+# ingredients_input = IngredientsInput(ingredients=["tomato", "cheese", "onion"])
 
-# Call the ingredients_search function with the created instance
-response = ingredients_search(ingredients_input)
+# # Call the ingredients_search function with the created instance
+# response = ingredients_search(ingredients_input)
 
-# Print the response to check the result
-print(response)
+# # Print the response to check the result
+# print(response)

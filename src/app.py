@@ -9,15 +9,15 @@ def home():
 
 
 @app.route("/recipe_search")
-def home():
+def recipe_search():
     return render_template("recipe_search.html")
 
 
 @app.route("/nutrition_tracker")
-def home():
+def nutrition_tracker():
     return render_template("nutrition_tracker.html")
 
 
 @app.route("/saved_recipes")
-def home():
+def saved_recipes():
     return render_template("saved_recipes.html")
