@@ -9,10 +9,27 @@
                 padding: 50px;
                 margin: 20px;
                 line-height: 1.5;
+                background: #f8f9fa;
+                color: #333;
+                display: flex;
+                flex-direction: column;
+                min-height: 90vh;
+            }
+            .content {
+                flex: 1;
+                /* text-align: center; */
+                padding: 20px;
             }
             h1 {
-                font-size: 4em;
-                margin-bottom: 50px;
+                text-align: center;
+                font-family: 'Inter', sans-serif; 
+                font-size: 3.5em;
+                color: #46d1e0;
+                margin-top: 10px;
+                margin-bottom: 40px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 2px;
             }
             .container {
                 max-width: 600px;
@@ -40,89 +57,99 @@
                 width: 60%;
                 max-width: 400px;
             }
-            #search-results {
-                margin-top: 20 px;
+            footer {
+                margin-top: 50px;
+                padding: 20px;
+                background-color: #46d1e0;
+                color: white;
+                font-size: 0.9em;
             }
-            #results-list li {
-                margin: 5px 0;
+
+            footer a {
+                color: #fff;
+                text-decoration: none;
+                font-weight: bold;
             }
         </style>
     </head>
     <body>
-        <a href="/">home</a>
-        <div class="container">
-            <h1>recipe search</h1>
+        <!-- <a href="/">home</a> -->
+        <div class="content">
+            <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
+            <div class="container">
+                <h2>recipe search</h2>
 
-            <form action="/ingredients_search" method="POST">
-                <div class="form-group">
-                    <label for="ingredients">ingredients:</label>
-                    <input type="text" id="ingredients" name="ingredients" placeholder="Enter ingredients...">
-                </div>
+                <form action="/ingredients_search" method="POST">
+                    <div class="form-group">
+                        <label for="ingredients">ingredients:</label>
+                        <input type="text" id="ingredients" name="ingredients" placeholder="Enter ingredients...">
+                    </div>
 
-                <div class="form-group">
-                    <label for="filter">Filter:</label>
-                    <select id="filter" name="filter">
-                        <option value="default1">Default 1</option>
-                        <option value="default2">Default 2</option>
-                        <option value="default3">Default 3</option>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="filter">Filter:</label>
+                        <select id="filter" name="filter">
+                            <option value="default1">Default 1</option>
+                            <option value="default2">Default 2</option>
+                            <option value="default3">Default 3</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sort">Sort:</label>
+                        <select id="sort" name="sort">
+                            <option value="default">Default</option>
+                            <option value="name">Name</option>
+                            <option value="cooking_time">Cooking time</option>
+                            <option value="nutrition">Nutrition</option>
+                            <option value="date_saved">Date saved</option>
+                        </select>
+                    </div>
                 
-                <div class="form-group">
-                    <label for="sort">Sort:</label>
-                    <select id="sort" name="sort">
-                        <option value="default">Default</option>
-                        <option value="name">Name</option>
-                        <option value="cooking_time">Cooking time</option>
-                        <option value="nutrition">Nutrition</option>
-                        <option value="date_saved">Date saved</option>
-                    </select>
-                </div>
-            
-                <div class="form-group">
-                    <button type="submit">Submit</button>
-                </div>
-            
-            </form>
+                    <div class="form-group">
+                        <button type="submit">Submit</button>
+                    </div>
+                
+                </form>
 
-            <script>
-                document.querySelector('form[action="/ingredients_search"]').addEventListener('submit', async function (event) {
-                event.preventDefault(); // Prevent default form submission
+                <script>
+                    document.querySelector('form[action="/ingredients_search"]').addEventListener('submit', async function (event) {
+                    event.preventDefault(); // Prevent default form submission
 
-                // Gather form data
-                const ingredients = document.getElementById('ingredients').value;
-                const filter = document.getElementById('filter').value;
-                const sort = document.getElementById('sort').value;
+                    // Gather form data
+                    const ingredients = document.getElementById('ingredients').value;
+                    const filter = document.getElementById('filter').value;
+                    const sort = document.getElementById('sort').value;
 
-                // Construct the request payload
-                const payload = {
-                    ingredients: ingredients.split(',').map(item => item.trim()), // Convert to list of strings
-                    filter: filter,
-                    sort: sort
-                };
+                    // Construct the request payload
+                    const payload = {
+                        ingredients: ingredients.split(',').map(item => item.trim()), // Convert to list of strings
+                        filter: filter,
+                        sort: sort
+                    };
 
-                try {
-                    // Send the POST request
-                    const response = await fetch('/ingredients_search', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(payload),
+                    try {
+                        // Send the POST request
+                        const response = await fetch('/ingredients_search', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(payload),
+                        });
+
+                        if (response.ok) {
+                            window.location.href = '/recipe_search_results'; // Redirect to the results page
+                        } else {
+                            console.error('Failed to fetch results:', await response.text());
+                        }
+                    } catch (error) {
+                        console.error('Error during fetch:', error);
+                    }
                     });
 
-                    if (response.ok) {
-                        window.location.href = '/recipe_search_results'; // Redirect to the results page
-                    } else {
-                        console.error('Failed to fetch results:', await response.text());
-                    }
-                } catch (error) {
-                    console.error('Error during fetch:', error);
-                }
-                });
+                </script>
 
-            </script>
-
+            </div>
         </div>
 
         <div class="container">
@@ -142,7 +169,9 @@
     
             <button onclick="window.location.href='nutrition_tracker.html';">nutrition tracker</button>
         </div>
-
+        <footer>
+            &copy; 2024 Dishcovery. Built with ❤️ for food enthusiasts.
+        </footer>
         
 
     </body>

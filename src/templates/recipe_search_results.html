@@ -8,6 +8,26 @@
             font-family: Arial, sans-serif;
             background-color: #f8f8f8;
             padding: 20px;
+            background: #f8f9fa;
+            color: #333;
+            flex-direction: column;
+            min-height: 90vh;
+        }
+        .content {
+            flex: 1;
+            /* text-align: center; */
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-family: 'Inter', sans-serif; 
+            font-size: 3.5em;
+            color: #46d1e0;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         .recipe-container {
             display: flex;
@@ -40,22 +60,41 @@
             margin: 0;
             color: #777;
         }
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #46d1e0;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Recipe Search Results</h1>
-    {% for recipe_name, recipe in recipes.items() %}
-    <div class="card">
-        <img src="{{ recipe.image }}" alt="Recipe image">
-        <h2>{{ recipe.name }}</h2>
-        <p><strong>Calories:</strong> {{ recipe.nutrition.calories }}</p>
-        <p><strong>Carbohydrate:</strong> {{ recipe.nutrition.carbohydrate }}</p>
-        <p><strong>Fat:</strong> {{ recipe.nutrition.fat }}</p>
-        <p><strong>Protein:</strong> {{ recipe.nutrition.protein }}</p>
-        <p><strong>Missed Ingredients:</strong> {{ recipe.missed_ingredients | join(', ') }}</p>
-        <p><strong>Used Ingredients:</strong> {{ recipe.used_ingredients | join(', ') }}</p>
+    <div class="content">
+        <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
+        <h2>Recipe Search Results</h2>
+        {% for recipe_name, recipe in recipes.items() %}
+        <div class="card">
+            <img src="{{ recipe.image }}" alt="Recipe image">
+            <h2>{{ recipe.name }}</h2>
+            <p><strong>Calories:</strong> {{ recipe.nutrition.calories }}</p>
+            <p><strong>Carbohydrate:</strong> {{ recipe.nutrition.carbohydrate }}</p>
+            <p><strong>Fat:</strong> {{ recipe.nutrition.fat }}</p>
+            <p><strong>Protein:</strong> {{ recipe.nutrition.protein }}</p>
+            <p><strong>Missed Ingredients:</strong> {{ recipe.missed_ingredients | join(', ') }}</p>
+            <p><strong>Used Ingredients:</strong> {{ recipe.used_ingredients | join(', ') }}</p>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    <footer>
+        &copy; 2024 Dishcovery. Built with ❤️ for food enthusiasts.
+    </footer>
 </body>
 </html>

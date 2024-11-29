@@ -7,11 +7,30 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
+            background: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 90vh;
         }
-
+        .content {
+            flex: 1;
+            /* text-align: center; */
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-family: 'Inter', sans-serif; 
+            font-size: 3.5em;
+            color: #46d1e0;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
         .container {
             background-color: #fff;
             max-width: 500px;
@@ -77,46 +96,65 @@
         .submit-btn:hover {
             background-color: #45a049;
         }
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #46d1e0;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+    <div class="content">
+        <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
+        <div class="container">
+            <h2>Nutrition Query Form</h2>
+            <form action="/nutrition_query" method="post">
+                
+                <label for="gender">Gender:</label>
+                <div class="radio-group">
+                        <input type="radio" id="malefield" name="gender" value="male">
+                        <label for="malefield">Male</label>
+                        <input type="radio" id="femalefield" name="gender" value="female">
+                        <label for="femalefield">Female</label>
+                </div>
 
-<div class="container">
-    <h2>Nutrition Query Form</h2>
-    <form action="/nutrition_query" method="post">
-        
-        <label for="gender">Gender:</label>
-        <div class="radio-group">
-                <input type="radio" id="malefield" name="gender" value="male">
-                <label for="malefield">Male</label>
-                <input type="radio" id="femalefield" name="gender" value="female">
-                <label for="femalefield">Female</label>
+                <label for="agefield">Age:</label>
+                <input type="number" id="agefield" name="age" min="0" max="100" placeholder="Enter your age" required>
+
+                <label for="heightfield">Height (cm):</label>
+                <input type="number" id="heightfield" name="height" min="100" max="300" placeholder="Enter your height in cm" required>
+
+                <label for="weightfield">Weight (kg):</label>
+                <input type="number" id="weightfield" name="weight" min="10" max="200" placeholder="Enter your weight in kg" required>
+
+                <input type="submit" class="submit-btn" value="Submit">
+            </form>
         </div>
 
-        <label for="agefield">Age:</label>
-        <input type="number" id="agefield" name="age" min="0" max="100" placeholder="Enter your age" required>
+        {% if results %}
+        <div class="results">
+            <h3>Nutrition Results:</h3>
+            <ul>
+                <li><strong>Calories:</strong> {{ results['Calories'] }} kcal</li>
+                <li><strong>Carbohydrates:</strong> {{ results['Carbohydrate'] }} grams</li>
+                <li><strong>Protein:</strong> {{ results['Protein'] }} grams</li>
+                <li><strong>Fat:</strong> {{ results['Fat'] }} grams</li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
 
-        <label for="heightfield">Height (cm):</label>
-        <input type="number" id="heightfield" name="height" min="100" max="300" placeholder="Enter your height in cm" required>
-
-        <label for="weightfield">Weight (kg):</label>
-        <input type="number" id="weightfield" name="weight" min="10" max="200" placeholder="Enter your weight in kg" required>
-
-        <input type="submit" class="submit-btn" value="Submit">
-    </form>
-</div>
-
-{% if results %}
-<div class="results">
-    <h3>Nutrition Results:</h3>
-    <ul>
-        <li><strong>Calories:</strong> {{ results['Calories'] }} kcal</li>
-        <li><strong>Carbohydrates:</strong> {{ results['Carbohydrate'] }} grams</li>
-        <li><strong>Protein:</strong> {{ results['Protein'] }} grams</li>
-        <li><strong>Fat:</strong> {{ results['Fat'] }} grams</li>
-    </ul>
-</div>
-{% endif %}
+    <footer>
+        &copy; 2024 Dishcovery. Built with ❤️ for food enthusiasts.
+    </footer>
 
 </body>
 </html>
