@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutrition Query Form</title>
-    <style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -15,101 +17,7 @@
             flex-direction: column;
             min-height: 90vh;
         }
-        .content {
-            flex: 1;
-            /* text-align: center; */
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            font-family: 'Inter', sans-serif; 
-            font-size: 3.5em;
-            color: #46d1e0;
-            margin-top: 10px;
-            margin-bottom: 40px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .container {
-            background-color: #fff;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .results {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #e8f5e9;
-            border-radius: 8px;
-            border: 1px solid #c8e6c9;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        label {
-            font-size: 16px;
-            margin-bottom: 6px;
-            display: block;
-            color: #333;
-        }
-
-        input[type="text"], input[type="number"], input[type="radio"], input[type="submit"] {
-            width: 100%;
-            padding: 8px;
-            margin: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="radio"] {
-            width: auto;
-            margin-right: 10px;
-        }
-
-        .radio-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .radio-group label {
-            margin-right: 20px;
-        }
-
-        .submit-btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            padding: 10px;
-            border-radius: 4px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .submit-btn:hover {
-            background-color: #45a049;
-        }
-        footer {
-            margin-top: 50px;
-            padding: 20px;
-            background-color: #46d1e0;
-            color: white;
-            font-size: 0.9em;
-        }
-
-        footer a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
+    </style> -->
 </head>
 <body>
     <div class="content">
