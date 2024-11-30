@@ -18,6 +18,7 @@ def home():
 def recipe_search():
     return render_template("recipe_search.html")
 
+
 @app.route("/ingredients_search", methods=["POST"])
 def ingredients_search():
     data = request.get_json()
@@ -93,20 +94,37 @@ def ingredients_search():
             }
         }
 
-        # Add the recipe to the results dictionary with recipe_name as the key
-        results[recipe_name] = organized_recipe
+        # Add the recipe to the results dictionary with recipe_id as the key
+        results[recipe_id] = organized_recipe
 
         print(results)
 
     return results
     
+
 @app.route("/recipe_search_results")
 def recipe_search_results():
     return render_template("recipe_search_results.html", recipes=results)
 
+
+# Route for the recipe details page
+@app.route('/recipe/<int:recipe_id>')
+def recipe_details(recipe_id):
+    recipe = results.get(recipe_id)
+    if not recipe:
+        return "Recipe not found", 404
+    return render_template('recipe_details.html', recipe=recipe)
+
+# for debugging
+# if __name__ == "__main__":
+#     app.run(debug=True)
+
+
+
 @app.route("/nutrition_tracker")
 def nutrition_tracker():
     return render_template("nutrition_tracker.html")
+
 
 @app.route("/nutrition_query", methods=["POST"])
 def nutrition_query():

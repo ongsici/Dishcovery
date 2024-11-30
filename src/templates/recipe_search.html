@@ -11,15 +11,12 @@
         <div class="content">
             <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
             <div class="container">
-                <h2>recipe search</h2>
+                <h2>Recipe Search</h2><br><br>
 
                 <form action="/ingredients_search" method="POST">
-                    <div class="form-group">
-                        <label for="ingredients">ingredients:</label>
-                        <input type="text" id="ingredients" name="ingredients" placeholder="Enter ingredients...">
-                    </div>
+                    <input type="text" id="ingredients" name="ingredients" placeholder="Enter ingredients...">
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="filter">Filter:</label>
                         <select id="filter" name="filter">
                             <option value="default1">Default 1</option>
@@ -37,12 +34,9 @@
                             <option value="nutrition">Nutrition</option>
                             <option value="date_saved">Date saved</option>
                         </select>
-                    </div>
+                    </div> -->
                 
-                    <div class="form-group">
-                        <button type="submit">Submit</button>
-                    </div>
-                
+                        <button type="submit" class="submit-btn">Submit</button>                
                 </form>
 
                 <script>
@@ -51,14 +45,14 @@
 
                     // Gather form data
                     const ingredients = document.getElementById('ingredients').value;
-                    const filter = document.getElementById('filter').value;
-                    const sort = document.getElementById('sort').value;
+                    // const filter = document.getElementById('filter').value;
+                    // const sort = document.getElementById('sort').value;
 
                     // Construct the request payload
                     const payload = {
-                        ingredients: ingredients.split(',').map(item => item.trim()), // Convert to list of strings
-                        filter: filter,
-                        sort: sort
+                        ingredients: ingredients.split(',').map(item => item.trim()) // Convert to list of strings
+                        // filter: filter,
+                        // sort: sort
                     };
 
                     try {
@@ -86,25 +80,8 @@
             </div>
         </div>
 
-        <div class="container">
-            <div id="search-results">
-                <h2>Recipes:</h2>
-                <ul id="results-list">
-                    <!-- Results will appear here -->
-                </ul>
-            </div>
-    
-    
-            
-    
-            <form action="/save-recipe" method="POST">
-                <button type="submit">save recipe</button>
-            </form>
-    
-            <button onclick="window.location.href='nutrition_tracker.html';">nutrition tracker</button>
-        </div>
         <footer>
-            &copy; 2024 Dishcovery. Built with ❤️ for food enthusiasts.
+            &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.
         </footer>
         
 

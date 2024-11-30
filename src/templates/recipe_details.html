@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ recipe.name }} - Recipe Details</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-<body>
-    <div class="content">
-        <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
-        <h2>{{ recipe.name }}</h2>
-        <img src="{{ recipe.image }}" alt="{{ recipe.name }} image">
-        
-        <h3>Instructions</h3>
-        <p>{{ recipe.instructions }}</p>
 
-        <h3>Nutrition Info</h3>
-        <p><strong>Calories:</strong> {{ recipe.nutrition.calories }}</p>
-        <p><strong>Carbohydrates:</strong> {{ recipe.nutrition.carbohydrate }}</p>
-        <p><strong>Fat:</strong> {{ recipe.nutrition.fat }}</p>
-        <p><strong>Protein:</strong> {{ recipe.nutrition.protein }}</p>
-        
-        <h3>Ingredients</h3>
-        <p><strong>Used Ingredients:</strong> {{ recipe.used_ingredients | join(', ') }}</p>
-        <p><strong>Missed Ingredients:</strong> {{ recipe.missed_ingredients | join(', ') }}</p>
-    </div>
+<body>
+    <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
+    
+    <h2>{{ recipe.name }}</h2>
+    <img src="{{ recipe.image }}" alt="{{ recipe.name }}">
+
+    <p><strong>Instructions:</strong> {{ recipe.instructions }}</p>
+
+    <p><strong>Calories:</strong> {{ recipe.nutrition.calories }}</p>
+    <p><strong>Carbohydrate:</strong> {{ recipe.nutrition.carbohydrate }}</p>
+    <p><strong>Fat:</strong> {{ recipe.nutrition.fat }}</p>
+    <p><strong>Protein:</strong> {{ recipe.nutrition.protein }}</p>
+    <p><strong>Missed Ingredients:</strong> {{ recipe.missed_ingredients | join(', ') }}</p>
+    <p><strong>Used Ingredients:</strong> {{ recipe.used_ingredients | join(', ') }}</p>
+    <!-- <a href="/recipes">Back to Search</a> -->
 
     <footer>
-        &copy; 2024 Dishcovery. Built with ❤️ for food enthusiasts.
+        &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.
     </footer>
 </body>
 </html>
