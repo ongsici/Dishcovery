@@ -1,0 +1,239 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+    background: #f8f9fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+}
+
+.button {
+    background-color: #A0D3E8;
+    border: none;
+    color: black;
+    padding: 20px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2em;
+    margin: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 400px;
+}
+
+.card {
+    background: none; 
+    border: 2px solid #46d1e0; 
+    color: #333;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); 
+    width: 90%;
+    max-width: 320px;
+    padding: 25px;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.card h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.8em;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #222;
+    font-weight: 700;
+}
+
+.card:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); 
+    transform: translateY(-10px);
+    border-color: #8ceffa; 
+}
+
+.card i {
+    font-size: 2.5em; 
+    color: #46d1e0; 
+    margin-top: 10px;
+    margin-bottom: 10px; 
+    display: block; 
+    text-align: center;
+    transition: color 0.3s
+}
+
+.card:hover i {
+    color: #333; 
+}
+
+.card p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    text-align: center;
+    line-height: 1.5;
+    color: #444;
+    font-weight: 400;
+}
+
+.container {
+    background-color: #fff;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+}
+
+footer {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #46d1e0;
+    color: white;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-family: 'Inter', sans-serif; 
+    font-size: 3.5em;
+    color: #46d1e0;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+input[type="text"], input[type="number"], input[type="radio"], input[type="submit"] {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 6px;
+    display: block;
+    color: #333;
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.5em;
+    }
+    .card {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.radio-group label {
+    margin-right: 20px;
+}
+
+.recipe-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    text-decoration: none;
+    color: #333;
+}
+
+.recipe-card .content {
+    padding: 15px;
+}
+
+.recipe-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.2em;
+}
+
+.recipe-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.recipe-card p {
+    margin: 0;
+    color: #777;
+}
+
+.recipe-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.results {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e8f5e9;
+    border-radius: 8px;
+    border: 1px solid #c8e6c9;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}

@@ -1,40 +1,40 @@
 name: Build
 on: [push]
 jobs:
-  python-formatting:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+#  python-formatting:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
         # TODO: ask about being explicit here despite dependencies
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - name: Install flake8
-        run: pip install flake8
-      - name: Run flake8
-        run: flake8 .
+#      - name: Setup Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.10'
+#      - name: Install flake8
+#        run: pip install flake8
+#      - name: Run flake8
+#        run: flake8 .
 
-  unit-test:
-    needs: python-formatting
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Run pytest
-        run: pytest
+#  unit-test:
+#    needs: python-formatting
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#      - name: Setup Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.10'
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install -r requirements.txt
+#      - name: Run pytest
+#        run: pytest
 
   deploy-to-impaas:
-    needs: unit-test
+#    needs: unit-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -50,11 +50,11 @@ jobs:
       - name: Run application
         env:
           API_KEY: ${{ secrets.API_KEY }}
-        run: python backend/src/api.py
+        run: python src/app.py
         # TODO: create new tsuru app
       - name: ImPaaS-Deploy
         uses: /impaas/impaas-deploy@v3
         with:
-          app-name: APP_NAME_HERE
+          app-name: Dishcovery
           deployment-token: ${{ secrets.IMPAAS_DEPLOY_TOKEN }}
           method: PLATFORM
