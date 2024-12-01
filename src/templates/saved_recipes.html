@@ -9,10 +9,23 @@
     <body>
         <div class="content">
             <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
-            <h2>saved recipes</h2>
+            <h2>Saved Recipes</h2>
+            <ul>
+                {% for recipe in recipes %}
+                <li>
+                    <h2>{{ recipe.name }}</h2>
+                    <img src="{{ recipe.image }}" alt="{{ recipe.name }}">
+                    <p>{{ recipe.instructions }}</p>
+                    <p><strong>Calories:</strong> {{ recipe.calories }}</p>
+                    <p><strong>Carbohydrate:</strong> {{ recipe.carbohydrate }}</p>
+                    <p><strong>Fat:</strong> {{ recipe.fat }}</p>
+                    <p><strong>Protein:</strong> {{ recipe.protein }}</p>
+                </li>
+                {% endfor %}
+            </ul>
 
             <!-- update/make /your-action-url -->
-            <form action="/your-action-url" method="GET">
+            <!-- <form action="/your-action-url" method="GET">
                 <label for="filter">Filter:</label>
                 <select id="filter" name="filter">
                     <option value="default1">Default 1</option>
@@ -31,13 +44,11 @@
             
                 <button type="submit">Submit</button>
             </form>
-        </div>  
+        </div>   -->
 
         <footer>
             &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.
         </footer>
-    
-
 
     </body>
 </html>

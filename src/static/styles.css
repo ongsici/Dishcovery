@@ -11,18 +11,16 @@ body {
     min-height: 90vh;
 }
 
-
-
-/* Container for back button and sort dropdown */
+/* container for back button and sort dropdown */
 .top-controls {
     display: flex;
-    justify-content: space-between;  /* Space between back button and dropdown */
-    align-items: center;  /* Vertically center the items */
-    padding: 10px 20px;  /* Optional padding around the controls */
-    gap: 15px;              /* space between back button & sort drop-box */
+    justify-content: space-between;  /* space between back button and dropdown */
+    align-items: center;  /* vertically center items */
+    padding: 10px 20px;  /* optional padding around controls */
+    gap: 15px;              /* space between back button and sort drop-box */
 }
 
-/* Style for back button */
+/* back button */
 .back-button {
     background-color: #46805b;
     color: white;
@@ -106,6 +104,12 @@ body {
     color: #333; 
 }
 
+/* for recipe card */
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .card p {
     font-family: 'Roboto', sans-serif;
     font-size: 1em;
@@ -145,7 +149,7 @@ footer a {
     font-weight: bold;
 }
 
-/* Sort drop-box */
+/* sort drop-box */
 .form-group {
     display: flex;
     align-items: center;
@@ -154,18 +158,20 @@ footer a {
     margin-bottom: 30px;
     font-family: Arial, sans-serif;
 }
+
 /* sort */
 label[for="sort"] {
     font-weight: bold;
     display: inline-block;
-    margin-right: 10px;  /* Space between label and select */
+    margin-right: 10px;  /* space between label and select */
     margin: 0;
     line-height: 32px;
 }
+
 /* select box */
 select#sort {
     display: inline-block;
-    width: 200px;  /* Adjust the width as needed */
+    width: 200px;  /* adjust width as needed */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -175,7 +181,6 @@ select#sort {
     vertical-align: middle;
     height: 36px;
 }
-
 
 
 h1 {

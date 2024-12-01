@@ -11,6 +11,18 @@
 <body>
     <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
     
+    <!-- Top Controls Section -->
+    <div class="top-controls">
+        <!-- Back Button -->
+        <button onclick="window.history.back()" class="back-button">Back</button>
+         
+        <!-- Save Recipe Button -->
+        <form action="/save_recipe" method="POST">
+            <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+            <button type="submit" class="submit-btn">Save Recipe</button>
+        </form>
+    </div>
+
     <h2>{{ recipe.name }}</h2>
     <img src="{{ recipe.image }}" alt="{{ recipe.name }}">
 

@@ -8,6 +8,9 @@ app = Flask(__name__)
 
 results = {}
 
+# from flask import redirect, url_for
+# from flask_sqlalchemy import SQLAlchemy
+
 
 @app.route("/")
 def home():
@@ -115,10 +118,10 @@ def recipe_details(recipe_id):
         return "Recipe not found", 404
     return render_template('recipe_details.html', recipe=recipe)
 
+
 # for debugging
 # if __name__ == "__main__":
 #     app.run(debug=True)
-
 
 
 @app.route("/nutrition_tracker")
@@ -145,4 +148,46 @@ def nutrition_query():
 
 @app.route("/saved_recipes")
 def saved_recipes():
+    # saved_recipes = SavedRecipe.query.all()
     return render_template("saved_recipes.html")
+    # , recipes=saved_recipes
+
+
+# TODO: Initialize the database
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipes.db'  # Example: SQLite database
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = SQLAlchemy(app)
+
+# TODO: Define the database model
+# class SavedRecipe(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(150), nullable=False)
+#     image = db.Column(db.String(200), nullable=False)
+#     instructions = db.Column(db.Text, nullable=True)
+#     calories = db.Column(db.String(50), nullable=True)
+#     carbohydrate = db.Column(db.String(50), nullable=True)
+#     fat = db.Column(db.String(50), nullable=True)
+#     protein = db.Column(db.String(50), nullable=True)
+
+# TODO: Write saved recipes to db
+# @app.route('/save_recipe', methods=['POST'])
+# def save_recipe():
+#     recipe_id = request.form.get('recipe_id')
+#     recipe = results.get(int(recipe_id))
+
+#     if recipe:
+#         saved_recipe = SavedRecipe(
+#             id=recipe['id'],
+#             name=recipe['name'],
+#             image=recipe['image'],
+#             instructions=recipe['instructions'],
+#             calories=recipe['nutrition']['calories'],
+#             carbohydrate=recipe['nutrition']['carbohydrate'],
+#             fat=recipe['nutrition']['fat'],
+#             protein=recipe['nutrition']['protein'],
+#         )
+#         db.session.add(saved_recipe)
+#         db.session.commit()
+#         return redirect(url_for('saved_recipes'))
+#     else:
+#         return "Recipe not found", 404
