@@ -24,9 +24,16 @@
     </div>
 
     <h2>{{ recipe.name }}</h2>
-    <img src="{{ recipe.image }}" alt="{{ recipe.name }}">
+    <img src="{{ recipe.image }}" alt="{{ recipe.name }}" class="recipe-image">
 
-    <p><strong>Instructions:</strong> {{ recipe.instructions }}</p>
+    <p><strong>Instructions:</strong></p>
+    <p>
+        {% for step in recipe.instructions.split('.') %}
+            {% if step.strip() %}
+                {{ loop.index }}. {{ step.strip() | safe }}<br>
+            {% endif %}
+        {% endfor %}
+    </p>
 
     <p><strong>Calories:</strong> {{ recipe.nutrition.calories }}</p>
     <p><strong>Carbohydrate:</strong> {{ recipe.nutrition.carbohydrate }}</p>

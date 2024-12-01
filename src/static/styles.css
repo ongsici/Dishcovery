@@ -228,6 +228,9 @@ label {
         width: 100%;
         padding: 20px;
     }
+    .recipe-image {
+        width: 90%;
+    }
 }
 
 .radio-group {
@@ -275,6 +278,13 @@ label {
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+}
+
+/* image in recipe_details */
+.recipe-image {
+    width: 40%; /* adjust percentage as needed */
+    display: block;
+    margin: 20px auto; /* centers the image horizontally */
 }
 
 .results {
