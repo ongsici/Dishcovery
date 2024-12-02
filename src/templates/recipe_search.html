@@ -14,76 +14,18 @@
                 <h2>Recipe Search</h2><br><br>
 
                 <form action="/ingredients_search" method="POST">
-                    <input type="text" id="ingredients" name="ingredients" placeholder="Enter ingredients...">
-
-                    <!-- <div class="form-group">
-                        <label for="filter">Filter:</label>
-                        <select id="filter" name="filter">
-                            <option value="default1">Default 1</option>
-                            <option value="default2">Default 2</option>
-                            <option value="default3">Default 3</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="sort">Sort:</label>
-                        <select id="sort" name="sort">
-                            <option value="default">Default</option>
-                            <option value="name">Name</option>
-                            <option value="cooking_time">Cooking time</option>
-                            <option value="nutrition">Nutrition</option>
-                            <option value="date_saved">Date saved</option>
-                        </select>
-                    </div> -->
-                
-                        <button type="submit" class="submit-btn">Submit</button>                
+                    <input type="text" id="ingredients" name="ingredients" placeholder="Enter ingredients...">    
+                    <button type="submit" class="submit-btn">Submit</button>                
                 </form>
 
-                <script>
-                    document.querySelector('form[action="/ingredients_search"]').addEventListener('submit', async function (event) {
-                    event.preventDefault(); // Prevent default form submission
-
-                    // Gather form data
-                    const ingredients = document.getElementById('ingredients').value;
-                    // const filter = document.getElementById('filter').value;
-                    // const sort = document.getElementById('sort').value;
-
-                    // Construct the request payload
-                    const payload = {
-                        ingredients: ingredients.split(',').map(item => item.trim()) // Convert to list of strings
-                        // filter: filter,
-                        // sort: sort
-                    };
-
-                    try {
-                        // Send the POST request
-                        const response = await fetch('/ingredients_search', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(payload),
-                        });
-
-                        if (response.ok) {
-                            window.location.href = '/recipe_search_results'; // Redirect to the results page
-                        } else {
-                            console.error('Failed to fetch results:', await response.text());
-                        }
-                    } catch (error) {
-                        console.error('Error during fetch:', error);
-                    }
-                    });
-
-                </script>
-
+            
             </div>
         </div>
 
         <footer>
             &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.
         </footer>
-        
+        .split(',')
 
     </body>
 </html>

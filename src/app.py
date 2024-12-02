@@ -39,8 +39,20 @@ def recipe_search():
 
 @app.route("/ingredients_search", methods=["POST"])
 def ingredients_search():
-    data = request.get_json()
-    ingredients_list = data.get("ingredients", [])
+
+    results = {}
+    
+    print("************** got the POST ******************")
+
+    search_query = request.form['ingredients']
+    print(search_query)
+
+    ingredients_list = [search_query]
+
+    # ingredient_list could contain commas, so maybe need to split to form the list
+
+    
+
     # filter_option = data.get("filter", "default1")
     # sort_option = data.get("sort", "default")
     
@@ -51,6 +63,7 @@ def ingredients_search():
     
     # Loop through each recipe in the list and fetch the details and nutrition info
     for recipe in recipe_ingredients:
+        print("recipe!!!!!", recipe)
         recipe_id = recipe['id']
         recipe_name = recipe['title']
 
@@ -115,17 +128,11 @@ def ingredients_search():
         # Add the recipe to the results dictionary with recipe_id as the key
         results[recipe_id] = organized_recipe
 
-        print(results)
+        print(used_ingredients)
 
-    return results
-    
-
-@app.route("/recipe_search_results")
-def recipe_search_results():
     return render_template("recipe_search_results.html", recipes=results)
 
 
-# @app.route("/recipe_details.html")
 @app.route('/recipe/<int:recipe_id>')
 def recipe_details(recipe_id):
     recipe = results.get(recipe_id)
