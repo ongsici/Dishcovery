@@ -2,4 +2,5 @@ requests
 python-dotenv
 flask
 pydantic
-flask_sqlalchemy
+flask-sqlalchemy
+psycopg2-binary
