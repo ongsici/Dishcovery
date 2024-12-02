@@ -6,6 +6,10 @@
     <title>{{ recipe.name }} - Recipe Details</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  
+
+
+
 </head>
 
 <body>
@@ -16,12 +20,47 @@
         <!-- Back Button -->
         <button onclick="window.history.back()" class="back-button">Back</button>
          
-        <!-- Save Recipe Button -->
         <form action="/save_recipe" method="POST">
             <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
             <button type="submit" class="submit-btn">Save Recipe</button>
         </form>
+
     </div>
+
+    <div id="toast" class="toast">
+        <div class="toast-content">Recipe Saved Successfully!</div>
+        <button class="close-button" onclick="document.getElementById('toast').classList.remove('show');">×</button>
+    </div>
+
+    <script>
+        // Check if success or failure flag and toast message is passed via query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const toastMessage = urlParams.get('toast_message');
+        const success = urlParams.get('success');
+
+        if (toastMessage) {
+            const toast = document.getElementById('toast');
+            const toastContent = toast.querySelector('.toast-content');
+            toastContent.innerText = toastMessage;
+
+            toast.classList.remove('toast-success', 'toast-error');
+
+            // Apply success or error class based on the success flag
+            if (success === 'true') {
+                toast.classList.add('toast-success');
+            } else {
+                toast.classList.add('toast-error');
+            }
+
+            // Show the toast by adding the "show" class
+            toast.classList.add('show');
+
+            // Hide the toast after a few seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000); // Toast will disappear after 4 seconds
+        }
+    </script>
 
     <h2>{{ recipe.name }}</h2>
     <img src="{{ recipe.image }}" alt="{{ recipe.name }}" class="recipe-image">
