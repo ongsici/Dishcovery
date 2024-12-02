@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from src.utils.data_models import IngredientsInput
 from src.utils.get_spoonacular import get_nutrition_by_id, get_recipe_by_id, get_recipe_by_ingredients
 from src.utils.get_nutrition_intake import get_daily_nutrition_intake
-from src.database import database as db
 from src.database.create_tables import SavedRecipe
 
 app = Flask(__name__)
@@ -14,18 +13,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 results = {}
-
-# Define the database model
-# class SavedRecipe(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(150), nullable=False)
-#     image = db.Column(db.String(200), nullable=False)
-#     instructions = db.Column(db.Text, nullable=True)
-#     calories = db.Column(db.String(50), nullable=True)
-#     carbohydrate = db.Column(db.String(50), nullable=True)
-#     fat = db.Column(db.String(50), nullable=True)
-#     protein = db.Column(db.String(50), nullable=True)
-
 
 @app.route("/")
 def home():
