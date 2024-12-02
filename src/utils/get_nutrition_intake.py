@@ -28,25 +28,26 @@ def get_daily_nutrition_intake(gender, age, height, weight, activity_level="Acti
 
     data = response.json()
     print(data)
+    if response.status_code ==200:
     
-    caloric_needs = int(re.sub(r'\D', '', data['BMI_EER']['Estimated Daily Caloric Needs']))
-    results = {}
-    
-    macronutrients = data['macronutrients_table']['macronutrients-table']
+        caloric_needs = int(re.sub(r'\D', '', data['BMI_EER']['Estimated Daily Caloric Needs']))
+        results = {}
+        
+        macronutrients = data['macronutrients_table']['macronutrients-table']
 
-    for row in macronutrients[1:]: 
-        if row[0] in ['Carbohydrate', 'Protein', 'Fat']:
-            # Split the range and get the upper limit (second value) for Carbohydrate and Fat
-            if 'Carbohydrate' in row[0]:
-                value = row[1].split(' - ')[1]  # Get the upper limit
-            elif 'Fat' in row[0]:
-                value = row[1].split(' - ')[1]  # Get the upper limit
-            else:
-                value = row[1]  # For Protein, there's only a single value
-            results[row[0]] = int(re.sub(r'\D', '', value)) 
+        for row in macronutrients[1:]: 
+            if row[0] in ['Carbohydrate', 'Protein', 'Fat']:
+                # Split the range and get the upper limit (second value) for Carbohydrate and Fat
+                if 'Carbohydrate' in row[0]:
+                    value = row[1].split(' - ')[1]  # Get the upper limit
+                elif 'Fat' in row[0]:
+                    value = row[1].split(' - ')[1]  # Get the upper limit
+                else:
+                    value = row[1]  # For Protein, there's only a single value
+                results[row[0]] = int(re.sub(r'\D', '', value)) 
 
-    results["Calories"] = caloric_needs
+        results["Calories"] = caloric_needs
 
-    return results
+        return results
 
 print(get_daily_nutrition_intake("female", "30", "168", "55"))
