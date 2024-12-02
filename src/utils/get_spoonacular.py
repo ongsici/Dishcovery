@@ -3,7 +3,7 @@ import requests
 from typing import List
 from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
 

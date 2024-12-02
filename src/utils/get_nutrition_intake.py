@@ -3,7 +3,7 @@ import re
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 NUTRITION_API_KEY = os.getenv("NUTRITION_API_KEY")
 
 def get_daily_nutrition_intake(gender, age, height, weight, activity_level="Active"):
