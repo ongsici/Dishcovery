@@ -1,30 +1,30 @@
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 from src.utils.data_models import IngredientsInput
 from src.utils.get_spoonacular import get_nutrition_by_id, get_recipe_by_id, get_recipe_by_ingredients
 from src.utils.get_nutrition_intake import get_daily_nutrition_intake
 from src.database import database as db
+from src.database.create_tables import SavedRecipe
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:/username:password@db//saved_recipes.db" # TODO
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dishcovery:dishcovery@localhost/dishcovery'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-db.init_app(app) # Set up extensions
-db.create_all()
-db.drop_all()
+db = SQLAlchemy(app)
 
 results = {}
 
 # Define the database model
-class SavedRecipe(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(150), nullable=False)
-    image = db.Column(db.String(200), nullable=False)
-    instructions = db.Column(db.Text, nullable=True)
-    calories = db.Column(db.String(50), nullable=True)
-    carbohydrate = db.Column(db.String(50), nullable=True)
-    fat = db.Column(db.String(50), nullable=True)
-    protein = db.Column(db.String(50), nullable=True)
+# class SavedRecipe(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(150), nullable=False)
+#     image = db.Column(db.String(200), nullable=False)
+#     instructions = db.Column(db.Text, nullable=True)
+#     calories = db.Column(db.String(50), nullable=True)
+#     carbohydrate = db.Column(db.String(50), nullable=True)
+#     fat = db.Column(db.String(50), nullable=True)
+#     protein = db.Column(db.String(50), nullable=True)
 
 
 @app.route("/")
@@ -129,9 +129,11 @@ def recipe_search_results():
 @app.route('/recipe/<int:recipe_id>')
 def recipe_details(recipe_id):
     recipe = results.get(recipe_id)
+    success =  request.args.get('success')
+    toast_message = request.args.get('toast_message')
     if not recipe:
         return "Recipe not found", 404
-    return render_template('recipe_details.html', recipe=recipe)
+    return render_template('recipe_details.html', recipe=recipe, success=success, toast_message=toast_message)
 
 
 # For debugging
@@ -178,15 +180,22 @@ def save_recipe():
 
     if recipe:
         saved_recipe = SavedRecipe(
-            id=recipe['id'],
+            recipe_id=recipe['id'],
             name=recipe['name'],
             image=recipe['image'],
             instructions=recipe['instructions'],
-            calories=recipe['nutrition']['calories'],
-            carbohydrate=recipe['nutrition']['carbohydrate'],
-            fat=recipe['nutrition']['fat'],
-            protein=recipe['nutrition']['protein'],
+            calories=int(recipe['nutrition']['calories'][:-1]),
+            carbohydrate=int(recipe['nutrition']['carbohydrate'][:-1]),
+            fat=int(recipe['nutrition']['fat'][:-1]),
+            protein=int(recipe['nutrition']['protein'][:-1]),
         )
-        db.session.add(saved_recipe)
-        db.session.commit()
-        # return redirect(url_for('saved_recipes')) TODO: Fix
+        try:
+            with app.app_context():
+                db.session.add(saved_recipe)
+                db.session.commit()
+
+            return redirect(url_for('recipe_details', recipe_id=recipe_id, success='true', toast_message="Recipe Saved Successfully!"))
+        
+        except Exception as e:
+            db.session.rollback() 
+            return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="Failed to save recipe: Recipe ID already exists"))
