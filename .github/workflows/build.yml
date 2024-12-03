@@ -47,13 +47,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Clear database table
-        run: |
-          echo "Clearing database table..."
-          python src/database/clear_tables.py
       - name: ImPaaS-Deploy
         uses: /impaas/impaas-deploy@v3
         with:
           app-name: dishcovery-app
           deployment-token: ${{ secrets.IMPAAS_DEPLOY_TOKEN }}
           method: PLATFORM
+      - name: Clear database table
+        run: |
+          echo "Clearing database table..."
+          python src/database/clear_tables.py
