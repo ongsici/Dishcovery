@@ -1,14 +1,10 @@
 import os
 import requests
 from typing import List
-from dotenv import load_dotenv
-
-if os.getenv("GITHUB_ACTIONS") is None: 
-    dotenv_path = os.path.join(os.path.dirname(__file__), '..', 'config', '.env')
-    load_dotenv(dotenv_path)
+from src.config import API_KEY
 
 def get_api_key():
-    return os.getenv("API_KEY")
+    return API_KEY
 
 def get_recipe_by_ingredients(ingredients_list: List):
     url = "https://api.spoonacular.com/recipes/findByIngredients"

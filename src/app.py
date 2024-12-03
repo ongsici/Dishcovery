@@ -5,9 +5,10 @@ from src.utils.data_models import IngredientsInput
 from src.utils.get_spoonacular import get_nutrition_by_id, get_recipe_by_id, get_recipe_by_ingredients
 from src.utils.get_nutrition_intake import get_daily_nutrition_intake
 from src.database.create_tables import db, SavedRecipe
+from src.config import PG_USER, PG_PASSWORD, PG_HOST, PG_PORT
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dishcovery:dishcovery@localhost/dishcovery_app_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/dishcovery_app_db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)

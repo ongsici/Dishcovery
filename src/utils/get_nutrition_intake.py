@@ -1,14 +1,10 @@
 import os
 import re
 import requests
-from dotenv import load_dotenv
-
-if os.getenv("GITHUB_ACTIONS") is None:  
-    dotenv_path = os.path.join(os.path.dirname(__file__), '..', 'config', '.env')
-    load_dotenv(dotenv_path)
+from src.config import NUTRITION_API_KEY
 
 def get_api_key():
-    return os.getenv("NUTRITION_API_KEY")
+    return NUTRITION_API_KEY
 
 def get_daily_nutrition_intake(gender, age, height, weight, activity_level="Active"):
     url = "https://nutrition-calculator.p.rapidapi.com/api/nutrition-info"
