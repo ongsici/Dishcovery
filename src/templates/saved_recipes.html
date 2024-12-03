@@ -6,15 +6,40 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
         
     </head>
+
     <body>
         <div class="content">
+
             <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
             <h2>Saved Recipes</h2>
-            {% if recipes %}
-                <ul>
+
+            <div class="top-controls">
+                <div class="form-group">
+                    <label for="sort">Sort:</label>
+                    <select id="sort" name="sort">
+                        <option value="default">Default</option>
+                        <option value="name">Name</option>
+                        <option value="cooking_time">Cooking time</option>
+                        <option value="calories">Calories</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card-container">
+                {% if recipes %}
                     {% for recipe in recipes %}
-                    <li>
-                        <h2>{{ recipe.name }}</h2>
+                        <a href="/recipe/{{ recipe.recipe_id }}" class="card-link">
+                            <div class="card">
+                                <img src="{{ recipe.image }}" alt="Recipe image">
+                                <h2>{{ recipe.name }}</h2>
+                                <p><strong>Calories:</strong> {{ recipe.calories }}</p>
+                                <p><strong>Carbohydrate:</strong> {{ recipe.carbohydrate }}</p>
+                                <p><strong>Fat:</strong> {{ recipe.fat }}</p>
+                                <p><strong>Protein:</strong> {{ recipe.protein }}</p>
+                            </div>
+                        </a>
+
+                        <!-- <h2>{{ recipe.name }}</h2>
                         <img src="{{ recipe.image }}" alt="{{ recipe.name }}">
                         <p><strong>Instructions:</strong></p>
                         <p>
@@ -27,13 +52,12 @@
                         <p><strong>Calories:</strong> {{ recipe.calories }}</p>
                         <p><strong>Carbohydrate:</strong> {{ recipe.carbohydrate }}</p>
                         <p><strong>Fat:</strong> {{ recipe.fat }}</p>
-                        <p><strong>Protein:</strong> {{ recipe.protein }}</p>
-                    </li>
+                        <p><strong>Protein:</strong> {{ recipe.protein }}</p> -->
                     {% endfor %}
-                </ul>
-            {% else %}
-                <p>No saved recipes found.</p>
-            {% endif %}
+                {% else %}
+                    <p>No saved recipes found</p>
+                {% endif %}
+            </div>
         </div>
 
             <!-- update/make /your-action-url -->

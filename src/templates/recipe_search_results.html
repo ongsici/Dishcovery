@@ -28,20 +28,24 @@
         </div>
 
         <div class="card-container">
-            {% for recipe_name, recipe in recipes.items() %}
-                <a href="/recipe/{{ recipe.id }}" class="card-link">
-                    <div class="card">
-                        <img src="{{ recipe.image }}" alt="Recipe image">
-                        <h2>{{ recipe.name }}</h2>
-                        <p><strong>Calories:</strong> {{ recipe.nutrition.calories }}</p>
-                        <p><strong>Carbohydrate:</strong> {{ recipe.nutrition.carbohydrate }}</p>
-                        <p><strong>Fat:</strong> {{ recipe.nutrition.fat }}</p>
-                        <p><strong>Protein:</strong> {{ recipe.nutrition.protein }}</p>
-                        <p><strong>Missed Ingredients:</strong> {{ recipe.missed_ingredients | join(', ') }}</p>
-                        <p><strong>Used Ingredients:</strong> {{ recipe.used_ingredients | join(', ') }}</p>
-                    </div>
-                </a>
-            {% endfor %}
+            {% if recipes %}
+                {% for recipe_name, recipe in recipes.items() %}
+                    <a href="/recipe/{{ recipe.id }}" class="card-link">
+                        <div class="card">
+                            <img src="{{ recipe.image }}" alt="Recipe image">
+                            <h2>{{ recipe.name }}</h2>
+                            <p><strong>Calories:</strong> {{ recipe.nutrition.calories }}</p>
+                            <p><strong>Carbohydrate:</strong> {{ recipe.nutrition.carbohydrate }}</p>
+                            <p><strong>Fat:</strong> {{ recipe.nutrition.fat }}</p>
+                            <p><strong>Protein:</strong> {{ recipe.nutrition.protein }}</p>
+                            <p><strong>Missed Ingredients:</strong> {{ recipe.missed_ingredients | join(', ') }}</p>
+                            <p><strong>Used Ingredients:</strong> {{ recipe.used_ingredients | join(', ') }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p>No recipes found with searched ingredients</p>
+            {% endif %}  
         </div>
     </div>
 
