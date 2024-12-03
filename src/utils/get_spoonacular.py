@@ -3,28 +3,28 @@ import requests
 from typing import List
 from dotenv import load_dotenv
 
-# load_dotenv()
-API_KEY = os.getenv("API_KEY")
+load_dotenv()
 
+def get_api_key():
+    return os.getenv("API_KEY")
 
 def get_recipe_by_ingredients(ingredients_list: List):
     url = "https://api.spoonacular.com/recipes/findByIngredients"
     ingredients = ", ".join(ingredients_list)
     params ={
         "ingredients": ingredients,
-        "apiKey": API_KEY,
+        "apiKey": get_api_key(),
         "number": 2
     }
     response = requests.get(url, params=params)
     data = response.json()
-    print(data)
     return data
 
 
 def get_recipe_by_id(recipeID: int):
     url = f'https://api.spoonacular.com/recipes/{recipeID}/information'
     params = {
-        "apiKey": API_KEY
+        "apiKey": get_api_key()
     }
     response = requests.get(url, params=params)
     data = response.json()
@@ -34,7 +34,7 @@ def get_recipe_by_id(recipeID: int):
 def get_nutrition_by_id(recipeID: int):
     url = f'https://api.spoonacular.com/recipes/{recipeID}/nutritionWidget.json'
     params = {
-        "apiKey": API_KEY
+        "apiKey": get_api_key()
     }
     response = requests.get(url, params=params)
     data = response.json()

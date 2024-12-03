@@ -3,8 +3,10 @@ import re
 import requests
 from dotenv import load_dotenv
 
-# load_dotenv()
-NUTRITION_API_KEY = os.getenv("NUTRITION_API_KEY")
+load_dotenv()
+
+def get_api_key():
+    return os.getenv("NUTRITION_API_KEY")
 
 def get_daily_nutrition_intake(gender, age, height, weight, activity_level="Active"):
     url = "https://nutrition-calculator.p.rapidapi.com/api/nutrition-info"
@@ -18,7 +20,7 @@ def get_daily_nutrition_intake(gender, age, height, weight, activity_level="Acti
                     "activity_level":activity_level}
 
     headers = {
-        "x-rapidapi-key": NUTRITION_API_KEY,
+        "x-rapidapi-key": get_api_key(),
         "x-rapidapi-host": "nutrition-calculator.p.rapidapi.com"
     }
     # print(f'api: {NUTRITION_API_KEY}') 
@@ -50,4 +52,4 @@ def get_daily_nutrition_intake(gender, age, height, weight, activity_level="Acti
 
         return results
 
-print(get_daily_nutrition_intake("female", "30", "168", "55"))
+# print(get_daily_nutrition_intake("female", "30", "168", "55"))
