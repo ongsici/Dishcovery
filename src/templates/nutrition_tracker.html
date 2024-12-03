@@ -6,18 +6,6 @@
     <title>Nutrition Query Form</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <!-- <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: #f8f9fa;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 90vh;
-        }
-    </style> -->
 </head>
 <body>
     <div class="content">
@@ -28,10 +16,10 @@
                 
                 <label for="gender">Gender:</label>
                 <div class="radio-group">
-                        <input type="radio" id="malefield" name="gender" value="male">
-                        <label for="malefield">Male</label>
-                        <input type="radio" id="femalefield" name="gender" value="female">
-                        <label for="femalefield">Female</label>
+                    <input type="radio" id="malefield" name="gender" value="male">
+                    <label for="malefield">Male</label>
+                    <input type="radio" id="femalefield" name="gender" value="female">
+                    <label for="femalefield">Female</label>
                 </div>
 
                 <label for="agefield">Age:</label>
@@ -43,26 +31,37 @@
                 <label for="weightfield">Weight (kg):</label>
                 <input type="number" id="weightfield" name="weight" min="10" max="200" placeholder="Enter your weight in kg" required>
 
+                <!-- Activity Level Slider -->
+                <label for="activityLevel">Activity Level:</label>
+                <input type="range" id="activityLevelSlider" name="activityLevelSlider" min="1" max="4" value="2" step="1" oninput="updateActivityLevelText(this.value)">
+                <span id="activityLevelText">Low Active</span>
+
+                <!-- Hidden input to pass the activity level as text -->
+                <input type="hidden" id="activityLevel" name="activityLevel" value="Low Active">
+
                 <input type="submit" class="submit-btn" value="Submit">
             </form>
         </div>
-
-        {% if results %}
-        <div class="results">
-            <h3>Nutrition Results:</h3>
-            <ul>
-                <li><strong>Calories:</strong> {{ results['Calories'] }} kcal</li>
-                <li><strong>Carbohydrates:</strong> {{ results['Carbohydrate'] }} grams</li>
-                <li><strong>Protein:</strong> {{ results['Protein'] }} grams</li>
-                <li><strong>Fat:</strong> {{ results['Fat'] }} grams</li>
-            </ul>
-        </div>
-        {% endif %}
     </div>
 
     <footer>
         &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.
     </footer>
 
+    <script>
+        // Function to update the displayed activity level text based on slider value
+        function updateActivityLevelText(value) {
+            const text = {
+                1: 'Inactive',
+                2: 'Low Active',
+                3: 'Active',
+                4: 'Very Active'
+            };
+            // Update the displayed text
+            document.getElementById('activityLevelText').textContent = text[value];
+            // Update the hidden input with the corresponding activity level text
+            document.getElementById('activityLevel').value = text[value];
+        }
+    </script>
 </body>
 </html>

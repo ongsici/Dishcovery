@@ -6,6 +6,8 @@ from src.utils.get_spoonacular import get_nutrition_by_id, get_recipe_by_id, get
 from src.utils.get_nutrition_intake import get_daily_nutrition_intake
 from src.database.create_tables import db, SavedRecipe
 from src.config import PG_USER, PG_PASSWORD, PG_HOST, PG_PORT
+import json
+from flask import jsonify
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/dishcovery_app_db'
@@ -141,16 +143,55 @@ def nutrition_query():
     age = request.form.get("age")
     gender = request.form.get("gender")
     height = request.form.get("height")
-    weight = request.form.get("weight") 
+    weight = request.form.get("weight")
+    activity_level = request.form.get("activityLevel")
 
     print(f'age: {age, type(age)}')
-    print(gender, type(gender))
-    print(height, type(height))
-    print(weight, type(weight))
-    rec_intake = get_daily_nutrition_intake(gender, age, height, weight)
-    # print(rec_intake)
+    print(f'gender: {gender, type(gender)}')
+    print(f'height: {height, type(height)}')
+    print(f'weight: {weight, type(weight)}')
+    print(f'activity level: {activity_level, type(activity_level)}')
 
-    return render_template("nutrition_tracker.html", results=rec_intake)
+    rec_intake = get_daily_nutrition_intake(gender, age, height, weight, activity_level)
+
+    rec_intake_json = json.dumps(rec_intake)
+
+    return redirect(url_for("nutrition_query_results", age=age, gender=gender, height=height, weight=weight, activity_level=activity_level, results=rec_intake_json))
+
+
+@app.route("/nutrition_query_results")
+def nutrition_query_results():
+    # Retrieve data passed from the previous route
+    age = request.args.get('age')
+    gender = request.args.get('gender')
+    height = request.args.get('height')
+    weight = request.args.get('weight')
+    activity_level = request.args.get('activity_level')
+
+    # Deserialize the results from the query string
+    results_json = request.args.get('results')
+    results = json.loads(results_json)
+
+    # Fetch saved recipes from the database
+    saved_recipes = SavedRecipe.query.all()
+
+    # Render the results page with form data, results, and saved recipes
+    return render_template("nutrition_query_results.html", 
+                           age=age, gender=gender, height=height, weight=weight, 
+                           activity_level=activity_level, results=results,
+                           saved_recipes=saved_recipes)
+
+@app.route("/get_recipe_nutrition/<int:recipe_id>")
+def get_recipe_nutrition(recipe_id):
+    recipe = SavedRecipe.query.get_or_404(recipe_id)
+
+    # Return nutrition data as JSON
+    return jsonify({
+        'calories': recipe.calories,
+        'carbohydrates': recipe.carbohydrate,
+        'protein': recipe.protein,
+        'fat': recipe.fat
+    })
 
 
 @app.route("/saved_recipes")
