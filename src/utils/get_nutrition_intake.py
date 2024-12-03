@@ -3,8 +3,9 @@ import re
 import requests
 from dotenv import load_dotenv
 
-# dotenv_path = os.path.join(os.path.dirname(__file__), '..', 'config', '.env')
-# load_dotenv(dotenv_path)
+if os.getenv("GITHUB_ACTIONS") is None:  
+    dotenv_path = os.path.join(os.path.dirname(__file__), '..', 'config', '.env')
+    load_dotenv(dotenv_path)
 
 def get_api_key():
     return os.getenv("NUTRITION_API_KEY")
