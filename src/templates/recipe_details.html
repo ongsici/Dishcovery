@@ -64,16 +64,7 @@
 
     <h2>{{ recipe.name }}</h2>
     <img src="{{ recipe.image }}" alt="{{ recipe.name }}" class="recipe-image">
-    <img src="{{ recipe.image }}" alt="{{ recipe.name }}" class="recipe-image">
 
-    <p><strong>Instructions:</strong></p>
-    <p>
-        {% for step in recipe.instructions.split('.') %}
-            {% if step.strip() %}
-                {{ loop.index }}. {{ step.strip() | safe }}<br>
-            {% endif %}
-        {% endfor %}
-    </p>
     <p><strong>Instructions:</strong></p>
     <p>
         {% for step in recipe.instructions.split('.') %}

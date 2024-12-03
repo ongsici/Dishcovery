@@ -12,7 +12,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
-results = {}
+global_results = {}
 
 @app.route("/")
 def home():
@@ -109,13 +109,14 @@ def ingredients_search():
 
         # Add the recipe to the results dictionary with recipe_id as the key
         results[recipe_id] = organized_recipe
+        global_results[recipe_id] = organized_recipe
 
     return render_template("recipe_search_results.html", recipes=results)
 
 
 @app.route('/recipe/<int:recipe_id>')
 def recipe_details(recipe_id):
-    recipe = results.get(recipe_id)
+    recipe = global_results.get(recipe_id)
     success =  request.args.get('success')
     toast_message = request.args.get('toast_message')
     if not recipe:
@@ -163,7 +164,7 @@ def saved_recipes(recipe_id):
 @app.route('/save_recipe', methods=['POST'])
 def save_recipe():
     recipe_id = request.form.get('recipe_id')
-    recipe = results.get(int(recipe_id))
+    recipe = global_results.get(int(recipe_id))
 
     if recipe:
         saved_recipe = SavedRecipe(
