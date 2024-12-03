@@ -28,12 +28,8 @@ def recipe_search():
 def ingredients_search():
 
     results = {}
-    
-    print("************** got the POST ******************")
 
     search_query = request.form['ingredients']
-    print(search_query)
-
     ingredients_list = [search_query]
 
     # ingredient_list could contain commas, so maybe need to split to form the list
@@ -50,7 +46,6 @@ def ingredients_search():
     
     # Loop through each recipe in the list and fetch the details and nutrition info
     for recipe in recipe_ingredients:
-        print("recipe!!!!!", recipe)
         recipe_id = recipe['id']
         recipe_name = recipe['title']
 
@@ -114,8 +109,6 @@ def ingredients_search():
 
         # Add the recipe to the results dictionary with recipe_id as the key
         results[recipe_id] = organized_recipe
-
-        print(used_ingredients)
 
     return render_template("recipe_search_results.html", recipes=results)
 
