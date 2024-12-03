@@ -4,13 +4,14 @@ from flask_sqlalchemy import SQLAlchemy
 from src.utils.data_models import IngredientsInput
 from src.utils.get_spoonacular import get_nutrition_by_id, get_recipe_by_id, get_recipe_by_ingredients
 from src.utils.get_nutrition_intake import get_daily_nutrition_intake
-from src.database.create_tables import SavedRecipe
+from src.database.create_tables import db, SavedRecipe
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dishcovery:dishcovery@localhost/dishcovery'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dishcovery:dishcovery@localhost/dishcovery_app_db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-db = SQLAlchemy(app)
+db.init_app(app)
+# db = SQLAlchemy(app)
 
 global_results = {}
 
@@ -152,12 +153,9 @@ def nutrition_query():
 
 
 @app.route("/saved_recipes")
-def saved_recipes(recipe_id):
-    # database.session.add(results.get(recipe_id))
-    # database.session.commit()
-    # saved_recipes = SavedRecipe.query.all()
-    return render_template("saved_recipes.html")
-    # , recipes=saved_recipes
+def saved_recipes():
+    saved_recipes = SavedRecipe.query.all()  # Query all saved recipes from the database
+    return render_template("saved_recipes.html", recipes=saved_recipes)
 
 
 # Write saved recipe to database
@@ -172,10 +170,10 @@ def save_recipe():
             name=recipe['name'],
             image=recipe['image'],
             instructions=recipe['instructions'],
-            calories=int(recipe['nutrition']['calories'][:-1]),
-            carbohydrate=int(recipe['nutrition']['carbohydrate'][:-1]),
-            fat=int(recipe['nutrition']['fat'][:-1]),
-            protein=int(recipe['nutrition']['protein'][:-1]),
+            calories=float(recipe['nutrition']['calories'][:-1]),
+            carbohydrate=float(recipe['nutrition']['carbohydrate'][:-1]),
+            fat=float(recipe['nutrition']['fat'][:-1]),
+            protein=float(recipe['nutrition']['protein'][:-1]),
         )
         try:
             with app.app_context():

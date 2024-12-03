@@ -34,10 +34,10 @@ psql postgres
 ```
 CREATE ROLE dishcovery WITH LOGIN PASSWORD 'dishcovery';
 \du # to check user list
-CREATE DATABASE saved_recipes;
+CREATE DATABASE dishcovery_app_db;
 ```
 6. Exit (`\q`)and relogin:
 ```
-psql -U dishcovery
+psql -U dishcovery -d dishcovery_app_db
 \dt # list tables
 ```
