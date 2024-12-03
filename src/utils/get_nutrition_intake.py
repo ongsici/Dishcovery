@@ -3,7 +3,8 @@ import re
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', 'config', '.env')
+load_dotenv(dotenv_path)
 
 def get_api_key():
     return os.getenv("NUTRITION_API_KEY")
@@ -26,10 +27,13 @@ def get_daily_nutrition_intake(gender, age, height, weight, activity_level="Acti
     # print(f'api: {NUTRITION_API_KEY}') 
 
     response = requests.get(url, headers=headers, params=querystring)
-    print(f'response:{response.status_code}')
+    # print(f'response:{response.status_code}')
 
     data = response.json()
-    print(data)
+    # print(data)
+
+    print(f'Response Status Code: {response.status_code}')  # Debugging line
+    print(f'API Response: {response.json()}')
     if response.status_code ==200:
     
         caloric_needs = int(re.sub(r'\D', '', data['BMI_EER']['Estimated Daily Caloric Needs']))
@@ -51,5 +55,7 @@ def get_daily_nutrition_intake(gender, age, height, weight, activity_level="Acti
         results["Calories"] = caloric_needs
 
         return results
+    else:
+        return {}
 
 # print(get_daily_nutrition_intake("female", "30", "168", "55"))

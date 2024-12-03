@@ -1,12 +1,20 @@
 import sqlalchemy.orm
-from sqlalchemy.dialects.postgresql import ARRAY, JSON, JSONB
-from sqlalchemy import create_engine, inspect, String, Integer, Float, Column, DateTime, Boolean, Text, ForeignKey
-from sqlalchemy.orm import relationship, sessionmaker, declarative_base
-# from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine, String, Integer, Float, Column, DateTime, Boolean, Text, ForeignKey
+from sqlalchemy.orm import sessionmaker, declarative_base
+import os
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', 'config', '.env')
+load_dotenv(dotenv_path)
+
+PG_USER = os.getenv('PG_USER')
+PG_PASSWORD = os.getenv('PG_PASSWORD')
+PG_HOST = os.getenv('PG_HOST')
+PG_PORT = os.getenv('PG_PORT')
 
 Base = declarative_base()
 
-engine = create_engine('postgresql://dishcovery:dishcovery@localhost/dishcovery')
+engine = create_engine(f'postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/dishcovery_app_db')
 Session = sessionmaker(bind=engine)
 session = Session()
 

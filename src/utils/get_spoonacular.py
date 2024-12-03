@@ -3,7 +3,8 @@ import requests
 from typing import List
 from dotenv import load_dotenv
 
-load_dotenv()
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', 'config', '.env')
+load_dotenv(dotenv_path)
 
 def get_api_key():
     return os.getenv("API_KEY")
