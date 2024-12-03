@@ -295,6 +295,8 @@ label {
     border: 1px solid #c8e6c9;
 }
 
+
+/* button style configurations */
 .submit-btn {
     background-color: #415a4b;
     color: white;
@@ -311,6 +313,16 @@ label {
 .submit-btn:hover {
     background-color: #6f907b;
 }
+
+/* inheriting from submit-btn */
+.save-btn {
+    background-color: #337ca1;
+}
+
+.unsave-btn {
+    background-color: #c7ac4c;
+}
+
 
 @keyframes slideDown {
     0% {

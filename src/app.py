@@ -186,3 +186,25 @@ def save_recipe():
         except Exception as e:
             db.session.rollback() 
             return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="Failed to save recipe: Recipe ID already exists"))
+
+
+# Delete saved recipe from database
+@app.route('/unsave_recipe', methods=['POST'])
+def unsave_recipe():
+    recipe_id = request.form.get('recipe_id')
+
+    try:
+        with app.app_context():
+            # Check if the recipe exists in the database
+            saved_recipe = SavedRecipe.query.filter_by(recipe_id=recipe_id).first()
+
+            if saved_recipe:
+                db.session.delete(saved_recipe)
+                db.session.commit()
+                return redirect(url_for('recipe_details', recipe_id=recipe_id, success='true', toast_message="Recipe Unsaved Successfully!"))
+            else:
+                return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="Failed to unsave: Recipe not found"))
+
+    except Exception as e:
+        db.session.rollback()
+        return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="An error occurred while unsaving the recipe"))

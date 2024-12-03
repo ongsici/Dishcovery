@@ -22,9 +22,13 @@
          
         <form action="/save_recipe" method="POST">
             <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-            <button type="submit" class="submit-btn">Save Recipe</button>
+            <button type="submit" class="submit-btn save-btn">Save Recipe</button>
         </form>
 
+        <form action="/unsave_recipe" method="POST" style="margin-left: 10px;">
+            <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+            <button type="submit" class="submit-btn unsave-btn">Unsave Recipe</button>
+        </form>
     </div>
 
     <div id="toast" class="toast">

@@ -15,6 +15,11 @@
 
             <div class="top-controls">
                 <div class="form-group">
+                    <!-- clear saved recipe database -->
+                    <form action="/clear_saved_recipes" method="POST" style="margin-top: 20px;">
+                        <button type="submit" class="clear-button">Clear All Recipes</button>
+                    </form>
+                    
                     <label for="sort">Sort:</label>
                     <select id="sort" name="sort">
                         <option value="default">Default</option>
