@@ -56,8 +56,11 @@ jobs:
           PG_HOST: ${{ secrets.PG_HOST }}
           PG_PORT: ${{ secrets.PG_PORT }}
         run: |
-          echo "Loading API Keys..."
-        # TODO: create new tsuru app
+          echo "API_KEY is set to: ${API_KEY}"
+          echo "NUTRITION_API_KEY is set to: ${NUTRITION_API_KEY}"
+          echo "PG_USER is set to: ${PG_USER}"
+          echo "PG_HOST is set to: ${PG_HOST}"
+          echo "PG_PORT is set to: ${PG_PORT}"
       - name: ImPaaS-Deploy
         uses: /impaas/impaas-deploy@v3
         with:
