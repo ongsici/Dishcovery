@@ -50,7 +50,7 @@ jobs:
       - name: Clear database table
         run: |
           echo "Clearing database table..."
-          python clear_tables.py
+          python src/database/clear_tables.py
       - name: ImPaaS-Deploy
         uses: /impaas/impaas-deploy@v3
         with:
