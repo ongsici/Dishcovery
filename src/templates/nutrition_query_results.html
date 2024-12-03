@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Query Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="content">
+        <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
+        <div class="container">
+            <h2>Nutrition Query Results</h2>
+            <div class="result-container">
+                <!-- Left Block: User-entered Info -->
+                <div class="left-block">
+                    <h3>Submitted Data:</h3>
+                    <ul>
+                        <li><strong>Gender:</strong> {{ gender }}</li>
+                        <li><strong>Age:</strong> {{ age }}</li>
+                        <li><strong>Height:</strong> {{ height }} cm</li>
+                        <li><strong>Weight:</strong> {{ weight }} kg</li>
+
+                        <!-- Display Activity Level -->
+                        <li><strong>Activity Level:</strong> 
+                            {% if activity_level == '1' %}Inactive
+                            {% elif activity_level == '2' %}Low Active
+                            {% elif activity_level == '3' %}Active
+                            {% else %}Very Active
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right Block: Nutrition Results -->
+                <div class="right-block">
+                    <h3>Nutrition Results:</h3>
+                    <ul>
+                        <li><strong>Calories:</strong> {{ results['Calories'] }} kcal</li>
+                        <li><strong>Carbohydrates:</strong> {{ results['Carbohydrate'] }} grams</li>
+                        <li><strong>Protein:</strong> {{ results['Protein'] }} grams</li>
+                        <li><strong>Fat:</strong> {{ results['Fat'] }} grams</li>
+                    </ul>
+
+                    <!-- Store Daily Nutrition Info in data-* attributes -->
+                    <div id="daily-nutrition" 
+                         data-calories="{{ results['Calories'] }}"
+                         data-carbohydrates="{{ results['Carbohydrate'] }}"
+                         data-protein="{{ results['Protein'] }}"
+                         data-fat="{{ results['Fat'] }}">
+                    </div>
+
+                    <!-- Dropdown to select a saved recipe -->
+                    <label for="recipe-select">Choose a saved recipe:</label>
+                    <select id="recipe-select">
+                        <option value="">--Select a recipe--</option>
+                        {% for recipe in saved_recipes %}
+                            <option value="{{ recipe.recipe_id }}">{{ recipe.name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <!-- Container to display the selected recipe's nutritional information -->
+                    <div id="selected-recipe-nutrition" style="display: none;">
+                        <h4>Recipe Nutrition:</h4>
+                        <ul>
+                            <li><strong>Calories:</strong> <span id="recipe-calories"></span> kcal</li>
+                            <li><strong>Carbohydrates:</strong> <span id="recipe-carbohydrates"></span> grams</li>
+                            <li><strong>Protein:</strong> <span id="recipe-protein"></span> grams</li>
+                            <li><strong>Fat:</strong> <span id="recipe-fat"></span> grams</li>
+                        </ul>
+
+                        <!-- Horizontal bars for each field -->
+                        <div>
+                            <strong>Calories Fulfilled:</strong>
+                            <div class="bar-container">
+                                <div id="recipe-calories-bar" class="progress-bar"></div>
+                                <span id="recipe-calories-percentage" class="percentage-text"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <strong>Carbs Fulfilled:</strong>
+                            <div class="bar-container">
+                                <div id="recipe-carbs-bar" class="progress-bar"></div>
+                                <span id="recipe-carbs-percentage" class="percentage-text"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <strong>Protein Fulfilled:</strong>
+                            <div class="bar-container">
+                                <div id="recipe-protein-bar" class="progress-bar"></div>
+                                <span id="recipe-protein-percentage" class="percentage-text"></span>
+                            </div>
+                        </div>
+                        <div>
+                            <strong>Fat Fulfilled:</strong>
+                            <div class="bar-container">
+                                <div id="recipe-fat-bar" class="progress-bar"></div>
+                                <span id="recipe-fat-percentage" class="percentage-text"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.
+    </footer>
+
+    <script>
+        // Add an event listener for when the user selects a recipe
+        document.getElementById('recipe-select').addEventListener('change', function() {
+            const recipeId = this.value;
+
+            if (recipeId) {
+                fetch(`/get_recipe_nutrition/${recipeId}`)
+                    .then(response => response.json()) // Make sure the response is parsed as JSON
+                    .then(data => {
+                        // Display recipe nutrition info
+                        document.getElementById('recipe-calories').textContent = data.calories;
+                        document.getElementById('recipe-carbohydrates').textContent = data.carbohydrates;
+                        document.getElementById('recipe-protein').textContent = data.protein;
+                        document.getElementById('recipe-fat').textContent = data.fat;
+
+                        // Retrieve the values from the data-* attributes
+                        const dailyCalories = parseInt(document.getElementById('daily-nutrition').dataset.calories);
+                        const dailyCarbohydrates = parseInt(document.getElementById('daily-nutrition').dataset.carbohydrates);
+                        const dailyProtein = parseInt(document.getElementById('daily-nutrition').dataset.protein);
+                        const dailyFat = parseInt(document.getElementById('daily-nutrition').dataset.fat);
+
+                        // Calculate the percentage of daily intake and update the bars and percentage text
+                        const caloriesPercentage = (data.calories / dailyCalories) * 100;
+                        const carbsPercentage = (data.carbohydrates / dailyCarbohydrates) * 100;
+                        const proteinPercentage = (data.protein / dailyProtein) * 100;
+                        const fatPercentage = (data.fat / dailyFat) * 100;
+
+                        document.getElementById('recipe-calories-bar').style.width = caloriesPercentage + '%';
+                        document.getElementById('recipe-carbs-bar').style.width = carbsPercentage + '%';
+                        document.getElementById('recipe-protein-bar').style.width = proteinPercentage + '%';
+                        document.getElementById('recipe-fat-bar').style.width = fatPercentage + '%';
+
+                        // Update the percentage text
+                        document.getElementById('recipe-calories-percentage').textContent = Math.round(caloriesPercentage) + '%';
+                        document.getElementById('recipe-carbs-percentage').textContent = Math.round(carbsPercentage) + '%';
+                        document.getElementById('recipe-protein-percentage').textContent = Math.round(proteinPercentage) + '%';
+                        document.getElementById('recipe-fat-percentage').textContent = Math.round(fatPercentage) + '%';
+
+                        // Show the nutrition info
+                        document.getElementById('selected-recipe-nutrition').style.display = 'block';
+                    })
+                    .catch(error => console.error('Error:', error));
+            } else {
+                document.getElementById('selected-recipe-nutrition').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

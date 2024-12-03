@@ -391,3 +391,119 @@ label {
         right: 10px;
         transform: translateY(-50%);
     }
+
+/* General styling for the content */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Flex container to hold both blocks */
+.result-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Adds space between the two blocks */
+    margin-top: 20px;
+}
+
+/* Left block (User data) */
+.left-block {
+    flex: 1; /* Takes up 50% of the container */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Right block (Nutrition results) */
+.right-block {
+    flex: 1; /* Takes up 50% of the container */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* General styling for headers and list items */
+h3 {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+strong {
+    font-weight: bold;
+}
+
+/* Styling for footer */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #888;
+}
+
+/* Slider Styling */
+input[type="range"] {
+    width: 100%; /* Make the slider span the entire container width */
+    max-width: 400px; /* Limit the max width if needed */
+    margin: 10px 0;
+}
+
+#activityLevelText {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+#recipe-calories-bar, #recipe-carbs-bar, #recipe-protein-bar, #recipe-fat-bar {
+    height: 20px;
+    background-color: #4caf50;
+}
+
+.bar-container {
+    position: relative;
+    width: 100%;
+    height: 20px;  /* Height of the bar */
+    background-color: #f0f0f0; /* Background of the bar */
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 10px;
+}
+
+.percentage-text {
+    position: absolute;
+    left: 50%;  /* Positioning at the center */
+    top: 50%;
+    transform: translate(-50%, -50%);  /* Adjust to center the text */
+    font-weight: bold;
+    color: #000;  /* Text color */
+}
+

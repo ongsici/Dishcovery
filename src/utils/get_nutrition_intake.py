@@ -6,7 +6,7 @@ from src.config import NUTRITION_API_KEY
 def get_api_key():
     return NUTRITION_API_KEY
 
-def get_daily_nutrition_intake(gender, age, height, weight, activity_level="Active"):
+def get_daily_nutrition_intake(gender, age, height, weight, activity_level):
     url = "https://nutrition-calculator.p.rapidapi.com/api/nutrition-info"
 
     querystring = {"measurement_units":"met",
@@ -15,7 +15,7 @@ def get_daily_nutrition_intake(gender, age, height, weight, activity_level="Acti
                     "age_type":"yrs",
                     "cm":str(height),
                     "kilos":str(weight),
-                    "activity_level":activity_level}
+                    "activity_level":str(activity_level)}
 
     headers = {
         "x-rapidapi-key": get_api_key(),
