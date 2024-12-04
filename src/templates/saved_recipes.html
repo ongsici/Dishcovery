@@ -18,13 +18,12 @@
                     <div class="form-group">                 
                         <label for="sort">Sort:</label>
                         <select id="sort" name="sort" onchange="this.form.submit()">
-                        <!-- <select id="sort" name="sort"> -->
-                            <option value="default">Default</option>
-                            <option value="name">Name</option>
-                            <option value="calories">Calories</option>
-                            <option value="carbohydrate">Carbohydrate</option>
-                            <option value="fat">Fat</option>
-                            <option value="protein">Protein</option>
+                            <option value="default" {% if request.args.get('sort') == 'default' %}selected{% endif %}>Default</option>
+                            <option value="name" {% if request.args.get('sort') == 'name' %}selected{% endif %}>Name</option>
+                            <option value="calories" {% if request.args.get('sort') == 'calories' %}selected{% endif %}>Calories</option>
+                            <option value="carbohydrate" {% if request.args.get('sort') == 'carbohydrate' %}selected{% endif %}>Carbohydrate</option>
+                            <option value="fat" {% if request.args.get('sort') == 'fat' %}selected{% endif %}>Fat</option>
+                            <option value="protein" {% if request.args.get('sort') == 'protein' %}selected{% endif %}>Protein</option>
                         </select>
                     </div>
                 </div>
@@ -38,10 +37,10 @@
                             <div class="card">
                                 <img src="{{ recipe.image }}" alt="Recipe image">
                                 <h2>{{ recipe.name }}</h2>
-                                <p><strong>Calories:</strong> {{ recipe.calories }}</p>
-                                <p><strong>Carbohydrate:</strong> {{ recipe.carbohydrate }}</p>
-                                <p><strong>Fat:</strong> {{ recipe.fat }}</p>
-                                <p><strong>Protein:</strong> {{ recipe.protein }}</p>
+                                <p><strong>Calories:</strong> {{ recipe.calories }} kcal</p>
+                                <p><strong>Carbohydrate:</strong> {{ recipe.carbohydrate }} g</p>
+                                <p><strong>Fat:</strong> {{ recipe.fat }} g</p>
+                                <p><strong>Protein:</strong> {{ recipe.protein }} g</p>
                             </div>
                         </a>
 
