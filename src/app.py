@@ -265,63 +265,6 @@ def save_recipe():
             return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="Failed to save recipe: Recipe ID already exists"))
 
 
-# @app.route('/save_recipe', methods=['POST'])
-# def save_recipe():
-#     recipe_id = request.form.get('recipe_id')
-#     recipe = global_results.get(int(recipe_id))
-
-#     if recipe:
-#         # Get nutritional values safely, defaulting to empty string or 0 if not available
-#         calories = recipe['nutrition'].get('calories', '').strip()
-#         carbohydrate = recipe['nutrition'].get('carbohydrate', '').strip()
-#         fat = recipe['nutrition'].get('fat', '').strip()
-#         protein = recipe['nutrition'].get('protein', '').strip()
-
-#         # Convert to float if the value is not empty, else default to 0
-#         try:
-#             calories = float(calories[:-1]) if calories else 0
-#         except ValueError:
-#             calories = 0
-        
-#         try:
-#             carbohydrate = float(carbohydrate[:-1]) if carbohydrate else 0
-#         except ValueError:
-#             carbohydrate = 0
-        
-#         try:
-#             fat = float(fat[:-1]) if fat else 0
-#         except ValueError:
-#             fat = 0
-        
-#         try:
-#             protein = float(protein[:-1]) if protein else 0
-#         except ValueError:
-#             protein = 0
-
-#         # Save the recipe to the database
-#         saved_recipe = SavedRecipe(
-#             recipe_id=recipe['id'],
-#             name=recipe['name'],
-#             image=recipe['image'],
-#             instructions=recipe['instructions'],
-#             calories=calories,
-#             carbohydrate=carbohydrate,
-#             fat=fat,
-#             protein=protein,
-#         )
-        
-#         try:
-#             with app.app_context():
-#                 db.session.add(saved_recipe)
-#                 db.session.commit()
-
-#             return redirect(url_for('recipe_details', recipe_id=recipe_id, success='true', toast_message="Recipe Saved Successfully!"))
-        
-#         except Exception as e:
-#             db.session.rollback() 
-#             return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="Failed to save recipe: Recipe ID already exists"))
-
-
 # Delete saved recipe from database
 @app.route('/unsave_recipe', methods=['POST'])
 def unsave_recipe():
