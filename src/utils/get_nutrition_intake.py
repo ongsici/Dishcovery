@@ -20,33 +20,32 @@ def get_daily_nutrition_intake(gender, age, height, weight, activity_level):
         "x-rapidapi-key": get_api_key(),
         "x-rapidapi-host": "nutrition-calculator.p.rapidapi.com"
     }
-    return None
-    # try:
-    #     response = requests.get(url, headers=headers, params=querystring)
+    try:
+        response = requests.get(url, headers=headers, params=querystring)
 
-    #     if response.status_code ==200:
-    #         data = response.json()
+        if response.status_code ==200:
+            data = response.json()
         
-    #         caloric_needs = int(re.sub(r'\D', '', data['BMI_EER']['Estimated Daily Caloric Needs']))
-    #         results = {}
+            caloric_needs = int(re.sub(r'\D', '', data['BMI_EER']['Estimated Daily Caloric Needs']))
+            results = {}
             
-    #         macronutrients = data['macronutrients_table']['macronutrients-table']
+            macronutrients = data['macronutrients_table']['macronutrients-table']
 
-    #         for row in macronutrients[1:]: 
-    #             if row[0] in ['Carbohydrate', 'Protein', 'Fat']:
-    #                 if 'Carbohydrate' in row[0]:
-    #                     value = row[1].split(' - ')[1]  
-    #                 elif 'Fat' in row[0]:
-    #                     value = row[1].split(' - ')[1] 
-    #                 else:
-    #                     value = row[1]  
-    #                 results[row[0]] = int(re.sub(r'\D', '', value)) 
+            for row in macronutrients[1:]: 
+                if row[0] in ['Carbohydrate', 'Protein', 'Fat']:
+                    if 'Carbohydrate' in row[0]:
+                        value = row[1].split(' - ')[1]  
+                    elif 'Fat' in row[0]:
+                        value = row[1].split(' - ')[1] 
+                    else:
+                        value = row[1]  
+                    results[row[0]] = int(re.sub(r'\D', '', value)) 
 
-    #         results["Calories"] = caloric_needs
+            results["Calories"] = caloric_needs
 
-    #         return results
-    #     else:
-    #         return None
-    # except Exception as e:
-    #     print(f"Error fetching nutrition data: {e}")
-    #     return None
+            return results
+        else:
+            return None
+    except Exception as e:
+        print(f"Error fetching nutrition data: {e}")
+        return None
