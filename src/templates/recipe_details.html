@@ -18,7 +18,7 @@
     <!-- Top Controls Section -->
     <div class="top-controls">
         <!-- Back Button -->
-        <button onclick="window.history.back()" class="back-button">Back</button>
+        <button onclick="window.location.href='/recipe_search'" class="back-button">Back to Search</button>
          
         <form action="/save_recipe" method="POST">
             <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
