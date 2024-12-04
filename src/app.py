@@ -45,6 +45,13 @@ def ingredients_search():
     
     # Get the list of recipes based on the ingredients list
     recipe_ingredients = get_recipe_by_ingredients(ingredients_list)
+
+    if recipe_ingredients is None:
+        return render_template(
+            "recipe_search_results.html", 
+            recipes=None, 
+            error="Failed to fetch recipes. Please try again later."
+        )
     
     # Initialize an empty dictionary to store the organized recipe details
     
@@ -68,6 +75,13 @@ def ingredients_search():
         # Fetch recipe details and nutrition for the current recipe ID
         recipe_details = get_recipe_by_id(recipe_id)
         recipe_nutrition = get_nutrition_by_id(recipe_id)
+        
+        if recipe_details is None or recipe_nutrition is None:
+            return render_template(
+            "recipe_search_results.html", 
+            recipes=None, 
+            error="Failed to fetch recipes. Please try again later."
+        )
 
         for ingredient in recipe_details.get('extendedIngredients'):
             name = ingredient.get('name')
@@ -115,7 +129,7 @@ def ingredients_search():
         results[recipe_id] = organized_recipe
         global_results[recipe_id] = organized_recipe
 
-    return render_template("recipe_search_results.html", recipes=results)
+    return render_template("recipe_search_results.html", recipes=results, error=None)
 
 
 @app.route('/recipe/<int:recipe_id>')

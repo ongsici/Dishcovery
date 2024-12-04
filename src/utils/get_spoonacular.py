@@ -15,8 +15,10 @@ def get_recipe_by_ingredients(ingredients_list: List):
         "number": 2
     }
     response = requests.get(url, params=params)
-    data = response.json()
-    return data
+    if response.status_code==200:
+        return response.json()
+    else:
+        return None
 
 
 def get_recipe_by_id(recipeID: int):
@@ -25,8 +27,10 @@ def get_recipe_by_id(recipeID: int):
         "apiKey": get_api_key()
     }
     response = requests.get(url, params=params)
-    data = response.json()
-    return data
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
 
 
 def get_nutrition_by_id(recipeID: int):
@@ -35,5 +39,7 @@ def get_nutrition_by_id(recipeID: int):
         "apiKey": get_api_key()
     }
     response = requests.get(url, params=params)
-    data = response.json()
-    return data
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
