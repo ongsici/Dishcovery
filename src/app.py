@@ -60,17 +60,17 @@ def ingredients_search():
         recipe_id = recipe['id']
         recipe_name = recipe['title']
 
-        missed_ingredients = []
-        used_ingredients = []
+        # missed_ingredients = []
+        # used_ingredients = []
         extended_ingredients = []
 
-        # Extracting missedIngredients (only the names)
-        for ingredient in recipe['missedIngredients']:
-            missed_ingredients.append(ingredient['name'])
+        # # Extracting missedIngredients (only the names)
+        # for ingredient in recipe['missedIngredients']:
+        #     missed_ingredients.append(ingredient['name'])
         
-        # Extracting usedIngredients (only the names)
-        for ingredient in recipe['usedIngredients']:
-            used_ingredients.append(ingredient['name'])
+        # # Extracting usedIngredients (only the names)
+        # for ingredient in recipe['usedIngredients']:
+        #     used_ingredients.append(ingredient['name'])
 
         # Fetch recipe details and nutrition for the current recipe ID
         recipe_details = get_recipe_by_id(recipe_id)
@@ -107,8 +107,8 @@ def ingredients_search():
             "image": recipe_details.get('image'),  # Include image
             "instructions": recipe_details.get('instructions'),
             "extended_ingredients": extended_ingredients,  # Include ingredients from the details
-            "missed_ingredients": missed_ingredients,  # Only names of missed ingredients
-            "used_ingredients": used_ingredients,  # Only names of used ingredients
+            # "missed_ingredients": missed_ingredients,  # Only names of missed ingredients
+            # "used_ingredients": used_ingredients,  # Only names of used ingredients
             "ready_in_minutes": recipe_details.get('readyInMinutes'),
             "labels": {  # Labels for dietary preferences
                 "vegan": recipe_details.get('vegan'),
@@ -145,18 +145,18 @@ def recipe_details(recipe_id):
         if recipe_details is None or recipe_nutrition is None:
             return "Recipe not found", 404
 
-        # Parse API responses into the expected format
-        missed_ingredients = []
-        used_ingredients = []
+        # # Parse API responses into the expected format
+        # missed_ingredients = []
+        # used_ingredients = []
         extended_ingredients = []
 
-        # Extract missedIngredients (only the names)
-        for ingredient in recipe_details.get('missedIngredients', []):
-            missed_ingredients.append(ingredient['name'])
+        # # Extract missedIngredients (only the names)
+        # for ingredient in recipe_details.get('missedIngredients', []):
+        #     missed_ingredients.append(ingredient['name'])
 
-        # Extract usedIngredients (only the names)
-        for ingredient in recipe_details.get('usedIngredients', []):
-            used_ingredients.append(ingredient['name'])
+        # # Extract usedIngredients (only the names)
+        # for ingredient in recipe_details.get('usedIngredients', []):
+        #     used_ingredients.append(ingredient['name'])
 
         for ingredient in recipe_details.get('extendedIngredients', []):
             name = ingredient.get('name')
@@ -182,8 +182,8 @@ def recipe_details(recipe_id):
             "image": recipe_details.get('image'),  # Include image
             "instructions": recipe_details.get('instructions'),
             "extended_ingredients": extended_ingredients,  # Include ingredients from the details
-            "missed_ingredients": missed_ingredients,  # Only names of missed ingredients
-            "used_ingredients": used_ingredients,  # Only names of used ingredients
+            # "missed_ingredients": missed_ingredients,  # Only names of missed ingredients
+            # "used_ingredients": used_ingredients,  # Only names of used ingredients
             "ready_in_minutes": recipe_details.get('readyInMinutes'),
             "labels": {  # Labels for dietary preferences
                 "vegan": recipe_details.get('vegan'),
@@ -342,9 +342,11 @@ def save_recipe():
             return redirect(url_for('recipe_details', recipe_id=recipe_id, success='true', toast_message="Recipe Saved Successfully!"))
         
         except Exception as e:
-            print(e)
-            db.session.rollback() 
+            db.session.rollback()
+            print(e) 
             return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="Failed to save recipe: Recipe ID already exists"))
+    # If the recipe is not found, handle gracefully
+    return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="Recipe not found"))
 
 
 # Delete saved recipe from database
