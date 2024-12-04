@@ -13,24 +13,25 @@
             <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
             <h2>Saved Recipes</h2>
 
-            <div class="top-controls">
-                <div class="form-group">
-                    <!-- clear saved recipe database -->
-                    <form action="/clear_saved_recipes" method="POST" style="margin-top: 20px;">
-                        <button type="submit" class="clear-button">Clear All Recipes</button>
-                    </form>
-                    
-                    <label for="sort">Sort:</label>
-                    <select id="sort" name="sort">
-                        <option value="default">Default</option>
-                        <option value="name">Name</option>
-                        <option value="cooking_time">Cooking time</option>
-                        <option value="calories">Calories</option>
-                    </select>
+            <form method="GET" action="{{ url_for('saved_recipes') }}">
+                <div class="top-controls">
+                    <div class="form-group">                 
+                        <label for="sort">Sort:</label>
+                        <select id="sort" name="sort" onchange="this.form.submit()">
+                        <!-- <select id="sort" name="sort"> -->
+                            <option value="default">Default</option>
+                            <option value="name">Name</option>
+                            <option value="calories">Calories</option>
+                            <option value="carbohydrate">Carbohydrate</option>
+                            <option value="fat">Fat</option>
+                            <option value="protein">Protein</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+            </form>
 
-            <div class="card-container">
+            <!-- Recipes listed in card containers -->
+            <div id="card-container" class="card-container">
                 {% if recipes %}
                     {% for recipe in recipes %}
                         <a href="/recipe/{{ recipe.recipe_id }}" class="card-link">
@@ -90,6 +91,5 @@
         <footer>
             &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.
         </footer>
-
     </body>
 </html>

@@ -18,10 +18,14 @@ class SavedRecipe(Base):
     name = Column(String(150), nullable=False)
     image = Column(String(200), nullable=False)
     instructions = Column(Text(), nullable=False)
-    calories = Column(Integer, nullable=False)
-    carbohydrate = Column(Integer, nullable=True)
-    fat = Column(Integer, nullable=True)
-    protein = Column(Integer, nullable=True)
+    calories = Column(Float, nullable=False)
+    carbohydrate = Column(Float, nullable=True)
+    fat = Column(Float, nullable=True)
+    protein = Column(Float, nullable=True)
+    # calories = Column(String(10), nullable=False)
+    # carbohydrate = Column(String(10), nullable=True)
+    # fat = Column(String(10), nullable=True)
+    # protein = Column(String(10), nullable=True)
 
 
 if __name__ == '__main__':

@@ -196,7 +196,25 @@ def get_recipe_nutrition(recipe_id):
 
 @app.route("/saved_recipes")
 def saved_recipes():
-    saved_recipes = SavedRecipe.query.all()  # Query all saved recipes from the database
+    # Get sort option from the saved_recipes dropbox
+    sort_option = request.args.get('sort', 'default')
+
+    # Apply sorting logic based on the sort option
+    if sort_option == 'name':
+        saved_recipes = SavedRecipe.query.order_by(SavedRecipe.name.asc()).all()
+    # elif sort_option == 'cooking_time':
+    #     saved_recipes = SavedRecipe.query.order_by(SavedRecipe.ready_in_minutes.asc()).all()
+    elif sort_option == 'calories':
+        saved_recipes = SavedRecipe.query.order_by(SavedRecipe.calories.asc()).all()
+    # elif sort_option == 'carbohydrates':
+    #     saved_recipes = SavedRecipe.query.order_by(SavedRecipe.carbohydrate.asc()).all()
+    elif sort_option == 'fat':
+        saved_recipes = SavedRecipe.query.order_by(SavedRecipe.fat.asc()).all()
+    elif sort_option == 'protein':
+        saved_recipes = SavedRecipe.query.order_by(SavedRecipe.protein.asc()).all()
+    else:  # Default case
+        saved_recipes = SavedRecipe.query.all()
+
     return render_template("saved_recipes.html", recipes=saved_recipes)
 
 
@@ -207,15 +225,32 @@ def save_recipe():
     recipe = global_results.get(int(recipe_id))
 
     if recipe:
+        carbohydrate_in=str(recipe['nutrition']['carbohydrate'])
+        fat_in=str(recipe['nutrition']['fat'])
+        protein_in=str(recipe['nutrition']['protein'])
+
+        # Function to convert string to float or None if empty
+        def convert_to_float(value):
+            # Check if the value is not empty and contains a valid number
+            if value and value != '':  # Not empty
+                # Remove 'g' if it's there and convert to float
+                return float(value[:-1])
+            else:
+                return None  # Return None if the value is empty or invalid
+
         saved_recipe = SavedRecipe(
             recipe_id=recipe['id'],
             name=recipe['name'],
             image=recipe['image'],
             instructions=recipe['instructions'],
-            calories=float(recipe['nutrition']['calories'][:-1]),
-            carbohydrate=float(recipe['nutrition']['carbohydrate'][:-1]),
-            fat=float(recipe['nutrition']['fat'][:-1]),
-            protein=float(recipe['nutrition']['protein'][:-1]),
+            calories=float(recipe['nutrition']['calories']),
+            carbohydrate=convert_to_float(carbohydrate_in),
+            fat=convert_to_float(fat_in),
+            protein=convert_to_float(protein_in)
+            # calories=float(recipe['nutrition']['calories'][:-1]),
+            # carbohydrate=float(recipe['nutrition']['carbohydrate'][:-1]),
+            # fat=float(recipe['nutrition']['fat'][:-1]),
+            # protein=float(recipe['nutrition']['protein'][:-1])
         )
         try:
             with app.app_context():
@@ -225,8 +260,66 @@ def save_recipe():
             return redirect(url_for('recipe_details', recipe_id=recipe_id, success='true', toast_message="Recipe Saved Successfully!"))
         
         except Exception as e:
+            print(e)
             db.session.rollback() 
             return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="Failed to save recipe: Recipe ID already exists"))
+
+
+# @app.route('/save_recipe', methods=['POST'])
+# def save_recipe():
+#     recipe_id = request.form.get('recipe_id')
+#     recipe = global_results.get(int(recipe_id))
+
+#     if recipe:
+#         # Get nutritional values safely, defaulting to empty string or 0 if not available
+#         calories = recipe['nutrition'].get('calories', '').strip()
+#         carbohydrate = recipe['nutrition'].get('carbohydrate', '').strip()
+#         fat = recipe['nutrition'].get('fat', '').strip()
+#         protein = recipe['nutrition'].get('protein', '').strip()
+
+#         # Convert to float if the value is not empty, else default to 0
+#         try:
+#             calories = float(calories[:-1]) if calories else 0
+#         except ValueError:
+#             calories = 0
+        
+#         try:
+#             carbohydrate = float(carbohydrate[:-1]) if carbohydrate else 0
+#         except ValueError:
+#             carbohydrate = 0
+        
+#         try:
+#             fat = float(fat[:-1]) if fat else 0
+#         except ValueError:
+#             fat = 0
+        
+#         try:
+#             protein = float(protein[:-1]) if protein else 0
+#         except ValueError:
+#             protein = 0
+
+#         # Save the recipe to the database
+#         saved_recipe = SavedRecipe(
+#             recipe_id=recipe['id'],
+#             name=recipe['name'],
+#             image=recipe['image'],
+#             instructions=recipe['instructions'],
+#             calories=calories,
+#             carbohydrate=carbohydrate,
+#             fat=fat,
+#             protein=protein,
+#         )
+        
+#         try:
+#             with app.app_context():
+#                 db.session.add(saved_recipe)
+#                 db.session.commit()
+
+#             return redirect(url_for('recipe_details', recipe_id=recipe_id, success='true', toast_message="Recipe Saved Successfully!"))
+        
+#         except Exception as e:
+#             db.session.rollback() 
+#             return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="Failed to save recipe: Recipe ID already exists"))
 
 
 # Delete saved recipe from database
