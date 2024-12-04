@@ -134,12 +134,78 @@ def ingredients_search():
 
 @app.route('/recipe/<int:recipe_id>')
 def recipe_details(recipe_id):
+    # check if recipe in global_results, else get recipe from SavedRecipes db
     recipe = global_results.get(recipe_id)
+
+    if not recipe:
+        # Fetch recipe details using the API
+        recipe_details = get_recipe_by_id(recipe_id)
+        recipe_nutrition = get_nutrition_by_id(recipe_id)
+
+        if recipe_details is None or recipe_nutrition is None:
+            return "Recipe not found", 404
+
+        # Parse API responses into the expected format
+        missed_ingredients = []
+        used_ingredients = []
+        extended_ingredients = []
+
+        # Extract missedIngredients (only the names)
+        for ingredient in recipe_details.get('missedIngredients', []):
+            missed_ingredients.append(ingredient['name'])
+
+        # Extract usedIngredients (only the names)
+        for ingredient in recipe_details.get('usedIngredients', []):
+            used_ingredients.append(ingredient['name'])
+
+        for ingredient in recipe_details.get('extendedIngredients', []):
+            name = ingredient.get('name')
+            image = ingredient.get('image')
+            metric = ingredient.get("measures", {}).get("metric", {})
+
+            # Prepare the metric in a readable format
+            if metric:
+                metric_info = f"{metric.get('amount', '')} {metric.get('unitShort', '')}"
+            else:
+                metric_info = "No metric data available"
+
+            extended_ingredients.append({
+                "name": name,
+                "image": image,
+                "metric": metric_info
+            })
+        
+        # Organize the response into a structured dictionary
+        recipe = {
+            "id": recipe_id,  # Include recipe ID
+            "name": recipe_details.get('title'),
+            "image": recipe_details.get('image'),  # Include image
+            "instructions": recipe_details.get('instructions'),
+            "extended_ingredients": extended_ingredients,  # Include ingredients from the details
+            "missed_ingredients": missed_ingredients,  # Only names of missed ingredients
+            "used_ingredients": used_ingredients,  # Only names of used ingredients
+            "ready_in_minutes": recipe_details.get('readyInMinutes'),
+            "labels": {  # Labels for dietary preferences
+                "vegan": recipe_details.get('vegan'),
+                "vegetarian": recipe_details.get('vegetarian'),
+                "glutenFree": recipe_details.get('glutenFree'),
+                "lowFodmap": recipe_details.get('lowFodmap'),
+                "sustainable": recipe_details.get('sustainable')
+            },
+            "nutrition": {  # Nutrition information
+                "calories": recipe_nutrition.get('calories'),
+                "carbohydrate": recipe_nutrition.get('carbs'),
+                "fat": recipe_nutrition.get('fat'),
+                "protein": recipe_nutrition.get('protein'),
+            }
+        }
+
     success =  request.args.get('success')
     toast_message = request.args.get('toast_message')
     if not recipe:
         return "Recipe not found", 404
     return render_template('recipe_details.html', recipe=recipe, success=success, toast_message=toast_message)
+
 
 
 # For debugging
