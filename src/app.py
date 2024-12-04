@@ -160,11 +160,11 @@ def nutrition_query():
     weight = request.form.get("weight")
     activity_level = request.form.get("activityLevel")
 
-    print(f'age: {age, type(age)}')
-    print(f'gender: {gender, type(gender)}')
-    print(f'height: {height, type(height)}')
-    print(f'weight: {weight, type(weight)}')
-    print(f'activity level: {activity_level, type(activity_level)}')
+    #print(f'age: {age, type(age)}')
+    #print(f'gender: {gender, type(gender)}')
+    #print(f'height: {height, type(height)}')
+    #print(f'weight: {weight, type(weight)}')
+    #print("ACTIVITY LEVEL BEFORE:", activity_level)
 
     rec_intake = get_daily_nutrition_intake(gender, age, height, weight, activity_level)
     if rec_intake:
@@ -189,6 +189,7 @@ def nutrition_query_results():
 
     # Fetch saved recipes from the database
     saved_recipes = SavedRecipe.query.all()
+    #print("ACTIVITY LEVEL:", activity_level)
 
     # Render the results page with form data, results, and saved recipes
     return render_template("nutrition_query_results.html", 

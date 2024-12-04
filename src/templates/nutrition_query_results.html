@@ -21,15 +21,7 @@
                         <li><strong>Age:</strong> {{ age }}</li>
                         <li><strong>Height:</strong> {{ height }} cm</li>
                         <li><strong>Weight:</strong> {{ weight }} kg</li>
-
-                        <!-- Display Activity Level -->
-                        <li><strong>Activity Level:</strong> 
-                            {% if activity_level == '1' %}Inactive
-                            {% elif activity_level == '2' %}Low Active
-                            {% elif activity_level == '3' %}Active
-                            {% else %}Very Active
-                            {% endif %}
-                        </li>
+                        <li><strong>Activity Level:</strong> {{ activity_level }}</li>
                     </ul>
                 </div>
 
