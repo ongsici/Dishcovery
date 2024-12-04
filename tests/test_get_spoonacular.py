@@ -8,7 +8,8 @@ from tests.mock_data import mock_recipes_by_ingredients, mock_nutrition_by_id, m
 
 @patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
 @patch('requests.get')
-def test_get_recipe_by_ingredients(mock_get, mock_get_api_key):
+def test_get_recipe_by_ingredients_success(mock_get, mock_get_api_key):
+    mock_get.return_value.status_code = 200
     mock_get.return_value.json.return_value = mock_recipes_by_ingredients
 
     ingredients = ["tomato", "garlic", "pasta"]
@@ -29,11 +30,31 @@ def test_get_recipe_by_ingredients(mock_get, mock_get_api_key):
         }
     )
 
+@patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
+@patch('requests.get')
+def test_get_recipe_by_ingredients_failure(mock_get, mock_get_api_key):
+    mock_get.return_value.status_code = 500
+    mock_get.return_value.json.return_value = {"error": "Internal Server Error"}
 
+    ingredients = ["tomato", "garlic", "pasta"]
+    response = get_recipe_by_ingredients(ingredients)
+
+    assert mock_get.called
+    assert response is None, "Expected None when the API call fails"
+
+    mock_get.assert_called_with(
+        "https://api.spoonacular.com/recipes/findByIngredients",
+        params={
+            "ingredients": "tomato, garlic, pasta",
+            "apiKey": "fake_api_key",
+            "number": 2
+        }
+    )
 
 @patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
 @patch('requests.get')
-def test_get_recipe_by_id(mock_get,  mock_get_api_key):
+def test_get_recipe_by_id_success(mock_get,  mock_get_api_key):
+    mock_get.return_value.status_code = 200
     mock_get.return_value.json.return_value = mock_recipe_by_id
 
     recipe_id = 655573
@@ -51,10 +72,27 @@ def test_get_recipe_by_id(mock_get,  mock_get_api_key):
         params={"apiKey": "fake_api_key"}
     )
 
+@patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
+@patch('requests.get')
+def test_get_recipe_by_id_failure(mock_get, mock_get_api_key):
+    mock_get.return_value.status_code = 500
+    mock_get.return_value.json.return_value = {"error": "Internal Server Error"}
+
+    recipe_id = 655573
+    response = get_recipe_by_id(recipe_id)
+
+    assert mock_get.called
+    assert response is None, "Expected None when the API call fails"
+
+    mock_get.assert_called_with(
+        f"https://api.spoonacular.com/recipes/{recipe_id}/information",
+        params={"apiKey": "fake_api_key"}
+    )
 
 @patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
 @patch('requests.get')
-def test_get_nutrition_by_id(mock_get,  mock_get_api_key):
+def test_get_nutrition_by_id_success(mock_get,  mock_get_api_key):
+    mock_get.return_value.status_code = 200
     mock_get.return_value.json.return_value = mock_nutrition_by_id
 
     recipe_id = 655573
@@ -64,6 +102,23 @@ def test_get_nutrition_by_id(mock_get,  mock_get_api_key):
 
     assert mock_get.called
     assert required_fields.issubset(response.keys()), f"Missing fields in response: {response}"
+    mock_get.assert_called_with(
+        f"https://api.spoonacular.com/recipes/{recipe_id}/nutritionWidget.json",
+        params={"apiKey": "fake_api_key"}
+    )
+
+@patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
+@patch('requests.get')
+def test_get_nutrition_by_id_failure(mock_get, mock_get_api_key):
+    mock_get.return_value.status_code = 500
+    mock_get.return_value.json.return_value = {"error": "Internal Server Error"}
+
+    recipe_id = 655573
+    response = get_nutrition_by_id(recipe_id)
+
+    assert mock_get.called
+    assert response is None, "Expected None when the API call fails"
+
     mock_get.assert_called_with(
         f"https://api.spoonacular.com/recipes/{recipe_id}/nutritionWidget.json",
         params={"apiKey": "fake_api_key"}
