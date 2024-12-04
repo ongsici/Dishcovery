@@ -75,7 +75,7 @@ def ingredients_search():
         # Fetch recipe details and nutrition for the current recipe ID
         recipe_details = get_recipe_by_id(recipe_id)
         recipe_nutrition = get_nutrition_by_id(recipe_id)
-        
+
         if recipe_details is None or recipe_nutrition is None:
             return render_template(
             "recipe_search_results.html", 
@@ -167,11 +167,12 @@ def nutrition_query():
     print(f'activity level: {activity_level, type(activity_level)}')
 
     rec_intake = get_daily_nutrition_intake(gender, age, height, weight, activity_level)
-
-    rec_intake_json = json.dumps(rec_intake)
-
-    return redirect(url_for("nutrition_query_results", age=age, gender=gender, height=height, weight=weight, activity_level=activity_level, results=rec_intake_json))
-
+    if rec_intake:
+        rec_intake_json = json.dumps(rec_intake)
+        return redirect(url_for("nutrition_query_results", age=age, gender=gender, height=height, weight=weight, activity_level=activity_level, results=rec_intake_json))
+    else:
+        error_message = "Failed to fetch nutrition data. Please try again later."
+        return render_template('nutrition_query_results.html', error_message=error_message, age=age, gender=gender, height=height, weight=weight, activity_level=activity_level)
 
 @app.route("/nutrition_query_results")
 def nutrition_query_results():

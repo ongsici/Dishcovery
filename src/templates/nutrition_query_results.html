@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutrition Query Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div class="content">
@@ -35,70 +36,78 @@
                 <!-- Right Block: Nutrition Results -->
                 <div class="right-block">
                     <h3>Nutrition Results:</h3>
-                    <ul>
-                        <li><strong>Calories:</strong> {{ results['Calories'] }} kcal</li>
-                        <li><strong>Carbohydrates:</strong> {{ results['Carbohydrate'] }} grams</li>
-                        <li><strong>Protein:</strong> {{ results['Protein'] }} grams</li>
-                        <li><strong>Fat:</strong> {{ results['Fat'] }} grams</li>
-                    </ul>
-
-                    <!-- Store Daily Nutrition Info in data-* attributes -->
-                    <div id="daily-nutrition" 
-                         data-calories="{{ results['Calories'] }}"
-                         data-carbohydrates="{{ results['Carbohydrate'] }}"
-                         data-protein="{{ results['Protein'] }}"
-                         data-fat="{{ results['Fat'] }}">
+                    {% if error_message %}
+                    <div class="error-message">
+                        <i class="material-icons">warning</i> 
+                        <span>{{ error_message }}</span>
                     </div>
-
-                    <!-- Dropdown to select a saved recipe -->
-                    <label for="recipe-select">Choose a saved recipe:</label>
-                    <select id="recipe-select">
-                        <option value="">--Select a recipe--</option>
-                        {% for recipe in saved_recipes %}
-                            <option value="{{ recipe.recipe_id }}">{{ recipe.name }}</option>
-                        {% endfor %}
-                    </select>
-
-                    <!-- Container to display the selected recipe's nutritional information -->
-                    <div id="selected-recipe-nutrition" style="display: none;">
-                        <h4>Recipe Nutrition:</h4>
+                    {% else %}
                         <ul>
-                            <li><strong>Calories:</strong> <span id="recipe-calories"></span> kcal</li>
-                            <li><strong>Carbohydrates:</strong> <span id="recipe-carbohydrates"></span> grams</li>
-                            <li><strong>Protein:</strong> <span id="recipe-protein"></span> grams</li>
-                            <li><strong>Fat:</strong> <span id="recipe-fat"></span> grams</li>
+                            <li><strong>Calories:</strong> {{ results['Calories'] }} kcal</li>
+                            <li><strong>Carbohydrates:</strong> {{ results['Carbohydrate'] }} grams</li>
+                            <li><strong>Protein:</strong> {{ results['Protein'] }} grams</li>
+                            <li><strong>Fat:</strong> {{ results['Fat'] }} grams</li>
                         </ul>
 
-                        <!-- Horizontal bars for each field -->
-                        <div>
-                            <strong>Calories Fulfilled:</strong>
-                            <div class="bar-container">
-                                <div id="recipe-calories-bar" class="progress-bar"></div>
-                                <span id="recipe-calories-percentage" class="percentage-text"></span>
+                        <!-- Store Daily Nutrition Info in data-* attributes -->
+                        <div id="daily-nutrition" 
+                            data-calories="{{ results['Calories'] }}"
+                            data-carbohydrates="{{ results['Carbohydrate'] }}"
+                            data-protein="{{ results['Protein'] }}"
+                            data-fat="{{ results['Fat'] }}">
+                        </div>
+                    
+
+                        <!-- Dropdown to select a saved recipe -->
+                        <label for="recipe-select">Choose a saved recipe:</label>
+                        <select id="recipe-select">
+                            <option value="">--Select a recipe--</option>
+                            {% for recipe in saved_recipes %}
+                                <option value="{{ recipe.recipe_id }}">{{ recipe.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <!-- Container to display the selected recipe's nutritional information -->
+                        <div id="selected-recipe-nutrition" style="display: none;">
+                            <h4>Recipe Nutrition:</h4>
+                            <ul>
+                                <li><strong>Calories:</strong> <span id="recipe-calories"></span> kcal</li>
+                                <li><strong>Carbohydrates:</strong> <span id="recipe-carbohydrates"></span> grams</li>
+                                <li><strong>Protein:</strong> <span id="recipe-protein"></span> grams</li>
+                                <li><strong>Fat:</strong> <span id="recipe-fat"></span> grams</li>
+                            </ul>
+
+                            <!-- Horizontal bars for each field -->
+                            <div>
+                                <strong>Calories Fulfilled:</strong>
+                                <div class="bar-container">
+                                    <div id="recipe-calories-bar" class="progress-bar"></div>
+                                    <span id="recipe-calories-percentage" class="percentage-text"></span>
+                                </div>
+                            </div>
+                            <div>
+                                <strong>Carbs Fulfilled:</strong>
+                                <div class="bar-container">
+                                    <div id="recipe-carbs-bar" class="progress-bar"></div>
+                                    <span id="recipe-carbs-percentage" class="percentage-text"></span>
+                                </div>
+                            </div>
+                            <div>
+                                <strong>Protein Fulfilled:</strong>
+                                <div class="bar-container">
+                                    <div id="recipe-protein-bar" class="progress-bar"></div>
+                                    <span id="recipe-protein-percentage" class="percentage-text"></span>
+                                </div>
+                            </div>
+                            <div>
+                                <strong>Fat Fulfilled:</strong>
+                                <div class="bar-container">
+                                    <div id="recipe-fat-bar" class="progress-bar"></div>
+                                    <span id="recipe-fat-percentage" class="percentage-text"></span>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <strong>Carbs Fulfilled:</strong>
-                            <div class="bar-container">
-                                <div id="recipe-carbs-bar" class="progress-bar"></div>
-                                <span id="recipe-carbs-percentage" class="percentage-text"></span>
-                            </div>
-                        </div>
-                        <div>
-                            <strong>Protein Fulfilled:</strong>
-                            <div class="bar-container">
-                                <div id="recipe-protein-bar" class="progress-bar"></div>
-                                <span id="recipe-protein-percentage" class="percentage-text"></span>
-                            </div>
-                        </div>
-                        <div>
-                            <strong>Fat Fulfilled:</strong>
-                            <div class="bar-container">
-                                <div id="recipe-fat-bar" class="progress-bar"></div>
-                                <span id="recipe-fat-percentage" class="percentage-text"></span>
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
