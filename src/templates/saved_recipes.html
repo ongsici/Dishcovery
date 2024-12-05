@@ -33,7 +33,7 @@
             <div id="card-container" class="card-container">
                 {% if recipes %}
                     {% for recipe in recipes %}
-                        <a href="/recipe/{{ recipe.recipe_id }}" class="card-link">
+                    <a href="/recipe/{{ recipe.recipe_id }}?from_page=saved_recipes" class="card-link">
                             <div class="card">
                                 <img src="{{ recipe.image }}" alt="Recipe image">
                                 <h2>{{ recipe.name }}</h2>

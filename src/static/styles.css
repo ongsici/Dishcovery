@@ -33,6 +33,10 @@ body {
     margin: 0;
 }
 
+.back-button:hover {
+    background-color: #76c191;
+}
+
 
 .button {
     background-color: #04491d;
@@ -319,10 +323,17 @@ label {
     background-color: #337ca1;
 }
 
+.save-btn:hover {
+    background-color: #80cbf0;
+}
+
 .unsave-btn {
     background-color: #c7ac4c;
 }
 
+.unsave-btn:hover {
+    background-color: #ebd78f;
+}
 
 @keyframes slideDown {
     0% {

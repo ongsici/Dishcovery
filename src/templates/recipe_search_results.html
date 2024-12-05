@@ -27,7 +27,7 @@
                 </div>
             {% elif recipes %}
                 {% for recipe_name, recipe in recipes.items() %}
-                    <a href="/recipe/{{ recipe.id }}" class="card-link">
+                    <a href="/recipe/{{ recipe.id }}?from_page=search_results" class="card-link">
                         <div class="card">
                             <img src="{{ recipe.image }}" alt="Recipe image">
                             <h2>{{ recipe.name }}</h2>

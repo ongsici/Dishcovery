@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, make_response
 from flask_sqlalchemy import SQLAlchemy
 from src.utils.data_models import IngredientsInput
 from src.utils.get_spoonacular import get_nutrition_by_id, get_recipe_by_id, get_recipe_by_ingredients
@@ -136,6 +136,7 @@ def ingredients_search():
 def recipe_details(recipe_id):
     # check if recipe in global_results, else get recipe from SavedRecipes db
     recipe = global_results.get(recipe_id)
+    from_page = request.args.get('from_page', 'search_results')
 
     if not recipe:
         # Fetch recipe details using the API
@@ -204,14 +205,11 @@ def recipe_details(recipe_id):
     toast_message = request.args.get('toast_message')
     if not recipe:
         return "Recipe not found", 404
-    return render_template('recipe_details.html', recipe=recipe, success=success, toast_message=toast_message)
-
-
-
-# For debugging
-# if __name__ == "__main__":
-#     app.run(debug=True)
-
+    return render_template('recipe_details.html', 
+                           recipe=recipe, 
+                           success=success, 
+                           toast_message=toast_message, 
+                           from_page = from_page)
 
 @app.route("/nutrition_tracker")
 def nutrition_tracker():
@@ -297,7 +295,9 @@ def saved_recipes():
     else:  # Default case
         saved_recipes = SavedRecipe.query.all()
 
-    return render_template("saved_recipes.html", recipes=saved_recipes)
+    response = make_response(render_template("saved_recipes.html", recipes=saved_recipes))
+    response.headers['Cache-Control'] = 'no-store'
+    return response
 
 
 # Write saved recipe to database

@@ -14,23 +14,21 @@
 
 <body>
     <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
-    
-    <!-- Top Controls Section -->
+
     <div class="top-controls">
-        <!-- Back Button -->
-        <!-- <button onclick="window.history.back() || window.location.reload()" class="back-button">Back</button> -->
-        <button onclick="window.history.back()" class="back-button">Back</button>
+        <button onclick="goBackAndReload()" class="back-button">Back</button>
 
-         
-        <form action="/save_recipe" method="POST">
-            <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-            <button type="submit" class="submit-btn save-btn">Save Recipe</button>
-        </form>
-
-        <form action="/unsave_recipe" method="POST" style="margin-left: 10px;">
-            <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-            <button type="submit" class="submit-btn unsave-btn">Unsave Recipe</button>
-        </form>
+        {% if from_page == 'search_results' %}
+            <form action="/save_recipe" method="POST">
+                <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                <button type="submit" class="submit-btn save-btn">Save Recipe</button>
+            </form>
+        {% elif from_page == 'saved_recipes' %}
+            <form action="/unsave_recipe" method="POST" style="margin-left: 10px;">
+                <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                <button type="submit" class="submit-btn unsave-btn">Unsave Recipe</button>
+            </form>
+        {% endif %}
     </div>
 
     <div id="toast" class="toast">
@@ -39,6 +37,15 @@
     </div>
 
     <script>
+        function goBackAndReload() {
+            // Go back to the previous page
+            window.history.back();
+            
+            // Force reload of the previous page after a small delay
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 50);
+        }
         // function goBack() {
         //     // Check if the referrer URL matches the saved recipes page
         //     const referrer = document.referrer; // The URL of the previous page
