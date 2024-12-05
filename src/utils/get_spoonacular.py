@@ -2,6 +2,10 @@ import os
 import requests
 from typing import List
 from src.config import API_KEY
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 def get_api_key():
     return API_KEY
@@ -15,6 +19,7 @@ def get_recipe_by_ingredients(ingredients_list: List):
         "number": 2
     }
     response = requests.get(url, params=params)
+    logger.debug(f'Get recipe by ingredients external API call returned response status code: {response.status_code}')
     if response.status_code==200:
         return response.json()
     else:
@@ -27,6 +32,7 @@ def get_recipe_by_id(recipeID: int):
         "apiKey": get_api_key()
     }
     response = requests.get(url, params=params)
+    logger.debug(f'Get recipe by ID external API call returned response status code: {response.status_code}')
     if response.status_code == 200:
         return response.json()
     else:
@@ -39,6 +45,7 @@ def get_nutrition_by_id(recipeID: int):
         "apiKey": get_api_key()
     }
     response = requests.get(url, params=params)
+    logger.debug(f'Get nutrition by ID external API call returned response status code: {response.status_code}')
     if response.status_code == 200:
         return response.json()
     else:
