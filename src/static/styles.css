@@ -222,7 +222,7 @@ input[type="radio"] {
 }
 
 input[type="text"], input[type="number"], input[type="radio"], input[type="submit"] {
-    width: 100%;
+    width: 90%;
     padding: 8px;
     margin: 8px 0;
     border: 1px solid #ccc;
@@ -251,8 +251,10 @@ label {
 
 .radio-group {
     display: flex;
-    align-items: center;
+    align-items: left;
     margin-bottom: 10px;
+    gap: 1px; /* Adds space between the radio button and the label */
+    justify-content: flex-start; /* Aligns the radio buttons and labels to the left */
 }
 
 .radio-group label {
@@ -415,6 +417,10 @@ label {
     transform: translateY(-50%);
 }
 
+html, body {
+    height: 100%;
+}
+
 /* General styling for the content */
 body {
     font-family: Arial, sans-serif;
@@ -429,7 +435,7 @@ h1 {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 650px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
@@ -491,7 +497,7 @@ footer {
 
 /* Slider Styling */
 input[type="range"] {
-    width: 100%; /* Make the slider span the entire container width */
+    width: 90%; /* Make the slider span the entire container width */
     max-width: 400px; /* Limit the max width if needed */
     margin: 10px 0;
 }
