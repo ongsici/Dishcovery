@@ -37,10 +37,10 @@
                             <div class="card">
                                 <img src="{{ recipe.image }}" alt="Recipe image">
                                 <h2>{{ recipe.name }}</h2>
-                                <p><strong>Calories:</strong> {{ recipe.calories }} kcal</p>
-                                <p><strong>Carbohydrate:</strong> {{ recipe.carbohydrate }} g</p>
-                                <p><strong>Fat:</strong> {{ recipe.fat }} g</p>
-                                <p><strong>Protein:</strong> {{ recipe.protein }} g</p>
+                                <p><strong>Calories:</strong> {{ recipe.calories | int }} kcal</p>
+                                <p><strong>Carbohydrate:</strong> {{ recipe.carbohydrate | int }} g</p>
+                                <p><strong>Fat:</strong> {{ recipe.fat | int }} g</p>
+                                <p><strong>Protein:</strong> {{ recipe.protein | int }} g</p>
                             </div>
                         </a>
 
