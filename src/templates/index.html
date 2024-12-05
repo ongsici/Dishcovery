@@ -33,9 +33,82 @@
                 </a>
             </div>
         </div>
+        
+        <div class="chatbot-btn" onclick="toggleChat()">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+
+        <div id="chat-popup" class="chat-popup">
+            <button class="close-btn" onclick="toggleChat()">×</button>
+            <div class="chat-container">
+                <div class="chat-header">Chat with ChefBot</div>
+                <div class="messages" id="messages">
+                    <div class="chatbot-message">
+                        <div class="chatbot-avatar">
+                            <i class="fas fa-robot" style="color: #fff;"></i>
+                        </div>
+                        <div class="chatbot-message-box">
+                            Hello! I'm still a trainee and am learning the ropes!
+                        </div>
+                    </div>
+                </div>
+                <div class="input-area">
+                    <input type="text" id="user-message" placeholder="Type your message here">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
 
         <footer>
             &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.
         </footer>
+
+        <script>
+            // Toggle chat window
+            function toggleChat() {
+                var popup = document.getElementById("chat-popup");
+                popup.style.display = popup.style.display === "block" ? "none" : "block";
+            }
+
+            function sendMessage() {
+                var userMessage = document.getElementById("user-message").value;
+                if (userMessage.trim()) {
+                    var messagesContainer = document.getElementById("messages");
+
+                    // Create user message element
+                    var userMessageDiv = document.createElement("div");
+                    userMessageDiv.classList.add("user-message");
+                    userMessageDiv.innerHTML = `
+                        <div class="user-message-box">${userMessage}</div>
+                        <div class="user-avatar">
+                            <span style="color: #fff;">U</span>
+                        </div>
+                    `;
+                    messagesContainer.appendChild(userMessageDiv);
+
+                    // Clear the input field
+                    document.getElementById("user-message").value = "";
+
+                    // Scroll to bottom
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                    // Respond with a chatbot message (simulated)
+                    setTimeout(function () {
+                        var botMessageDiv = document.createElement("div");
+                        botMessageDiv.classList.add("chatbot-message");
+                        botMessageDiv.innerHTML = `
+                            <div class="chatbot-avatar">
+                                <i class="fas fa-robot" style="color: #fff;"></i>
+                            </div>
+                            <div class="chatbot-message-box">
+                                Sorry I'm still learning how to chat with humans, please be patient with me!
+                            </div>
+                        `;
+                        messagesContainer.appendChild(botMessageDiv);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }, 1000); // Simulate a delay for bot response
+                }
+            }
+        </script>
     </body>
 </html>
