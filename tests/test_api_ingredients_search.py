@@ -15,7 +15,8 @@ class TestIngredientsSearch(unittest.TestCase):
             'PG_USER': 'test_user',
             'PG_PASSWORD': 'test_password',
             'PG_HOST': 'localhost',
-            'PG_PORT': '5432'
+            'PG_PORT': '5432',
+            'FLASK_ENV': 'test',
         }):
             with app.test_client() as client:
                 self.app = client
