@@ -1,7 +1,9 @@
 # Dishcovery
 
+The app is deployed on dishcovery-app.impaas.uk.
 
-## Installation
+
+## Instructions for Local Installation / Usage
 
 For local usage and development, first create an environment (conda or venv).
 
@@ -12,7 +14,7 @@ conda activate dishcovery
 pip install -r requirements.txt
 ```
 
-## Usage
+### Usage
 
 From `Dishcovery` directory, run the following to start the application: 
 
@@ -35,6 +37,7 @@ psql postgres
 CREATE ROLE dishcovery WITH LOGIN PASSWORD 'dishcovery';
 \du # to check user list
 CREATE DATABASE dishcovery_app_db;
+python src/database/create_tables.py
 ```
 6. Exit (`\q`)and relogin:
 ```
