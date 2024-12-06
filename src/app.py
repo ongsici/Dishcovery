@@ -1,7 +1,5 @@
 import requests
 from flask import Flask, render_template, request, redirect, url_for, make_response
-from flask_sqlalchemy import SQLAlchemy
-from src.utils.data_models import IngredientsInput
 from src.utils.get_spoonacular import get_nutrition_by_id, get_recipe_by_id, get_recipe_by_ingredients
 from src.utils.get_nutrition_intake import get_daily_nutrition_intake
 from src.database.create_tables import db, SavedRecipe
@@ -75,7 +73,7 @@ def ingredients_search():
         # Fetch recipe details and nutrition for the current recipe ID
         recipe_details = get_recipe_by_id(recipe_id)
         recipe_nutrition = get_nutrition_by_id(recipe_id)
-
+        
         if recipe_details is None or recipe_nutrition is None:
             return render_template(
             "recipe_search_results.html", 
