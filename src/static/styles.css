@@ -566,7 +566,7 @@ input[type="range"] {
 /* Chatbot button and pop-up styles */
 .chatbot-btn {
     position: fixed;
-    bottom: 100px;
+    bottom: 80px;
     right: 20px;
     background-color: #fbfbfb; /* WhatsApp green */
     color: #006023; /* Green color for the icon */
