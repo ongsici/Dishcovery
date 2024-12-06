@@ -1,6 +1,6 @@
 # Dishcovery
 
-The app is deployed [here](dishcovery-app.impaas.uk).
+The app is deployed [here](https://dishcovery-app.impaas.uk/).
 
 ![homepage](public/dishcovery-homepage.png)
 
