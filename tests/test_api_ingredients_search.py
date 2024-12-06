@@ -6,17 +6,14 @@ from unittest.mock import patch
 from mock_data import mock_recipes_by_ingredients, mock_recipe_by_id, mock_nutrition_by_id
 
 from src.app import app
-os.environ['FLASK_ENV'] = 'development'
 
 class TestIngredientsSearch(unittest.TestCase):
     def setUp(self):
-        # Configure the test client
         with patch.dict(os.environ, {
             'PG_USER': 'test_user',
             'PG_PASSWORD': 'test_password',
             'PG_HOST': 'localhost',
-            'PG_PORT': '5432',
-            'FLASK_ENV': 'test',
+            'PG_PORT': '5432'
         }):
             with app.test_client() as client:
                 self.app = client
@@ -58,31 +55,30 @@ class TestIngredientsSearch(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Failed to fetch recipes", response.data)
 
-    # @patch("src.app.get_recipe_by_ingredients")
-    # @patch("src.app.get_recipe_by_id")
-    # def test_recipe_details_fetch_failure(self, mock_get_recipe_by_id, mock_get_recipe_by_ingredients):
-    #     mock_get_recipe_by_ingredients.return_value = mock_get_recipe_by_ingredients
-    #     mock_get_recipe_by_id.return_value = None
+    @patch("src.app.get_recipe_by_ingredients")
+    @patch("src.app.get_recipe_by_id")
+    def test_recipe_details_fetch_failure(self, mock_get_recipe_by_id, mock_get_recipe_by_ingredients):
+        mock_get_recipe_by_ingredients.return_value = mock_recipes_by_ingredients
+        mock_get_recipe_by_id.return_value = None
 
-    #     response = self.app.post("/ingredients_search", data={"ingredients": ["spaghetti"]})
-        # print("Mocked get_recipe_by_id called with:", mock_recipe_by_id.call_args)
-        # print(mock_get_recipe_by_id.return_value)
+        response = self.app.post("/ingredients_search", data={"ingredients": ["spaghetti"]})
+        print(mock_get_recipe_by_id.return_value)
 
-        # self.assertEqual(response.status_code, 200)
-        # self.assertIn(b"Failed to fetch recipes", response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Failed to fetch recipes", response.data)
 
-    # @patch("src.app.get_recipe_by_ingredients")
-    # @patch("src.app.get_recipe_by_id")
-    # @patch("src.app.get_nutrition_by_id")
-    # def test_nutrition_fetch_failure(self, mock_get_nutrition_by_id, mock_get_recipe_by_id, mock_get_recipe_by_ingredients):
-    #     mock_get_recipe_by_ingredients.return_value = mock_get_recipe_by_ingredients
-    #     mock_get_recipe_by_id.return_value = mock_get_recipe_by_id
-    #     mock_get_nutrition_by_id.return_value = None
+    @patch("src.app.get_recipe_by_ingredients")
+    @patch("src.app.get_recipe_by_id")
+    @patch("src.app.get_nutrition_by_id")
+    def test_nutrition_fetch_failure(self, mock_get_nutrition_by_id, mock_get_recipe_by_id, mock_get_recipe_by_ingredients):
+        mock_get_recipe_by_ingredients.return_value = mock_recipes_by_ingredients
+        mock_get_recipe_by_id.return_value = mock_get_recipe_by_id
+        mock_get_nutrition_by_id.return_value = None
 
-    #     response = self.app.post("/ingredients_search", data={"ingredients": ["spaghetti"]})
+        response = self.app.post("/ingredients_search", data={"ingredients": ["spaghetti"]})
 
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertIn(b"Failed to fetch recipes", response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Failed to fetch recipes", response.data)
 
 if __name__ == "__main__":
     unittest.main()

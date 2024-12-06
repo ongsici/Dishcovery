@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-if os.getenv("FLASK_ENV") != "test" and os.getenv("GITHUB_ACTIONS") is None:
+if os.getenv("GITHUB_ACTIONS") is None:
     load_dotenv()
 
 PG_USER = os.getenv('PG_USER')

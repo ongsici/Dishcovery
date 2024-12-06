@@ -1,4 +1,3 @@
-import requests
 from flask import Flask, render_template, request, redirect, url_for, make_response
 from src.utils.get_spoonacular import get_nutrition_by_id, get_recipe_by_id, get_recipe_by_ingredients
 from src.utils.get_nutrition_intake import get_daily_nutrition_intake
@@ -12,7 +11,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{PG_USER}:{PG_PASSWORD}@{
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
-# db = SQLAlchemy(app)
 
 global_results = {}
 
@@ -222,12 +220,6 @@ def nutrition_query():
     weight = request.form.get("weight")
     activity_level = request.form.get("activityLevel")
 
-    #print(f'age: {age, type(age)}')
-    #print(f'gender: {gender, type(gender)}')
-    #print(f'height: {height, type(height)}')
-    #print(f'weight: {weight, type(weight)}')
-    #print("ACTIVITY LEVEL BEFORE:", activity_level)
-
     rec_intake = get_daily_nutrition_intake(gender, age, height, weight, activity_level)
     if rec_intake:
         rec_intake_json = json.dumps(rec_intake)
@@ -251,7 +243,6 @@ def nutrition_query_results():
 
     # Fetch saved recipes from the database
     saved_recipes = SavedRecipe.query.all()
-    #print("ACTIVITY LEVEL:", activity_level)
 
     # Render the results page with form data, results, and saved recipes
     return render_template("nutrition_query_results.html", 
@@ -327,10 +318,6 @@ def save_recipe():
             carbohydrate=convert_to_float(carbohydrate_in),
             fat=convert_to_float(fat_in),
             protein=convert_to_float(protein_in)
-            # calories=float(recipe['nutrition']['calories'][:-1]),
-            # carbohydrate=float(recipe['nutrition']['carbohydrate'][:-1]),
-            # fat=float(recipe['nutrition']['fat'][:-1]),
-            # protein=float(recipe['nutrition']['protein'][:-1])
         )
         try:
             with app.app_context():
