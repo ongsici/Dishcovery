@@ -11,7 +11,14 @@ os.environ['FLASK_ENV'] = 'development'
 class TestIngredientsSearch(unittest.TestCase):
     def setUp(self):
         # Configure the test client
-        self.app = app.test_client()
+        with patch.dict(os.environ, {
+            'PG_USER': 'test_user',
+            'PG_PASSWORD': 'test_password',
+            'PG_HOST': 'localhost',
+            'PG_PORT': '5432'
+        }):
+            with app.test_client() as client:
+                self.app = client
         self.app.testing = True
 
     @patch("src.app.get_recipe_by_ingredients")
