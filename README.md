@@ -1,7 +1,8 @@
 # Dishcovery
 
-The app is deployed on dishcovery-app.impaas.uk.
+The app is deployed [here](dishcovery-app.impaas.uk).
 
+![homepage](public/dishcovery-homepage.png)
 
 ## Instructions for Local Installation / Usage
 
