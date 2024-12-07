@@ -8,7 +8,6 @@ from flask_sqlalchemy import SQLAlchemy
 from src.config import PG_HOST, PG_PASSWORD, PG_USER, PG_PORT
 
 
-
 # Base = declarative_base()
 db = SQLAlchemy()
 Base = db.Model

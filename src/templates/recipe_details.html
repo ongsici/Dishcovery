@@ -21,19 +21,19 @@
         {% if from_page == 'search_results' %}
             <form action="/save_recipe" method="POST">
                 <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-                <button type="submit" class="submit-btn save-btn">Save Recipe</button>
+                <button type="submit" class="save-btn">Save Recipe</button>
             </form>
         {% elif from_page == 'saved_recipes' %}
             <form action="/unsave_recipe" method="POST" style="margin-left: 10px;">
                 <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
-                <button type="submit" class="submit-btn unsave-btn">Unsave Recipe</button>
+                <button type="submit" class="save-btn unsave-btn">Unsave Recipe</button>
             </form>
         {% endif %}
     </div>
 
     <div id="toast" class="toast">
         <div class="toast-content">Recipe Saved Successfully!</div>
-        <button class="close-button" onclick="document.getElementById('toast').classList.remove('show');">×</button>
+        <button class="close-button" onclick="document.getElementById('toast').classList.remove('show');"></button>
     </div>
 
     <script>
@@ -46,23 +46,6 @@
                 window.location.reload(true);
             }, 50);
         }
-        // function goBack() {
-        //     // Check if the referrer URL matches the saved recipes page
-        //     const referrer = document.referrer; // The URL of the previous page
-        //     const savedRecipesPage = "http://10.74.130.185:8000/saved_recipes"; // Replace with your actual saved recipes URL
-
-        //     console.log("Referrer: ", referrer);
-        //     console.log("Saved recipes page:", savedRecipesPage);
-
-        //     if (referrer && referrer.includes(savedRecipesPage)) {
-        //         window.location.replace(savedRecipesPage);
-        //         print("at saved_recipes");
-        //         window.location.reload;
-        //     }
-        //     else {
-        //         window.history.back();
-        //     }
-        // }
 
         // Check if success or failure flag and toast message is passed via query parameters
         const urlParams = new URLSearchParams(window.location.search);
@@ -129,9 +112,6 @@
     <p><strong>Carbohydrate:</strong> {{ recipe.nutrition.carbohydrate }}</p>
     <p><strong>Fat:</strong> {{ recipe.nutrition.fat }}</p>
     <p><strong>Protein:</strong> {{ recipe.nutrition.protein }}</p>
-    <!-- <p><strong>Missed Ingredients:</strong> {{ recipe.missed_ingredients | join(', ') }}</p>
-    <p><strong>Used Ingredients:</strong> {{ recipe.used_ingredients | join(', ') }}</p> -->
-    <!-- <a href="/recipes">Back to Search</a> -->
 
     <footer>
         &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.

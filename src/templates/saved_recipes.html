@@ -13,12 +13,13 @@
             <h1><a href="/" style="text-decoration: none; color: inherit;">dishcovery</a></h1>
             <h2 class = "subheader">Saved Recipes</h2>
 
+            <!-- Sort drop-box -->
             <form method="GET" action="{{ url_for('saved_recipes') }}">
                 <div class="top-controls">
                     <div class="form-group">                 
                         <label for="sort">Sort:</label>
                         <select id="sort" name="sort" onchange="this.form.submit()">
-                            <option value="default" {% if request.args.get('sort') == 'default' %}selected{% endif %}>Default</option>
+                            <option value="default" {% if request.args.get('sort') == 'default' %}selected{% endif %}>--Default--</option>
                             <option value="name" {% if request.args.get('sort') == 'name' %}selected{% endif %}>Name</option>
                             <option value="calories" {% if request.args.get('sort') == 'calories' %}selected{% endif %}>Calories</option>
                             <option value="carbohydrate" {% if request.args.get('sort') == 'carbohydrate' %}selected{% endif %}>Carbohydrate</option>
@@ -29,7 +30,7 @@
                 </div>
             </form>
 
-            <!-- Recipes listed in card containers -->
+            <!-- List individual recipes in card containers -->
             <div id="card-container" class="card-container">
                 {% if recipes %}
                     {% for recipe in recipes %}
@@ -43,21 +44,6 @@
                                 <p><strong>Protein:</strong> {{ recipe.protein | int }} g</p>
                             </div>
                         </a>
-
-                        <!-- <h2>{{ recipe.name }}</h2>
-                        <img src="{{ recipe.image }}" alt="{{ recipe.name }}">
-                        <p><strong>Instructions:</strong></p>
-                        <p>
-                            {% for step in recipe.instructions.split('.') %}
-                                {% if step.strip() %}
-                                    {{ loop.index }}. {{ step.strip() | safe }}<br>
-                                {% endif %}
-                            {% endfor %}
-                        </p>
-                        <p><strong>Calories:</strong> {{ recipe.calories }}</p>
-                        <p><strong>Carbohydrate:</strong> {{ recipe.carbohydrate }}</p>
-                        <p><strong>Fat:</strong> {{ recipe.fat }}</p>
-                        <p><strong>Protein:</strong> {{ recipe.protein }}</p> -->
                     {% endfor %}
                 {% else %}
                     <p>No saved recipes found</p>

@@ -43,7 +43,3 @@ jobs:
           app-name: dishcovery-app
           deployment-token: ${{ secrets.IMPAAS_DEPLOY_TOKEN }}
           method: PLATFORM
-      # - name: Clear database table
-      #   run: |
-      #     echo "Clearing database table..."
-      #     python src/database/clear_tables.py

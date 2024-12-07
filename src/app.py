@@ -32,13 +32,6 @@ def ingredients_search():
     search_query = request.form['ingredients']
     ingredients_list = [search_query]
 
-    # ingredient_list could contain commas, so maybe need to split to form the list
-
-    
-
-    # filter_option = data.get("filter", "default1")
-    # sort_option = data.get("sort", "default")
-    
     # Get the list of recipes based on the ingredients list
     recipe_ingredients = get_recipe_by_ingredients(ingredients_list)
 
@@ -48,8 +41,6 @@ def ingredients_search():
             recipes=None, 
             error="Failed to fetch recipes. Please try again later."
         )
-    
-    # Initialize an empty dictionary to store the organized recipe details
     
     # Loop through each recipe in the list and fetch the details and nutrition info
     for recipe in recipe_ingredients:
@@ -142,16 +133,16 @@ def recipe_details(recipe_id):
         if recipe_details is None or recipe_nutrition is None:
             return "Recipe not found", 404
 
-        # # Parse API responses into the expected format
+        # Parse API responses into the expected format
         missed_ingredients = []
         used_ingredients = []
         extended_ingredients = []
 
-        # # Extract missedIngredients (only the names)
+        # Extract missedIngredients (only the names)
         for ingredient in recipe_details.get('missedIngredients', []):
             missed_ingredients.append(ingredient['name'])
 
-        # # Extract usedIngredients (only the names)
+        # Extract usedIngredients (only the names)
         for ingredient in recipe_details.get('usedIngredients', []):
             used_ingredients.append(ingredient['name'])
 

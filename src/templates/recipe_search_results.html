@@ -35,8 +35,8 @@
                             <p><strong>Carbohydrate:</strong> {{ recipe.nutrition.carbohydrate }}</p>
                             <p><strong>Fat:</strong> {{ recipe.nutrition.fat }}</p>
                             <p><strong>Protein:</strong> {{ recipe.nutrition.protein }}</p>
-                            <p><strong>Missed Ingredients:</strong> {{ recipe.missed_ingredients | join(', ') }}</p>
-                            <p><strong>Used Ingredients:</strong> {{ recipe.used_ingredients | join(', ') }}</p>
+                            <p><strong>Matching Ingredients:</strong> {{ recipe.used_ingredients | join(', ') }}</p>
+                            <p><strong>Additional Ingredients:</strong> {{ recipe.missed_ingredients | join(', ') }}</p>
                         </div>
                     </a>
                 {% endfor %}

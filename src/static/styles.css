@@ -1,8 +1,14 @@
+/* -------- standard layouts -------- */
+
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    padding: 50px;
-    margin: 20px;
+    padding: 0px;
+    margin: 0px;
     line-height: 1.5;
     background: #f8f9fa;
     color: #333;
@@ -11,48 +17,78 @@ body {
     min-height: 90vh;
 }
 
-/* container for back button and sort dropdown */
-.top-controls {
-    display: flex;
-    justify-content: space-between;  /* space between back button and dropdown */
-    align-items: center;  /* vertically center items */
-    padding: 10px 20px;  /* optional padding around controls */
-    gap: 15px;              /* space between back button and sort drop-box */
-}
-
-/* back button */
-.back-button {
-    background-color: #46805b;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    margin: 0;
-}
-
-.back-button:hover {
-    background-color: #76c191;
-}
-
-
-.button {
-    background-color: #04491d;
-    border: none;
-    color: black;
-    padding: 20px 50px;
+h1 {
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 2em;
-    margin: 20px;
-    cursor: pointer;
-    border-radius: 10px;
-    width: 60%;
-    max-width: 400px;
+    font-family: 'Inter', sans-serif; 
+    font-size: 3.5em;
+    color: #006023;
+    margin-top: 20px;
+    margin-bottom: 120px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+h3 {
+    margin-bottom: 10px;
+}
+
+.subheader {
+    color: #3e5947;
+    font-family: 'Roboto', sans-serif;
+    font-size: 2.5em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.content {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #04491d;
+    color: rgb(205, 205, 205);
+    font-size: 14px;
+    margin-top: 50px;
+}
+
+/* for viewports width <= 600px */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.5em;
+    }
+    .card {
+        width: 100%;
+        padding: 20px;
+    }
+    .recipe-image {
+        width: 90%;
+    }
+}
+
+
+/* -------- card layout -------- */
 
 .card {
     background: none; 
@@ -71,12 +107,10 @@ body {
     justify-content: space-between;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
-
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
+.card:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); 
+    transform: translateY(-10px);
+    border-color: #9ecbae;
 }
 
 .card h2 {
@@ -88,12 +122,6 @@ body {
     font-weight: 700;
 }
 
-.card:hover {
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); 
-    transform: translateY(-10px);
-    border-color: #9ecbae;
-}
-
 .card i {
     font-size: 2.5em;
     color: #76a186;
@@ -103,15 +131,8 @@ body {
     text-align: center;
     transition: color 0.3s
 }
-
 .card:hover i {
     color: #333; 
-}
-
-/* for recipe card */
-.card-link {
-    text-decoration: none;
-    color: inherit;
 }
 
 .card p {
@@ -123,37 +144,117 @@ body {
     font-weight: 400;
 }
 
-.container {
-    background-color: #fff;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
 }
 
-.content {
-    flex: 1;
-    text-align: center;
-    padding: 20px;
-}
-
-footer {
-    margin-top: 50px;
-    padding: 20px;
-    background-color: #04491d;
-    color: white;
-    font-size: 0.9em;
-}
-
-footer a {
-    color: #fff;
+/* for listing recipes */
+.card-link {
     text-decoration: none;
-    font-weight: bold;
+    color: inherit;
 }
 
-/* sort drop-box */
+/* image in recipe_details */
+.recipe-image {
+    width: 40%;          /* adjust percentage as needed */
+    display: block;
+    margin: 20px auto;   /* centers the image horizontally */
+}
+
+
+/* -------- button layout -------- */
+
+.top-controls {
+    display: flex;
+    justify-content: space-between;     /* horizontal alignment of elements */
+    align-items: center;                /* align elements vertically */
+    padding: 10px 20px;                 /* <top/bottom> <left/right> */
+    gap: 15px;                          /* space between elements */
+    margin-bottom: 60px;
+}
+
+.button {
+    background-color: #04491d;
+    border: none;
+    color: black;
+    padding: 20px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2em;
+    margin: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 400px;
+}
+
+.back-button {
+    background-color: #46805b;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin: 0;
+    margin-left: 140px;
+    display: inline-block; /* Ensure it doesn't stretch to fill its container */
+    width: auto; /* Prevent it from inheriting a stretched width */
+}
+.back-button:hover {
+    background-color: #76c191;
+}
+
+.submit-btn {
+    background-color: #415a4b;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+    width: 60%;
+    margin-top: 30px;
+}
+.submit-btn:hover {
+    background-color: #6f907b;
+}
+
+.save-btn {
+    background-color: #337ca1; /* Unique background color for save-btn */
+    color: white;
+    border: none;
+    padding: 10px; /* Consistent padding */
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+    width: auto; /* Prevent stretching */
+    min-width: 130px; /* Set a minimum width to prevent text wrapping */
+    margin-right: 140px; /* Adds space to the right */
+    display: inline-block; /* Ensures button doesn't stretch */
+}
+.save-btn:hover {
+    background-color: #80cbf0; /* Hover effect */
+}
+
+.unsave-btn {
+    background-color: #c7ac4c;
+}
+.unsave-btn:hover {
+    background-color: #ebd78f;
+}
+
+
+/* -------- sort styling -------- */
+
+/* drop-box */
 .form-group {
     display: flex;
     align-items: center;
@@ -161,9 +262,9 @@ footer a {
     margin-top: 50px;
     margin-bottom: 30px;
     font-family: Arial, sans-serif;
+    margin-left: 90px; /* Adjust this value to move the group to the right */
 }
 
-/* sort */
 label[for="sort"] {
     font-weight: bold;
     display: inline-block;
@@ -172,7 +273,6 @@ label[for="sort"] {
     line-height: 32px;
 }
 
-/* select box */
 select#sort {
     display: inline-block;
     width: 200px;  /* adjust width as needed */
@@ -187,167 +287,7 @@ select#sort {
 }
 
 
-h1 {
-    text-align: center;
-    font-family: 'Inter', sans-serif; 
-    font-size: 3.5em;
-    color: #006023;
-    margin-top: 10px;
-    margin-bottom: 120px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-h2 {
-    text-align: center;
-    color: #333;
-}
-
-.subheader {
-    text-align: center;
-    color: #3e5947;
-    font-family: 'Roboto', sans-serif;
-    font-size: 2.5em;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-top: 20px;
-    margin-bottom: 30px;
-}
-
-
-input[type="radio"] {
-    width: auto;
-    margin-right: 10px;
-}
-
-input[type="text"], input[type="number"], input[type="radio"], input[type="submit"] {
-    width: 90%;
-    padding: 8px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-label {
-    font-size: 16px;
-    margin-bottom: 6px;
-    display: block;
-    color: #333;
-}
-
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2.5em;
-    }
-    .card {
-        width: 100%;
-        padding: 20px;
-    }
-    .recipe-image {
-        width: 90%;
-    }
-}
-
-.radio-group {
-    display: flex;
-    align-items: left;
-    margin-bottom: 10px;
-    gap: 1px; /* Adds space between the radio button and the label */
-    justify-content: flex-start; /* Aligns the radio buttons and labels to the left */
-}
-
-.radio-group label {
-    margin-right: 20px;
-}
-
-.recipe-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: 300px;
-    text-decoration: none;
-    color: #333;
-}
-
-.recipe-card .content {
-    padding: 15px;
-}
-
-.recipe-card h3 {
-    margin: 0 0 10px;
-    font-size: 1.2em;
-}
-
-.recipe-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.recipe-card p {
-    margin: 0;
-    color: #777;
-}
-
-.recipe-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-/* image in recipe_details */
-.recipe-image {
-    width: 40%; /* adjust percentage as needed */
-    display: block;
-    margin: 20px auto; /* centers the image horizontally */
-}
-
-.results {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #e8f5e9;
-    border-radius: 8px;
-    border: 1px solid #c8e6c9;
-}
-
-
-/* button style configurations */
-.submit-btn {
-    background-color: #415a4b;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 4px;
-    text-align: center;
-    width: 100%;
-    margin-top: 50px;
-}
-
-.submit-btn:hover {
-    background-color: #6f907b;
-}
-
-/* inheriting from submit-btn */
-.save-btn {
-    background-color: #337ca1;
-}
-
-.save-btn:hover {
-    background-color: #80cbf0;
-}
-
-.unsave-btn {
-    background-color: #c7ac4c;
-}
-
-.unsave-btn:hover {
-    background-color: #ebd78f;
-}
+/* ----- save/unsave recipe toast messages ----- */
 
 @keyframes slideDown {
     0% {
@@ -356,7 +296,7 @@ label {
     100% {
         transform: translateY(0);
     }
-    }
+}
 
 .toast {
     position: fixed;
@@ -417,23 +357,53 @@ label {
     transform: translateY(-50%);
 }
 
-html, body {
-    height: 100%;
+
+/* ----- nutrition tracker styles ----- */
+
+input[type="text"], input[type="number"], input[type="radio"], input[type="submit"] {
+    width: 90%;
+    padding: 8px;
+    margin: 8px 0;
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-/* General styling for the content */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
+input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
 }
 
-h1 {
-    text-align: center;
-    margin-top: 20px;
+/* label for selecting recipes in nutrition query */
+label {
+    font-size: 16px;
+    margin-bottom: 6px;
+    display: block;
+    color: #333;
 }
 
+.radio-group {
+    display: flex;
+    align-items: left;
+    margin-bottom: 10px;
+    gap: 160px; /* Adds space between the radio button and the label */
+    justify-content: center; /* Aligns the radio buttons and labels to the left */
+}
+
+input[type="radio"] {
+    margin-right: -140px; /* Keeps a small gap between the radio button and the label */
+}
+
+/* daily nutrition format */
+.results {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e8f5e9;
+    border-radius: 8px;
+    border: 1px solid #c8e6c9;
+}
+
+/* also used in recipe_search */
 .container {
     max-width: 650px;
     margin: 20px auto;
@@ -469,37 +439,12 @@ h1 {
     background-color: #f9f9f9;
 }
 
-/* General styling for headers and list items */
-h3 {
-    margin-bottom: 10px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 8px;
-}
-
-strong {
-    font-weight: bold;
-}
-
-/* Styling for footer */
-footer {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 14px;
-    color: #888;
-}
-
-/* Slider Styling */
+/* Acitvity Level Slider */
 input[type="range"] {
     width: 90%; /* Make the slider span the entire container width */
     max-width: 400px; /* Limit the max width if needed */
     margin: 10px 0;
+    margin-bottom: 50px;
 }
 
 #activityLevelText {
@@ -558,6 +503,7 @@ input[type="range"] {
     color: #e74c3c;
     vertical-align: middle;
 }
+
 
 /**********************************************/
 /*************** CHATBOT STYLES ***************/
