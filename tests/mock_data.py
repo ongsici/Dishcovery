@@ -1,3 +1,8 @@
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from src.database.create_tables import SavedRecipe
+
 mock_recipes_by_ingredients = [
     {
         "id": 655573,
@@ -64,3 +69,26 @@ mock_recipe_by_id = {
         {'id': 11120420, 'name': 'penne', 'amount': 14.0, 'unit': 'oz', 'image': 'penne-pasta.jpg'}
     ]
 }
+
+mock_saved_recipes_query_all = [
+            SavedRecipe(
+                recipe_id=648475, 
+                name="Japanese Gyoza Pot Stickers", 
+                image="https://img.spoonacular.com/recipes/648475-556x370.jpg", 
+                instructions="<ol><li>Chop cabbage fine, place in colander and pour boiling water over the cabbage. Cool to touch, then squeeze cabbage well to get the water out. In a bowl mix cabbage, chopped green onions, chopped mushrooms and grated ginger. Mix ground beef, wine, soy sauce, sesame oil and black pepper together with vegetables; mix well. Place a small amount of filling (about 1 teaspoon) in center of gyoza wrapping and fold in half. Pleat edge to seal. If edges won't stick together, dampen the inside edge with a little water, then pleat. Put 2 tablespoon salad oil in </li></ol>", 
+                calories=463.0, 
+                carbohydrate=8.0, 
+                fat=31.0, 
+                protein=13.0
+            ),
+            SavedRecipe(
+                recipe_id=660837, 
+                name="Spaghetti With Smoked Salmon and Prawns", 
+                image="https://img.spoonacular.com/recipes/660837-556x370.jpg", 
+                instructions="<ol><li>Cook spaghetti as per packet instructions. Dish up and put in a large bowl.</li><li>Use fork to loosen the smoked salmon and set aside.</li><li>Heat frying pan at medium heat, add olive oil and throw in garlic and saute for a while.</li><li>Then add in prawns and fry till cooked, lower heat and pour in the smoked salmon and fresh dills ~ stir fry well and off heat.</li><li>Lastly pour all the ingredients on the cooked spaghetti and toss well with some pepper then serve into individual plate.</li><li>Enjoy!</li></ol>", 
+                calories=61.0, 
+                carbohydrate=60.0, 
+                fat=6.0, 
+                protein=2.0
+            )
+        ]
