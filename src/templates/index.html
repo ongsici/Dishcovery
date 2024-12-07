@@ -47,11 +47,22 @@
                         <div class="chatbot-avatar">
                             <i class="fas fa-robot" style="color: #fff;"></i>
                         </div>
+
+                        <!-- initial chatbot message -->
                         <div class="chatbot-message-box">
                             Hello! I'm still a trainee and am learning the ropes!
                         </div>
                     </div>
+
+                    <!-- option to generate random ingredient -->
+                    <div class="chat-options">
+                        <button class="chat-option-button" onclick="sendPredeterminedMessage()">
+                            Give me a random ingredient!
+                        </button>
+                    </div>
                 </div>
+
+                <!-- write your own message -->
                 <div class="input-area">
                     <input type="text" id="user-message" placeholder="Type your message here">
                     <button onclick="sendMessage()">Send</button>
@@ -63,6 +74,7 @@
             &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.
         </footer>
 
+
         <script>
             // Toggle chat window
             function toggleChat() {
@@ -70,6 +82,7 @@
                 popup.style.display = popup.style.display === "block" ? "none" : "block";
             }
 
+            // User inputs their own message
             function sendMessage() {
                 var userMessage = document.getElementById("user-message").value;
                 if (userMessage.trim()) {
@@ -92,6 +105,9 @@
                     // Scroll to bottom
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
+                    // Hide the random ingredient button after sending a message
+                    hideRandomIngredientButton();
+
                     // Respond with a chatbot message (simulated)
                     setTimeout(function () {
                         var botMessageDiv = document.createElement("div");
@@ -101,12 +117,100 @@
                                 <i class="fas fa-robot" style="color: #fff;"></i>
                             </div>
                             <div class="chatbot-message-box">
-                                Sorry I'm still learning how to chat with humans, please be patient with me!
+                                Sorry I'm still learning how to chat with humans, please be patient with me! >.<
                             </div>
                         `;
                         messagesContainer.appendChild(botMessageDiv);
                         messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                    }, 1000); // Simulate a delay for bot response
+
+                        // After the bot reply, show the random ingredient button (after a small delay)
+                        setTimeout(showRandomIngredientButton, 500);
+                    }, 500); // Simulate a delay for bot response
+                }
+            }
+
+            // Pre-determined message: random ingredient generation
+            function sendPredeterminedMessage() {
+                const predeterminedMessage = "Could you give me a random ingredient to search recipes?";
+                appendUserMessage(predeterminedMessage);
+
+                // Hide the random ingredient button after it's clicked
+                hideRandomIngredientButton();
+
+                // Generate random ingredient
+                const ingredients = ["Saffron", "Lotus Root", "Basil", "Garlic", "Avocado", "Lemon", "Spinach", "Mushroom", "Shiso", "Corn"];
+                const randomIngredient = ingredients[Math.floor(Math.random() * ingredients.length)];
+
+                // Bot reply with random ingredient
+                generateBotReply(`Sure! Here's a random ingredient: ${randomIngredient}`);
+            }
+
+            // Adds user's message to chat interface
+            function appendUserMessage(message) {
+                var messagesContainer = document.getElementById("messages");
+                var userMessageDiv = document.createElement("div");
+                userMessageDiv.classList.add("user-message");
+                userMessageDiv.innerHTML = `
+                    <div class="user-message-box">${message}</div>
+                    <div class="user-avatar">
+                        <span style="color: #fff;">U</span>
+                    </div>
+                `;
+                messagesContainer.appendChild(userMessageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+
+            // Simulate delay for bot response
+            function generateBotReply(message) {
+                setTimeout(function () {
+                    var messagesContainer = document.getElementById("messages");
+                    var botMessageDiv = document.createElement("div");
+                    botMessageDiv.classList.add("chatbot-message");
+                    botMessageDiv.innerHTML = `
+                        <div class="chatbot-avatar">
+                            <i class="fas fa-robot" style="color: #fff;"></i>
+                        </div>
+                        <div class="chatbot-message-box">${message}</div>
+                    `;
+                    messagesContainer.appendChild(botMessageDiv);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                    // After the bot reply, show the random ingredient button
+                    setTimeout(showRandomIngredientButton, 500); // Make sure the button appears after a small delay
+                }, 500); // Reduced delay to 500ms
+            }
+
+            // Show the random ingredient button below the last chatbot message
+            function showRandomIngredientButton() {
+                var messagesContainer = document.getElementById("messages");
+
+                // Check if the button already exists and do not add again if it's there
+                if (!document.querySelector(".chat-options")) {
+                    var optionsDiv = document.createElement("div");
+                    optionsDiv.classList.add("chat-options");
+
+                    var randomIngredientButton = document.createElement("button");
+                    randomIngredientButton.classList.add("chat-option-button");
+                    randomIngredientButton.innerHTML = "Give me a random ingredient!";
+                    randomIngredientButton.onclick = function() {
+                        sendPredeterminedMessage();  // Trigger the random ingredient response
+                    };
+
+                    optionsDiv.appendChild(randomIngredientButton);
+
+                    // Append the options div below the last bot message
+                    messagesContainer.appendChild(optionsDiv);
+
+                    // Scroll to bottom
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            }
+
+            // Function to hide the random ingredient button if it exists
+            function hideRandomIngredientButton() {
+                var existingButton = document.querySelector(".chat-options");
+                if (existingButton) {
+                    existingButton.remove();  // Use remove() to completely remove the button
                 }
             }
         </script>

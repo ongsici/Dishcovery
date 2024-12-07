@@ -622,7 +622,37 @@ input[type="range"] {
     max-width: 70%;
 }
 
-/* User message */
+
+/* --- Pre-determined chat options --- */
+
+/* Container for chat options */
+.chat-options {
+    /* margin-top: 10px; Add spacing above the options */
+    margin-bottom: 20px;
+    display: flex;    /* Arrange buttons horizontally */
+    justify-content: center;    /* Center the buttons horizontally */
+}
+
+.chat-option-button {
+    background-color: #ffffff;
+    color: #017c3d;
+    border: 2px solid #669b79;  /* Green border */
+    /* border-radius: 20px;       Rounded corners */
+    padding: 6px 12px;         /* Padding for button size */
+    font-size: 12px;
+    cursor: pointer;           /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    display: block;            /* Make the button a block element, causing it to appear on a new line */
+    margin: 5px auto;         /* Center the button and add some spacing around it */
+}
+
+/* Ensure buttons fit nicely within chatbot container */
+.chat-container .chat-options {
+    justify-content: center; /* Center the buttons */
+}
+
+
+/* -------- User message -------- */
 .user-message {
     font-family: 'Roboto', sans-serif;
     font-size: 0.8rem;
@@ -657,7 +687,7 @@ input[type="range"] {
 .input-area {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 0px 10px;
     background-color: #efefef;
     border-top: 1px solid #ddd;
     border-bottom-left-radius: 8px;
@@ -672,6 +702,8 @@ input[type="range"] {
     border-radius: 5px;
     border: 1px solid #ddd;
     font-size: 0.85rem;
+    box-sizing: border-box;
+    margin-top: 30px;  /* Adjust this value to lower the input box */
 }
 
 .input-area button {
