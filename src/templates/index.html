@@ -123,7 +123,7 @@
                         messagesContainer.appendChild(botMessageDiv);
                         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-                        // After the bot reply, show the random ingredient button (after a small delay)
+                        // After the bot reply, show the random ingredient button 
                         setTimeout(showRandomIngredientButton, 500);
                     }, 500); // Simulate a delay for bot response
                 }
@@ -176,8 +176,8 @@
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
                     // After the bot reply, show the random ingredient button
-                    setTimeout(showRandomIngredientButton, 500); // Make sure the button appears after a small delay
-                }, 500); // Reduced delay to 500ms
+                    setTimeout(showRandomIngredientButton, 500); 
+                }, 500); 
             }
 
             // Show the random ingredient button below the last chatbot message
@@ -210,7 +210,7 @@
             function hideRandomIngredientButton() {
                 var existingButton = document.querySelector(".chat-options");
                 if (existingButton) {
-                    existingButton.remove();  // Use remove() to completely remove the button
+                    existingButton.remove(); 
                 }
             }
         </script>

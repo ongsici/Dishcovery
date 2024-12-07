@@ -6,9 +6,6 @@
     <title>{{ recipe.name }} - Recipe Details</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  
-
-
 
 </head>
 
@@ -73,10 +70,8 @@
             setTimeout(() => {
                 toast.classList.remove('show');
                 window.history.back();
-            }, 4000); // Toast will disappear after 4 seconds
+            }, 4000); 
             
-            // go back once, so that the back button now works
-            // window.history.back();
 
             // Set up the close button functionality
             const closeButton = toast.querySelector('.close-button');

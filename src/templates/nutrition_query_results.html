@@ -111,13 +111,13 @@
     </footer>
 
     <script>
-        // Add an event listener for when the user selects a recipe
+        // event listener for when the user selects a recipe
         document.getElementById('recipe-select').addEventListener('change', function() {
             const recipeId = this.value;
 
             if (recipeId) {
                 fetch(`/get_recipe_nutrition/${recipeId}`)
-                    .then(response => response.json()) // Make sure the response is parsed as JSON
+                    .then(response => response.json())
                     .then(data => {
                         // Display recipe nutrition info
                         document.getElementById('recipe-calories').textContent = data.calories;

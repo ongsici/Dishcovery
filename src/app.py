@@ -51,11 +51,11 @@ def ingredients_search():
         used_ingredients = []
         extended_ingredients = []
 
-        # Extracting missedIngredients (only the names)
+        # Extracting missedIngredients
         for ingredient in recipe['missedIngredients']:
             missed_ingredients.append(ingredient['name'])
         
-        # Extracting usedIngredients (only the names)
+        # Extracting usedIngredients
         for ingredient in recipe['usedIngredients']:
             used_ingredients.append(ingredient['name'])
 
@@ -75,7 +75,6 @@ def ingredients_search():
             image = ingredient.get('image')
             metric = ingredient.get("measures", {}).get("metric", {})
             
-            # Prepare the metric in a readable format
             if metric:
                 metric_info = f"{metric.get('amount', '')} {metric.get('unitShort', '')}"
             else:
@@ -89,22 +88,22 @@ def ingredients_search():
 
         # Organize the response into a structured dictionary
         organized_recipe = {
-            "id": recipe_id,  # Include recipe ID
-            "name": recipe_name,  # Include recipe name
-            "image": recipe_details.get('image'),  # Include image
+            "id": recipe_id, 
+            "name": recipe_name, 
+            "image": recipe_details.get('image'),
             "instructions": recipe_details.get('instructions'),
-            "extended_ingredients": extended_ingredients,  # Include ingredients from the details
-            "missed_ingredients": missed_ingredients,  # Only names of missed ingredients
-            "used_ingredients": used_ingredients,  # Only names of used ingredients
+            "extended_ingredients": extended_ingredients,  
+            "missed_ingredients": missed_ingredients, 
+            "used_ingredients": used_ingredients,
             "ready_in_minutes": recipe_details.get('readyInMinutes'),
-            "labels": {  # Labels for dietary preferences
+            "labels": {  
                 "vegan": recipe_details.get('vegan'),
                 "vegetarian": recipe_details.get('vegetarian'),
                 "glutenFree": recipe_details.get('glutenFree'),
                 "lowFodmap": recipe_details.get('lowFodmap'),
                 "sustainable": recipe_details.get('sustainable')
             },
-            "nutrition": {  # Nutrition information
+            "nutrition": { 
                 "calories": recipe_nutrition.get('calories'),
                 "carbohydrate": recipe_nutrition.get('carbs'),
                 "fat": recipe_nutrition.get('fat'),
@@ -133,16 +132,15 @@ def recipe_details(recipe_id):
         if recipe_details is None or recipe_nutrition is None:
             return "Recipe not found", 404
 
-        # Parse API responses into the expected format
         missed_ingredients = []
         used_ingredients = []
         extended_ingredients = []
 
-        # Extract missedIngredients (only the names)
+        # Extract missedIngredients
         for ingredient in recipe_details.get('missedIngredients', []):
             missed_ingredients.append(ingredient['name'])
 
-        # Extract usedIngredients (only the names)
+        # Extract usedIngredients 
         for ingredient in recipe_details.get('usedIngredients', []):
             used_ingredients.append(ingredient['name'])
 
@@ -151,7 +149,6 @@ def recipe_details(recipe_id):
             image = ingredient.get('image')
             metric = ingredient.get("measures", {}).get("metric", {})
 
-            # Prepare the metric in a readable format
             if metric:
                 metric_info = f"{metric.get('amount', '')} {metric.get('unitShort', '')}"
             else:
@@ -163,24 +160,23 @@ def recipe_details(recipe_id):
                 "metric": metric_info
             })
         
-        # Organize the response into a structured dictionary
         recipe = {
-            "id": recipe_id,  # Include recipe ID
+            "id": recipe_id,  
             "name": recipe_details.get('title'),
-            "image": recipe_details.get('image'),  # Include image
+            "image": recipe_details.get('image'),  
             "instructions": recipe_details.get('instructions'),
-            "extended_ingredients": extended_ingredients,  # Include ingredients from the details
-            "missed_ingredients": missed_ingredients,  # Only names of missed ingredients
-            "used_ingredients": used_ingredients,  # Only names of used ingredients
+            "extended_ingredients": extended_ingredients, 
+            "missed_ingredients": missed_ingredients,  
+            "used_ingredients": used_ingredients, 
             "ready_in_minutes": recipe_details.get('readyInMinutes'),
-            "labels": {  # Labels for dietary preferences
+            "labels": {  
                 "vegan": recipe_details.get('vegan'),
                 "vegetarian": recipe_details.get('vegetarian'),
                 "glutenFree": recipe_details.get('glutenFree'),
                 "lowFodmap": recipe_details.get('lowFodmap'),
                 "sustainable": recipe_details.get('sustainable')
             },
-            "nutrition": {  # Nutrition information
+            "nutrition": {  
                 "calories": recipe_nutrition.get('calories'),
                 "carbohydrate": recipe_nutrition.get('carbs'),
                 "fat": recipe_nutrition.get('fat'),
@@ -245,7 +241,6 @@ def nutrition_query_results():
 def get_recipe_nutrition(recipe_id):
     recipe = SavedRecipe.query.get_or_404(recipe_id)
 
-    # Return nutrition data as JSON
     return jsonify({
         'calories': recipe.calories,
         'carbohydrates': recipe.carbohydrate,
@@ -262,17 +257,13 @@ def saved_recipes():
     # Apply sorting logic based on the sort option
     if sort_option == 'name':
         saved_recipes = SavedRecipe.query.order_by(SavedRecipe.name.asc()).all()
-    # elif sort_option == 'cooking_time':
-    #     saved_recipes = SavedRecipe.query.order_by(SavedRecipe.ready_in_minutes.asc()).all()
     elif sort_option == 'calories':
         saved_recipes = SavedRecipe.query.order_by(SavedRecipe.calories.asc()).all()
-    # elif sort_option == 'carbohydrates':
-    #     saved_recipes = SavedRecipe.query.order_by(SavedRecipe.carbohydrate.asc()).all()
     elif sort_option == 'fat':
         saved_recipes = SavedRecipe.query.order_by(SavedRecipe.fat.asc()).all()
     elif sort_option == 'protein':
         saved_recipes = SavedRecipe.query.order_by(SavedRecipe.protein.asc()).all()
-    else:  # Default case
+    else:  #default if no sorting from user
         saved_recipes = SavedRecipe.query.all()
 
     response = make_response(render_template("saved_recipes.html", recipes=saved_recipes))
@@ -293,12 +284,10 @@ def save_recipe():
 
         # Function to convert string to float or None if empty
         def convert_to_float(value):
-            # Check if the value is not empty and contains a valid number
-            if value and value != '':  # Not empty
-                # Remove 'g' if it's there and convert to float
+            if value and value != '':
                 return float(value[:-1])
             else:
-                return None  # Return None if the value is empty or invalid
+                return None  
 
         saved_recipe = SavedRecipe(
             recipe_id=recipe['id'],
