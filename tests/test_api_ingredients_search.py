@@ -33,8 +33,8 @@ class TestIngredientsSearch(unittest.TestCase):
 
         # Assertions
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b"Missed Ingredients", response.data)
-        self.assertIn(b"Used Ingredients", response.data)
+        self.assertIn(b"Additional Ingredients", response.data)
+        self.assertIn(b"Matching Ingredients", response.data)
         self.assertIn(b"Protein", response.data)
         self.assertIn(b"Carbohydrate", response.data)
         self.assertIn(b"Calories", response.data)
