@@ -269,9 +269,6 @@ def saved_recipes():
     else:  #default if no sorting from user
         saved_recipes = SavedRecipe.query.all()
 
-
-
-
     response = make_response(render_template("saved_recipes.html", recipes=saved_recipes))
     response.headers['Cache-Control'] = 'no-store'
     return response
