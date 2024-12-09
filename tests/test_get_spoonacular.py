@@ -26,7 +26,7 @@ def test_get_recipe_by_ingredients_success(mock_get, mock_get_api_key):
         params={
             "ingredients": "tomato, garlic, pasta",
             "apiKey": "fake_api_key",
-            "number": 2
+            "number": 5
         }
     )
 
@@ -47,7 +47,7 @@ def test_get_recipe_by_ingredients_failure(mock_get, mock_get_api_key):
         params={
             "ingredients": "tomato, garlic, pasta",
             "apiKey": "fake_api_key",
-            "number": 2
+            "number": 5
         }
     )
 
