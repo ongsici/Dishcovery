@@ -20,11 +20,14 @@ def get_recipe_by_ingredients(ingredients_list: List):
         "apiKey": get_api_key(),
         "number": 5
     }
-    response = requests.get(url, params=params)
-    logger.debug(f'Get recipe by ingredients external API call returned response status code: {response.status_code}')
-    if response.status_code==200:
-        return response.json()
-    else:
+    try:
+        response = requests.get(url, params=params, timeout=10)
+        logger.debug(f'Get recipe by ingredients external API call returned response status code: {response.status_code}')
+        if response.status_code==200:
+            return response.json()
+        else:
+            return None
+    except Exception as e:
         return None
 
 
@@ -33,11 +36,14 @@ def get_recipe_by_id(recipeID: int):
     params = {
         "apiKey": get_api_key()
     }
-    response = requests.get(url, params=params)
-    logger.debug(f'Get recipe by ID external API call returned response status code: {response.status_code}')
-    if response.status_code == 200:
-        return response.json()
-    else:
+    try:
+        response = requests.get(url, params=params)
+        logger.debug(f'Get recipe by ID external API call returned response status code: {response.status_code}')
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return None
+    except Exception as e:
         return None
 
 
@@ -46,9 +52,12 @@ def get_nutrition_by_id(recipeID: int):
     params = {
         "apiKey": get_api_key()
     }
-    response = requests.get(url, params=params)
-    logger.debug(f'Get nutrition by ID external API call returned response status code: {response.status_code}')
-    if response.status_code == 200:
-        return response.json()
-    else:
+    try:
+        response = requests.get(url, params=params)
+        logger.debug(f'Get nutrition by ID external API call returned response status code: {response.status_code}')
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return None
+    except Exception as e:
         return None
