@@ -21,7 +21,7 @@ def get_recipe_by_ingredients(ingredients_list: List):
         "number": 5
     }
     try:
-        response = requests.get(url, params=params, timeout=10)
+        response = requests.get(url, params=params, timeout=15)
         logger.debug(f'Get recipe by ingredients external API call returned response status code: {response.status_code}')
         if response.status_code==200:
             return response.json()
@@ -37,7 +37,7 @@ def get_recipe_by_id(recipeID: int):
         "apiKey": get_api_key()
     }
     try:
-        response = requests.get(url, params=params)
+        response = requests.get(url, params=params, timeout=15)
         logger.debug(f'Get recipe by ID external API call returned response status code: {response.status_code}')
         if response.status_code == 200:
             return response.json()
@@ -53,7 +53,7 @@ def get_nutrition_by_id(recipeID: int):
         "apiKey": get_api_key()
     }
     try:
-        response = requests.get(url, params=params)
+        response = requests.get(url, params=params, timeout=15)
         logger.debug(f'Get nutrition by ID external API call returned response status code: {response.status_code}')
         if response.status_code == 200:
             return response.json()
