@@ -18,7 +18,7 @@ def get_recipe_by_ingredients(ingredients_list: List):
     params ={
         "ingredients": ingredients,
         "apiKey": get_api_key(),
-        "number": 2
+        "number": 5
     }
     response = requests.get(url, params=params)
     logger.debug(f'Get recipe by ingredients external API call returned response status code: {response.status_code}')
