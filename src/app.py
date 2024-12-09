@@ -5,6 +5,7 @@ from src.database.create_tables import db, SavedRecipe
 from src.config import PG_USER, PG_PASSWORD, PG_HOST, PG_PORT
 import json
 from flask import jsonify
+from sqlalchemy import asc
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/dishcovery_app_db'
@@ -251,7 +252,7 @@ def get_recipe_nutrition(recipe_id):
 
 @app.route("/saved_recipes")
 def saved_recipes():
-    # Get sort option from the saved_recipes dropbox
+    # Get sort option from the saved_recipes dropbox, 'default' if nothing provided
     sort_option = request.args.get('sort', 'default')
 
     # Apply sorting logic based on the sort option
@@ -259,6 +260,8 @@ def saved_recipes():
         saved_recipes = SavedRecipe.query.order_by(SavedRecipe.name.asc()).all()
     elif sort_option == 'calories':
         saved_recipes = SavedRecipe.query.order_by(SavedRecipe.calories.asc()).all()
+    elif sort_option == 'carbohydrate':
+        saved_recipes = SavedRecipe.query.order_by(SavedRecipe.carbohydrate.asc()).all()
     elif sort_option == 'fat':
         saved_recipes = SavedRecipe.query.order_by(SavedRecipe.fat.asc()).all()
     elif sort_option == 'protein':
