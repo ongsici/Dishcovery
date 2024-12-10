@@ -26,8 +26,9 @@ def test_get_recipe_by_ingredients_success(mock_get, mock_get_api_key):
         params={
             "ingredients": "tomato, garlic, pasta",
             "apiKey": "fake_api_key",
-            "number": 2
-        }
+            "number": 5
+        }, 
+        timeout=15
     )
 
 @patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
@@ -47,8 +48,9 @@ def test_get_recipe_by_ingredients_failure(mock_get, mock_get_api_key):
         params={
             "ingredients": "tomato, garlic, pasta",
             "apiKey": "fake_api_key",
-            "number": 2
-        }
+            "number": 5
+        },
+        timeout=15
     )
 
 @patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
@@ -69,7 +71,8 @@ def test_get_recipe_by_id_success(mock_get,  mock_get_api_key):
     assert required_fields.issubset(response.keys()), f"Missing fields in response: {response}"
     mock_get.assert_called_with(
         f"https://api.spoonacular.com/recipes/{recipe_id}/information",
-        params={"apiKey": "fake_api_key"}
+        params={"apiKey": "fake_api_key"}, 
+        timeout=15
     )
 
 @patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
@@ -86,7 +89,8 @@ def test_get_recipe_by_id_failure(mock_get, mock_get_api_key):
 
     mock_get.assert_called_with(
         f"https://api.spoonacular.com/recipes/{recipe_id}/information",
-        params={"apiKey": "fake_api_key"}
+        params={"apiKey": "fake_api_key"}, 
+        timeout=15
     )
 
 @patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
@@ -104,7 +108,8 @@ def test_get_nutrition_by_id_success(mock_get,  mock_get_api_key):
     assert required_fields.issubset(response.keys()), f"Missing fields in response: {response}"
     mock_get.assert_called_with(
         f"https://api.spoonacular.com/recipes/{recipe_id}/nutritionWidget.json",
-        params={"apiKey": "fake_api_key"}
+        params={"apiKey": "fake_api_key"}, 
+        timeout=15
     )
 
 @patch('src.utils.get_spoonacular.get_api_key', return_value="fake_api_key")
@@ -121,5 +126,6 @@ def test_get_nutrition_by_id_failure(mock_get, mock_get_api_key):
 
     mock_get.assert_called_with(
         f"https://api.spoonacular.com/recipes/{recipe_id}/nutritionWidget.json",
-        params={"apiKey": "fake_api_key"}
+        params={"apiKey": "fake_api_key"}, 
+        timeout=15
     )

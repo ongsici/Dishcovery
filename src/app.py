@@ -6,12 +6,16 @@ from src.config import PG_USER, PG_PASSWORD, PG_HOST, PG_PORT
 import json
 from flask import jsonify
 from sqlalchemy import asc
+import logging
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/dishcovery_app_db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 global_results = {}
 
@@ -27,65 +31,67 @@ def recipe_search():
 
 @app.route("/ingredients_search", methods=["POST"])
 def ingredients_search():
-
+    
     results = {}
 
-    search_query = request.form['ingredients']
-    ingredients_list = [search_query]
+    try:
 
-    # Get the list of recipes based on the ingredients list
-    recipe_ingredients = get_recipe_by_ingredients(ingredients_list)
+        search_query = request.form['ingredients']
+        ingredients_list = [search_query]
 
-    if recipe_ingredients is None:
-        return render_template(
-            "recipe_search_results.html", 
-            recipes=None, 
-            error="Failed to fetch recipes. Please try again later."
-        )
-    
-    # Loop through each recipe in the list and fetch the details and nutrition info
-    for recipe in recipe_ingredients:
-        recipe_id = recipe['id']
-        recipe_name = recipe['title']
+        # Get the list of recipes based on the ingredients list
+        recipe_ingredients = get_recipe_by_ingredients(ingredients_list)
 
-        missed_ingredients = []
-        used_ingredients = []
-        extended_ingredients = []
-
-        # Extracting missedIngredients
-        for ingredient in recipe['missedIngredients']:
-            missed_ingredients.append(ingredient['name'])
-        
-        # Extracting usedIngredients
-        for ingredient in recipe['usedIngredients']:
-            used_ingredients.append(ingredient['name'])
-
-        # Fetch recipe details and nutrition for the current recipe ID
-        recipe_details = get_recipe_by_id(recipe_id)
-        recipe_nutrition = get_nutrition_by_id(recipe_id)
-        
-        if recipe_details is None or recipe_nutrition is None:
+        if recipe_ingredients is None:
             return render_template(
-            "recipe_search_results.html", 
-            recipes=None, 
-            error="Failed to fetch recipes. Please try again later."
-        )
+                "recipe_search_results.html", 
+                recipes=None, 
+                error="Failed to fetch recipes. Please try again later."
+            )
+        
+        # Loop through each recipe in the list and fetch the details and nutrition info
+        for recipe in recipe_ingredients:
+            recipe_id = recipe['id']
+            recipe_name = recipe['title']
 
-        for ingredient in recipe_details.get('extendedIngredients'):
-            name = ingredient.get('name')
-            image = ingredient.get('image')
-            metric = ingredient.get("measures", {}).get("metric", {})
+            missed_ingredients = []
+            used_ingredients = []
+            extended_ingredients = []
+
+            # Extracting missedIngredients
+            for ingredient in recipe['missedIngredients']:
+                missed_ingredients.append(ingredient['name'])
             
-            if metric:
-                metric_info = f"{metric.get('amount', '')} {metric.get('unitShort', '')}"
-            else:
-                metric_info = "No metric data available"
+            # Extracting usedIngredients
+            for ingredient in recipe['usedIngredients']:
+                used_ingredients.append(ingredient['name'])
 
-            extended_ingredients.append({
-                "name": name,
-                "image": image,
-                "metric": metric_info
-            })
+            # Fetch recipe details and nutrition for the current recipe ID
+            recipe_details = get_recipe_by_id(recipe_id)
+            recipe_nutrition = get_nutrition_by_id(recipe_id)
+            
+            if recipe_details is None or recipe_nutrition is None:
+                return render_template(
+                "recipe_search_results.html", 
+                recipes=None, 
+                error="Failed to fetch recipes. Please try again later."
+            )
+
+            for ingredient in recipe_details.get('extendedIngredients'):
+                name = ingredient.get('name')
+                image = ingredient.get('image')
+                metric = ingredient.get("measures", {}).get("metric", {})
+                
+                if metric:
+                    metric_info = f"{metric.get('amount', '')} {metric.get('unitShort', '')}"
+                else:
+                    metric_info = "No metric data available"
+
+                extended_ingredients.append({
+                    "name": name,
+                    "image": image,
+                    "metric": metric_info
+                })
 
         # Organize the response into a structured dictionary
         organized_recipe = {
@@ -96,6 +102,7 @@ def ingredients_search():
             "extended_ingredients": extended_ingredients,  
             "missed_ingredients": missed_ingredients, 
             "used_ingredients": used_ingredients,
+            # -- below commented out details for future implementation --
             # "ready_in_minutes": recipe_details.get('readyInMinutes'),
             # "labels": {  
             #     "vegan": recipe_details.get('vegan'),
@@ -116,8 +123,10 @@ def ingredients_search():
         results[recipe_id] = organized_recipe
         global_results[recipe_id] = organized_recipe
 
-    return render_template("recipe_search_results.html", recipes=results, error=None)
-
+        return render_template("recipe_search_results.html", recipes=results, error=None)
+    except Exception as e:
+        logger.error(f"Error occured in ingredients_search endpoint with message: {e}")
+        render_template("recipe_search_results.html", recipes=None, error=f"An error occured: {e}. Please try again later.")
 
 @app.route('/recipe/<int:recipe_id>')
 def recipe_details(recipe_id):
@@ -126,47 +135,14 @@ def recipe_details(recipe_id):
     from_page = request.args.get('from_page', 'search_results')
 
     if not recipe:
-        # # Fetch recipe details using the API
-        # recipe_details = get_recipe_by_id(recipe_id)
-        # recipe_nutrition = get_nutrition_by_id(recipe_id)
-
-        # if recipe_details is None or recipe_nutrition is None:
-        #     return "Recipe not found", 404
-
-        # missed_ingredients = []
-        # used_ingredients = []
-        # extended_ingredients = []
-
-        # # Extract missedIngredients
-        # for ingredient in recipe_details.get('missedIngredients', []):
-        #     missed_ingredients.append(ingredient['name'])
-
-        # # Extract usedIngredients 
-        # for ingredient in recipe_details.get('usedIngredients', []):
-        #     used_ingredients.append(ingredient['name'])
-
-        # for ingredient in recipe_details.get('extendedIngredients', []):
-        #     name = ingredient.get('name')
-        #     image = ingredient.get('image')
-        #     metric = ingredient.get("measures", {}).get("metric", {})
-
-        #     if metric:
-        #         metric_info = f"{metric.get('amount', '')} {metric.get('unitShort', '')}"
-        #     else:
-        #         metric_info = "No metric data available"
-
-        #     extended_ingredients.append({
-        #         "name": name,
-        #         "image": image,
-        #         "metric": metric_info
-        #     })
-
+        # Search psql database if not in global recipes dictionary
         saved_recipe = SavedRecipe.query.filter_by(recipe_id=recipe_id).first()
         print(saved_recipe)
 
         if not saved_recipe:
             return "Recipe not found", 404
         
+        # Save psql data into a dictionary format to pass into recipe_details
         recipe = {
             "id": saved_recipe.recipe_id,
             "name": saved_recipe.name,
