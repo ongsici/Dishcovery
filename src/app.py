@@ -96,14 +96,14 @@ def ingredients_search():
             "extended_ingredients": extended_ingredients,  
             "missed_ingredients": missed_ingredients, 
             "used_ingredients": used_ingredients,
-            "ready_in_minutes": recipe_details.get('readyInMinutes'),
-            "labels": {  
-                "vegan": recipe_details.get('vegan'),
-                "vegetarian": recipe_details.get('vegetarian'),
-                "glutenFree": recipe_details.get('glutenFree'),
-                "lowFodmap": recipe_details.get('lowFodmap'),
-                "sustainable": recipe_details.get('sustainable')
-            },
+            # "ready_in_minutes": recipe_details.get('readyInMinutes'),
+            # "labels": {  
+            #     "vegan": recipe_details.get('vegan'),
+            #     "vegetarian": recipe_details.get('vegetarian'),
+            #     "glutenFree": recipe_details.get('glutenFree'),
+            #     "lowFodmap": recipe_details.get('lowFodmap'),
+            #     "sustainable": recipe_details.get('sustainable')
+            # },
             "nutrition": { 
                 "calories": recipe_nutrition.get('calories'),
                 "carbohydrate": recipe_nutrition.get('carbs'),
@@ -126,69 +126,74 @@ def recipe_details(recipe_id):
     from_page = request.args.get('from_page', 'search_results')
 
     if not recipe:
-        # Fetch recipe details using the API
-        recipe_details = get_recipe_by_id(recipe_id)
-        recipe_nutrition = get_nutrition_by_id(recipe_id)
+        # # Fetch recipe details using the API
+        # recipe_details = get_recipe_by_id(recipe_id)
+        # recipe_nutrition = get_nutrition_by_id(recipe_id)
 
-        if recipe_details is None or recipe_nutrition is None:
+        # if recipe_details is None or recipe_nutrition is None:
+        #     return "Recipe not found", 404
+
+        # missed_ingredients = []
+        # used_ingredients = []
+        # extended_ingredients = []
+
+        # # Extract missedIngredients
+        # for ingredient in recipe_details.get('missedIngredients', []):
+        #     missed_ingredients.append(ingredient['name'])
+
+        # # Extract usedIngredients 
+        # for ingredient in recipe_details.get('usedIngredients', []):
+        #     used_ingredients.append(ingredient['name'])
+
+        # for ingredient in recipe_details.get('extendedIngredients', []):
+        #     name = ingredient.get('name')
+        #     image = ingredient.get('image')
+        #     metric = ingredient.get("measures", {}).get("metric", {})
+
+        #     if metric:
+        #         metric_info = f"{metric.get('amount', '')} {metric.get('unitShort', '')}"
+        #     else:
+        #         metric_info = "No metric data available"
+
+        #     extended_ingredients.append({
+        #         "name": name,
+        #         "image": image,
+        #         "metric": metric_info
+        #     })
+
+        saved_recipe = SavedRecipe.query.filter_by(recipe_id=recipe_id).first()
+        print(saved_recipe)
+
+        if not saved_recipe:
             return "Recipe not found", 404
-
-        missed_ingredients = []
-        used_ingredients = []
-        extended_ingredients = []
-
-        # Extract missedIngredients
-        for ingredient in recipe_details.get('missedIngredients', []):
-            missed_ingredients.append(ingredient['name'])
-
-        # Extract usedIngredients 
-        for ingredient in recipe_details.get('usedIngredients', []):
-            used_ingredients.append(ingredient['name'])
-
-        for ingredient in recipe_details.get('extendedIngredients', []):
-            name = ingredient.get('name')
-            image = ingredient.get('image')
-            metric = ingredient.get("measures", {}).get("metric", {})
-
-            if metric:
-                metric_info = f"{metric.get('amount', '')} {metric.get('unitShort', '')}"
-            else:
-                metric_info = "No metric data available"
-
-            extended_ingredients.append({
-                "name": name,
-                "image": image,
-                "metric": metric_info
-            })
         
         recipe = {
-            "id": recipe_id,  
-            "name": recipe_details.get('title'),
-            "image": recipe_details.get('image'),  
-            "instructions": recipe_details.get('instructions'),
-            "extended_ingredients": extended_ingredients, 
-            "missed_ingredients": missed_ingredients,  
-            "used_ingredients": used_ingredients, 
-            "ready_in_minutes": recipe_details.get('readyInMinutes'),
-            "labels": {  
-                "vegan": recipe_details.get('vegan'),
-                "vegetarian": recipe_details.get('vegetarian'),
-                "glutenFree": recipe_details.get('glutenFree'),
-                "lowFodmap": recipe_details.get('lowFodmap'),
-                "sustainable": recipe_details.get('sustainable')
+            "id": saved_recipe.recipe_id,
+            "name": saved_recipe.name,
+            "image": saved_recipe.image,
+            "instructions": saved_recipe.instructions,
+            "extended_ingredients": [],
+            "missed_ingredients": [],
+            "used_ingredients": [],
+            # "ready_in_minutes": [],
+            # "labels": {
+            #     "vegan": [],
+            #     "vegetarian": [],
+            #     "glutenFree": [],
+            #     "lowFodmap": [],
+            #     "sustainable": [],
+            # },
+            "nutrition": {
+                "calories": saved_recipe.calories,
+                "carbohydrate": saved_recipe.carbohydrate,
+                "fat": saved_recipe.fat,
+                "protein": saved_recipe.protein,
             },
-            "nutrition": {  
-                "calories": recipe_nutrition.get('calories'),
-                "carbohydrate": recipe_nutrition.get('carbs'),
-                "fat": recipe_nutrition.get('fat'),
-                "protein": recipe_nutrition.get('protein'),
-            }
         }
 
     success =  request.args.get('success')
     toast_message = request.args.get('toast_message')
-    if not recipe:
-        return "Recipe not found", 404
+
     return render_template('recipe_details.html', 
                            recipe=recipe, 
                            success=success, 
