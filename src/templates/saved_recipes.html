@@ -51,8 +51,46 @@
             </div>
         </div>
 
+        <div id="toast" class="toast">
+            <div class="toast-content">Placeholder message</div>
+            <button class="close-button" onclick="document.getElementById('toast').classList.remove('show');"></button>
+        </div>
+        
+
         <footer>
             &copy; 2024 Dishcovery. Built with ♡ for food enthusiasts.
         </footer>
+
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const toastMessage = urlParams.get('toast_message');
+            const success = urlParams.get('success');
+        
+            if (toastMessage) {
+                const toast = document.getElementById('toast');
+                const toastContent = toast.querySelector('.toast-content');
+                toastContent.innerText = toastMessage;
+        
+                toast.classList.remove('toast-success', 'toast-error');
+        
+                if (success === 'true') {
+                    toast.classList.add('toast-success');
+                } else {
+                    toast.classList.add('toast-error');
+                }
+        
+                toast.classList.add('show');
+        
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+        
+                const closeButton = toast.querySelector('.close-button');
+                closeButton.onclick = function () {
+                    toast.classList.remove('show');
+                };
+            }
+        </script>
+        
     </body>
 </html>

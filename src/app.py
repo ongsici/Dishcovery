@@ -311,10 +311,10 @@ def unsave_recipe():
             if saved_recipe:
                 db.session.delete(saved_recipe)
                 db.session.commit()
-                return redirect(url_for('recipe_details', recipe_id=recipe_id, success='true', toast_message="Recipe Unsaved Successfully!"))
+                return redirect(url_for('saved_recipes', success='true', toast_message="Recipe Unsaved Successfully!"))
             else:
-                return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="Failed to unsave: Recipe not found"))
+                return redirect(url_for('saved_recipes', success='false', toast_message="Failed to unsave: Recipe not found"))
 
     except Exception as e:
         db.session.rollback()
-        return redirect(url_for('recipe_details', recipe_id=recipe_id, success='false', toast_message="An error occurred while unsaving the recipe"))
+        return redirect(url_for('saved_recipes', success='false', toast_message="An error occurred while unsaving the recipe"))
