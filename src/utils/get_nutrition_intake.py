@@ -21,7 +21,7 @@ def get_daily_nutrition_intake(gender, age, height, weight, activity_level):
         "x-rapidapi-host": "nutrition-calculator.p.rapidapi.com"
     }
     try:
-        response = requests.get(url, headers=headers, params=querystring)
+        response = requests.get(url, headers=headers, params=querystring, timeout=15)
 
         if response.status_code ==200:
             data = response.json()
