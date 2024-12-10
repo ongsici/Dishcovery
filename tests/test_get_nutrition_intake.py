@@ -54,7 +54,8 @@ def test_get_daily_nutrition_intake_success(mock_get, mock_get_api_key):
             "cm": '180',
             "kilos": '75',
             "activity_level": 'active'
-        }
+        }, 
+        timeout=15
     )
 
 @patch('src.utils.get_nutrition_intake.get_api_key', return_value="fake_api_key")
@@ -87,5 +88,6 @@ def test_get_daily_nutrition_intake_failure(mock_get, mock_get_api_key):
             "cm": '165',
             "kilos": '60',
             "activity_level": 'low'
-        }
+        }, 
+        timeout=15
     )
