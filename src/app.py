@@ -93,35 +93,35 @@ def ingredients_search():
                     "metric": metric_info
                 })
 
-        # Organize the response into a structured dictionary
-        organized_recipe = {
-            "id": recipe_id, 
-            "name": recipe_name, 
-            "image": recipe_details.get('image'),
-            "instructions": recipe_details.get('instructions'),
-            "extended_ingredients": extended_ingredients,  
-            "missed_ingredients": missed_ingredients, 
-            "used_ingredients": used_ingredients,
-            # -- below commented out details for future implementation --
-            # "ready_in_minutes": recipe_details.get('readyInMinutes'),
-            # "labels": {  
-            #     "vegan": recipe_details.get('vegan'),
-            #     "vegetarian": recipe_details.get('vegetarian'),
-            #     "glutenFree": recipe_details.get('glutenFree'),
-            #     "lowFodmap": recipe_details.get('lowFodmap'),
-            #     "sustainable": recipe_details.get('sustainable')
-            # },
-            "nutrition": { 
-                "calories": recipe_nutrition.get('calories'),
-                "carbohydrate": recipe_nutrition.get('carbs'),
-                "fat": recipe_nutrition.get('fat'),
-                "protein": recipe_nutrition.get('protein'),
+            # Organize the response into a structured dictionary
+            organized_recipe = {
+                "id": recipe_id, 
+                "name": recipe_name, 
+                "image": recipe_details.get('image'),
+                "instructions": recipe_details.get('instructions'),
+                "extended_ingredients": extended_ingredients,  
+                "missed_ingredients": missed_ingredients, 
+                "used_ingredients": used_ingredients,
+                # -- below commented out details for future implementation --
+                # "ready_in_minutes": recipe_details.get('readyInMinutes'),
+                # "labels": {  
+                #     "vegan": recipe_details.get('vegan'),
+                #     "vegetarian": recipe_details.get('vegetarian'),
+                #     "glutenFree": recipe_details.get('glutenFree'),
+                #     "lowFodmap": recipe_details.get('lowFodmap'),
+                #     "sustainable": recipe_details.get('sustainable')
+                # },
+                "nutrition": { 
+                    "calories": recipe_nutrition.get('calories'),
+                    "carbohydrate": recipe_nutrition.get('carbs'),
+                    "fat": recipe_nutrition.get('fat'),
+                    "protein": recipe_nutrition.get('protein'),
+                }
             }
-        }
 
-        # Add the recipe to the results dictionary with recipe_id as the key
-        results[recipe_id] = organized_recipe
-        global_results[recipe_id] = organized_recipe
+            # Add the recipe to the results dictionary with recipe_id as the key
+            results[recipe_id] = organized_recipe
+            global_results[recipe_id] = organized_recipe
 
         return render_template("recipe_search_results.html", recipes=results, error=None)
     except Exception as e:

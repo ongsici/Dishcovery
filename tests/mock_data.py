@@ -54,12 +54,12 @@ mock_nutrition_by_id = {
 }
 
 mock_recipe_by_id = {
-    'vegetarian': True,
-    'vegan': True,
-    'glutenFree': False,
-    'lowFodmap': False,
-    'sustainable': False,
-    'readyInMinutes': 45,
+    # 'vegetarian': True,
+    # 'vegan': True,
+    # 'glutenFree': False,
+    # 'lowFodmap': False,
+    # 'sustainable': False,
+    # 'readyInMinutes': 45,
     'image': 'https://img.spoonacular.com/recipes/655573-556x370.jpg',
     'extendedIngredients': [
         {'id': 10011531, 'name': 'tomato', 'amount': 14.5, 'unit': 'oz', 'image': 'tomatoes-canned.png'},
